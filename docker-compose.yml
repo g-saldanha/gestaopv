@@ -1,0 +1,9 @@
+services:
+    frontend:
+        container_name: weddigital-admin
+        build: .
+        restart: always #change if you don't want your container restarting
+        environment:
+            - NODE_ENV=production
+        ports:
+            - 4000:3000
