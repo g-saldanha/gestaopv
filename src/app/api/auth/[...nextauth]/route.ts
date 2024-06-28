@@ -50,7 +50,7 @@ const handler = NextAuth({
             },
             // @ts-ignore
             async authorize(credentials, req) {
-                const user: Wed.User = {
+                const user: Metrics.User = {
                     password: 'amiriamnaotemerece',
                     email: 'bianchyboss@gmail.com',
                     id: 1

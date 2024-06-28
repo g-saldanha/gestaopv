@@ -69,11 +69,6 @@ declare namespace Wed {
         usuario: Usuario;
     }
 
-    interface User {
-        email: string;
-        password: string;
-        id: number;
-    }
 
     interface Orcamento {
         idProfissional: number;

@@ -30,6 +30,7 @@ import {
     LayoutType,
     SortOrderType
 } from './demo';
+import { Metrics } from './metrics';
 
 type ChildContainerProps = {
     children: ReactNode;
@@ -64,8 +65,5 @@ export type {
     AppMailReplyProps,
     AppMailProps,
     AppMenuItem,
-    Wed,
-    Usuario,
-    Profissional,
-    optionsSegmento
+    Metrics
 };

@@ -1,34 +1,20 @@
 declare namespace Metrics {
-    interface Record {
-        'id': number;
-        'created_at': string;
-        'updated_at': string,
-        'week_reference': number;
-        'service_date_time': string;
-        'service_timezone': string;
-        'value': number;
-        'replaces': null,
-        'category': Category,
-        'campus': Campus,
-        'event': null
+    interface Culto {
+        week_reference: number;
+        data_hora: Date;
+        serviceid: number;
+        periodo?: string;
+        total: number;
+        youtube: number;
+        kids: number;
+        visitantes: number;
+        voluntarios: number;
+        salvacoes: number;
     }
 
-    interface Category {
-        'id': number;
-        'name': string;
-        'format': string;
-        'created_at': string;
-        'updated_at': string;
-    }
-
-    interface Campus {
-        'id': number;
-        'slug': string;
-        'description': string;
-        'region_id': null,
-        'timezone': string;
-        'active': true,
-        'created_at': string;
-        'updated_at': string;
+    interface User {
+        email: string;
+        password: string;
+        id: number;
     }
 }
