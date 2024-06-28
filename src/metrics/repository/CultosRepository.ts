@@ -1,12 +1,10 @@
 import { sql } from '@vercel/postgres';
 import { Constantes } from '@/metrics/utils/Constantes';
+import prisma from '../../../lib/prisma';
 
 export const CultosRepository = {
     async getDomingos() {
-        const { rows, fields } = await sql`
-          SELECT *
-          FROM verceldb.pvmetrics.cultos_domingo`;
-        return rows as Metrics.Culto[];
+        return await prisma.culto.findMany({ where: { serviceid: { in: [Constantes.CULTO_DOMINGO_MANHA, Constantes.CULTO_DOMINGO_NOITE] } } });
     },
     async getDomingosNoite() {
         return await sql<Metrics.Culto[]>`

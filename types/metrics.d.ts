@@ -1,7 +1,8 @@
 declare namespace Metrics {
     interface Culto {
         week_reference: number;
-        data_hora: Date;
+        data_hora: string;
+        data?: Date;
         serviceid: number;
         periodo?: string;
         total: number;

@@ -1,0 +1,35 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider  = "postgresql"
+    url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+    directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model User {
+    id        String   @id @default(cuid())
+    name      String?
+    email     String?  @unique
+    createdAt DateTime @default(now()) @map(name: "created_at")
+    updatedAt DateTime @updatedAt @map(name: "updated_at")
+
+    @@map(name: "users")
+}
+
+model Culto {
+    id             String   @id @default(cuid())
+    week_reference Int
+    data_hora      DateTime @db.Timestamptz(3)
+    serviceid      Int      @default(0)
+    youtube        Int      @default(0)
+    kids           Int      @default(0)
+    visitantes     Int      @default(0)
+    voluntarios    Int      @default(0)
+    salvacoes      Int      @default(0)
+    periodo        String?  @default("Noite")
+    total          Int      @default(0)
+
+    @@map(name: "cultos")
+}

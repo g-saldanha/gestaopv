@@ -13,7 +13,7 @@ const AppMenu = () => {
                 { label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/' },
                 {
                     label: 'Usuários',
-                    icon: 'pi pi-fw pi-sync',
+                    icon: 'pi pi-fw pi-users',
                     to: '/usuarios'
                 }
             ]
@@ -25,8 +25,8 @@ const AppMenu = () => {
                     icon: 'pi pi-fw pi-users',
                     items: [
                         { label: 'Geral', icon: 'pi pi-fw pi-bookmark', to: '/domingo' },
-                        { label: 'Noite', icon: 'pi pi-fw pi-bookmark', to: '/domingomanha' },
-                        { label: 'Noite', icon: 'pi pi-fw pi-bookmark', to: '/domingonoite' }
+                        { label: 'Manhã', icon: 'pi pi-fw pi-sun', to: '/domingomanha' },
+                        { label: 'Noite', icon: 'pi pi-fw pi-moon', to: '/domingonoite' }
                     ]
                 },
                 {

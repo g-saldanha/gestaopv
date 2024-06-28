@@ -15,3 +15,11 @@ export const formatDateTime = (value: Date) => {
         minute: '2-digit'
     });
 };
+
+
+export const formatDatetoDayMonth = (value: Date) => {
+    return value.toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit'
+    });
+};
