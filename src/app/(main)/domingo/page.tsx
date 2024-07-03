@@ -1,9 +1,9 @@
 'use client';
 import React, { Suspense, useEffect, useState } from 'react';
-import { Chart } from 'primereact/chart';
 import { CultosService } from '@/metrics/service/CultosService';
 import { formatDatetoDayMonth } from '@/metrics/utils/date';
 import AnoButton from '@/metrics/components/button/AnoButton';
+import BarChart from '@/metrics/components/BarChart';
 
 
 export default function Domingo() {
@@ -84,9 +84,7 @@ export default function Domingo() {
                         <h5>Métricas Gerais de Domingo</h5>
                         <AnoButton year={year} handleYear={setYear} />
                     </div>
-                    <div className="card">
-                        <Chart type="bar" data={chartData} options={chartOptions} />
-                    </div>
+                    <BarChart data={chartData} options={chartOptions} />
                 </div>
             </div>
         </Suspense>
