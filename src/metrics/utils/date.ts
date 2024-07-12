@@ -17,7 +17,8 @@ export const formatDateTime = (value: Date) => {
 };
 
 
-export const formatDatetoDayMonth = (value: Date) => {
+export const formatDatetoDayMonth = (value: Date | undefined) => {
+    // @ts-ignore
     return value.toLocaleDateString('pt-BR', {
         day: '2-digit',
         month: '2-digit'

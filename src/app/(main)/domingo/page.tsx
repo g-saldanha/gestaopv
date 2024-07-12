@@ -3,7 +3,15 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { CultosService } from '@/metrics/service/CultosService';
 import { formatDatetoDayMonth } from '@/metrics/utils/date';
 import AnoButton from '@/metrics/components/button/AnoButton';
-import BarChart from '@/metrics/components/BarChart';
+import { Accordion, AccordionTab } from 'primereact/accordion';
+import { MeterGroup } from 'primereact/metergroup';
+import BarChart from '@/metrics/components/chart/BarChart';
+import TotalCard from '@/metrics/components/stats/TotalCard';
+import VoluntariosCard from '@/metrics/components/stats/VoluntariosCard';
+import KidsCard from '@/metrics/components/stats/KidsCard';
+import LiveCard from '@/metrics/components/stats/LiveCard';
+import SalvacoesCard from '@/metrics/components/stats/SalvacoesCard';
+import VisitantesCard from '@/metrics/components/stats/VisitantesCard';
 
 
 export default function Domingo() {
@@ -11,6 +19,15 @@ export default function Domingo() {
     // @ts-ignore
     const [chartData, setChartData] = useState({});
     const [chartOptions, setChartOptions] = useState({});
+    const [totais, setTotais] = useState({
+        total: 0,
+        youtube: 0,
+        kids: 0,
+        visitantes: 0,
+        voluntarios: 0,
+        salvacoes: 0,
+        cultos: 0
+    });
     const [year, setYear] = useState({ name: fullYear, code: fullYear });
     useEffect(() => {
         const documentStyle = getComputedStyle(document.documentElement);
@@ -18,8 +35,30 @@ export default function Domingo() {
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
         const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
         CultosService.getDomingos(year.code).then(cultos => {
-            // @ts-ignore
-            const labels = cultos.filter(culto => culto.data?.getFullYear() === year.code).map(culto => formatDatetoDayMonth(culto.data));
+            // @ts-ignore  total: number;
+            //         youtube: number;
+            //         kids: number;
+            //         visitantes: number;
+            //         voluntarios: number;
+            //         salvacoes: number;
+            const totais = {
+                total: 0,
+                youtube: 0,
+                kids: 0,
+                visitantes: 0,
+                voluntarios: 0,
+                salvacoes: 0,
+                cultos: 0
+            };
+            totais.total = parseInt(String(cultos.now.reduce((accumulator, current) => accumulator + current.total, 0)));
+            totais.youtube = parseInt(String(cultos.now.reduce((accumulator, current) => accumulator + current.youtube, 0)), 10);
+            totais.kids = parseInt(String(cultos.now.reduce((accumulator, current) => accumulator + current.kids, 0)), 10);
+            totais.visitantes = parseInt(String(cultos.now.reduce((accumulator, current) => accumulator + current.visitantes, 0)), 10);
+            totais.voluntarios = parseInt(String(cultos.now.reduce((accumulator, current) => accumulator + current.voluntarios, 0)), 10);
+            totais.salvacoes = parseInt(String(cultos.now.reduce((accumulator, current) => accumulator + current.salvacoes, 0)), 10);
+            totais.cultos = cultos.now.length;
+            setTotais(totais);
+            const labels = cultos.now.map(culto => formatDatetoDayMonth(culto.data));
             const data = {
                 labels,
                 datasets: [
@@ -27,13 +66,13 @@ export default function Domingo() {
                         label: year.code - 1,
                         backgroundColor: 'grey',
                         borderColor: 'grey',
-                        data: cultos.filter(culto => culto.data?.getFullYear() === year.code - 1).map((culto => culto.total))
+                        data: cultos.last.map((culto => culto.total))
                     },
                     {
                         label: year.code,
                         backgroundColor: 'black',
                         borderColor: 'black',
-                        data: cultos.filter(culto => culto.data?.getFullYear() === year.code).map((culto => culto.total))
+                        data: cultos.now.map((culto => culto.total))
                     }
                 ]
             };
@@ -42,6 +81,10 @@ export default function Domingo() {
                 aspectRatio: 0.8,
                 plugins: {
                     legend: {
+                        title: {
+                            display: true,
+                            text: `Média por culto ${Math.round(totais.total / totais.cultos)}`
+                        },
                         labels: {
                             fontColor: textColor
                         }
@@ -76,6 +119,9 @@ export default function Domingo() {
             setChartOptions(options);
         });
     }, [year]);
+
+    const values = [{ label: 'Space used', value: 15 }];
+
     return (
         <Suspense>
             <div className="grid">
@@ -84,7 +130,38 @@ export default function Domingo() {
                         <h5>Métricas Gerais de Domingo</h5>
                         <AnoButton year={year} handleYear={setYear} />
                     </div>
-                    <BarChart data={chartData} options={chartOptions} />
+                    <div className="card">
+                        <Accordion multiple activeIndex={[0, 1, 2]}>
+                            <AccordionTab header="Estatísticas">
+                                <div className="grid">
+                                    <TotalCard totais={totais} />
+                                    <VoluntariosCard totais={totais} />
+                                    <KidsCard totais={totais} />
+                                    <LiveCard totais={totais} />
+                                    <SalvacoesCard totais={totais} />
+                                    <VisitantesCard totais={totais} />
+                                </div>
+                                <div className="flex justify-content-center">
+                                    <MeterGroup values={values} />
+                                </div>
+                            </AccordionTab>
+                            <AccordionTab header="Gráfico de Linhas">
+                                <p className="m-0">
+                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+                                    doloremque laudantium, totam rem aperiam, eaque ipsa
+                                    quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
+                                    explicabo. Nemo enim ipsam voluptatem quia voluptas
+                                    sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui
+                                    ratione voluptatem sequi nesciunt.
+                                    Consectetur, adipisci velit, sed quia non numquam eius modi.
+                                </p>
+                            </AccordionTab>
+                            <AccordionTab header="Gráfico de Barra">
+                                <BarChart data={chartData} options={chartOptions} />
+                            </AccordionTab>
+                        </Accordion>
+                    </div>
+
                 </div>
             </div>
         </Suspense>

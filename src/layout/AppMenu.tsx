@@ -10,7 +10,7 @@ const AppMenu = () => {
         {
             label: 'Home',
             items: [
-                { label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/' },
+                { label: 'Dashboard', icon: 'pi pi-fw pi-chart-bar', to: '/' },
                 {
                     label: 'Usuários',
                     icon: 'pi pi-fw pi-users',
@@ -24,14 +24,14 @@ const AppMenu = () => {
                     label: 'Domingo',
                     icon: 'pi pi-fw pi-users',
                     items: [
-                        { label: 'Geral', icon: 'pi pi-fw pi-bookmark', to: '/domingo' },
+                        { label: 'Geral', icon: 'pi pi-fw pi-verified', to: '/domingo' },
                         { label: 'Manhã', icon: 'pi pi-fw pi-sun', to: '/domingomanha' },
                         { label: 'Noite', icon: 'pi pi-fw pi-moon', to: '/domingonoite' }
                     ]
                 },
                 {
                     label: 'Quarta',
-                    icon: 'pi pi-fw pi-map-marker',
+                    icon: 'pi pi-fw pi-chart-line',
                     to: '/quarta'
                 }
             ]
@@ -40,12 +40,12 @@ const AppMenu = () => {
             items: [
                 {
                     label: 'Só para donzelas',
-                    icon: 'pi pi-fw pi-sync',
+                    icon: 'pi pi-fw pi-dollar',
                     to: '/soparaelas'
                 },
                 {
                     label: 'Pulse',
-                    icon: 'pi pi-fw pi-sync',
+                    icon: 'pi pi-fw pi-wifi',
                     to: '/pulse'
                 }
             ]

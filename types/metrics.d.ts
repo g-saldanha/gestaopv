@@ -18,4 +18,14 @@ declare namespace Metrics {
         password: string;
         id: number;
     }
+
+    interface Totais {
+        total: number;
+        youtube: number;
+        kids: number;
+        visitantes: number;
+        voluntarios: number;
+        salvacoes: number;
+        cultos: number;
+    }
 }

@@ -1,12 +1,8 @@
 'use client';
-import React, { Suspense, useEffect, useState } from 'react';
-import { CultosRepository } from '@/metrics/repository/CultosRepository';
+import React, { Suspense, useState } from 'react';
 
 const Sorteios = () => {
     const [records, setRecords] = useState<any>([]);
-    useEffect(() => {
-        CultosRepository.getDomingos().then((results) => setRecords(results));
-    }, []);
     return (
         <Suspense>
             <div className="grid">
