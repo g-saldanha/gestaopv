@@ -10,27 +10,26 @@ export default function MeterStats({ totais }: MeterStatsProps) {
         {
             label: 'Visitantes',
             color: '#34d399',
-            // value: Math.round(((totais.visitantes / totais.cultos) / media)),
             value: Math.round(totais.visitantes * 100 / totais.total),
-            icon: 'pi pi-table'
+            icon: 'pi pi-bell'
         },
         {
             label: 'Voluntários',
             color: '#fbbf24',
             value: Math.round(((totais.voluntarios * 100) / totais.total)),
-            icon: 'pi pi-inbox'
+            icon: 'pi pi-id-card'
         },
         {
             label: 'Salvações',
             color: '#60a5fa',
             value: Math.round(((totais.salvacoes * 100) / totais.total)),
-            icon: 'pi pi-image'
+            icon: 'pi pi-trophy'
         },
         {
             label: 'Membros',
             color: '#60a5fa',
             value: Math.round(((totais.total - totais.salvacoes - totais.voluntarios - totais.visitantes) * 100 / totais.total)),
-            icon: 'pi pi-image'
+            icon: 'pi pi-users'
         }
     ];
 

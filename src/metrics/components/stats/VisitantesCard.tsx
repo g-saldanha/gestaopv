@@ -17,7 +17,7 @@ export default function VisitantesCard({ totais }: VisitantesCardProps) {
                     <div
                         className="flex align-items-center justify-content-center bg-blue-100 border-round"
                         style={{ width: '2.5rem', height: '2.5rem' }}>
-                        <i className="pi pi-shopping-cart text-blue-500 text-xl" />
+                        <i className="pi pi-bell text-blue-500 text-xl" />
                     </div>
                 </div>
                 <span className="text-500">Média por culto de </span>

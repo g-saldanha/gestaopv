@@ -1,4 +1,3 @@
-import { Constantes } from '@/metrics/utils/Constantes';
 import { PrismaClient } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -7,15 +6,14 @@ import { NextRequest, NextResponse } from 'next/server';
 const prisma = new PrismaClient();
 
 export async function GET(request: NextRequest) {
-    // @ts-ignore
-
     try {
-        // Get all admins using Prisma
         const url = new URL(request.url);
         let ano = url.searchParams.get('ano');
+        let servicos = url.searchParams.get('servicesId');
         let last = await prisma.culto.findMany({
             where: {
-                serviceid: { in: [Constantes.CULTO_DOMINGO_MANHA, Constantes.CULTO_DOMINGO_NOITE] },
+                // @ts-ignore
+                serviceid: { in: JSON.parse(servicos) },
                 data_hora: {
                     gte: new Date(`${Number(ano) - 1}-01-01`), // Start of date range
                     lte: new Date(`${Number(ano) - 1}-12-31`) // End of date range
@@ -24,7 +22,8 @@ export async function GET(request: NextRequest) {
         });
         let now = await prisma.culto.findMany({
             where: {
-                serviceid: { in: [Constantes.CULTO_DOMINGO_MANHA, Constantes.CULTO_DOMINGO_NOITE] },
+                // @ts-ignore
+                serviceid: { in: JSON.parse(servicos) },
                 data_hora: {
                     gte: new Date(`${Number(ano)}-01-01`), // Start of date range
                     lte: new Date(`${Number(ano)}-12-31`) // End of date range
@@ -36,7 +35,6 @@ export async function GET(request: NextRequest) {
             status: 200
         });
     } catch (error) {
-        console.error(error);
         return NextResponse.json(
             { error: 'Failed to get admins' },
             {

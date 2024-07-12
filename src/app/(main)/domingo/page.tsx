@@ -3,25 +3,16 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { CultosService } from '@/metrics/service/CultosService';
 import { formatDatetoDayMonth } from '@/metrics/utils/date';
 import AnoButton from '@/metrics/components/button/AnoButton';
-import { Accordion, AccordionTab } from 'primereact/accordion';
-import BarChart from '@/metrics/components/chart/BarChart';
-import TotalCard from '@/metrics/components/stats/TotalCard';
-import VoluntariosCard from '@/metrics/components/stats/VoluntariosCard';
-import KidsCard from '@/metrics/components/stats/KidsCard';
-import LiveCard from '@/metrics/components/stats/LiveCard';
-import SalvacoesCard from '@/metrics/components/stats/SalvacoesCard';
-import VisitantesCard from '@/metrics/components/stats/VisitantesCard';
-import MeterStats from '@/metrics/components/stats/MeterStats';
-import LineChart from '@/metrics/components/chart/LineChart';
+import CultosView from '@/metrics/components/CultosView';
 
 
 export default function Domingo() {
     const fullYear = new Date().getFullYear();
+    const [isLoading, setIsLoading] = useState(true);
     const [labels, setLabels] = useState<string[]>([]);
     const [now, setNow] = useState<number[]>([]);
     const [last, setLast] = useState<number[]>([]);
-    // @ts-ignore
-    const [totais, setTotais] = useState({
+    const [totais, setTotais] = useState<Metrics.Totais>({
         total: 0,
         youtube: 0,
         kids: 0,
@@ -53,7 +44,7 @@ export default function Domingo() {
             setLabels(cultos.now.map(culto => formatDatetoDayMonth(culto.data)));
             setLast(cultos.last.map((culto => culto.total)));
             setNow(cultos.now.map((culto => culto.total)));
-        });
+        }).then(() => setIsLoading(false));
     }, [year]);
 
     return (
@@ -64,28 +55,8 @@ export default function Domingo() {
                         <h5>Métricas Gerais de Domingo</h5>
                         <AnoButton year={year} handleYear={setYear} />
                     </div>
-                    <div className="card">
-                        <Accordion multiple activeIndex={[0, 1, 2]}>
-                            <AccordionTab header="Estatísticas">
-                                <div className="grid">
-                                    <TotalCard totais={totais} />
-                                    <VoluntariosCard totais={totais} />
-                                    <KidsCard totais={totais} />
-                                    <LiveCard totais={totais} />
-                                    <SalvacoesCard totais={totais} />
-                                    <VisitantesCard totais={totais} />
-                                </div>
-                                <MeterStats totais={totais} />
-                            </AccordionTab>
-                            <AccordionTab header="Gráfico de Linhas">
-                                <LineChart now={now} labels={labels} last={last} year={year} totais={totais} />
-                            </AccordionTab>
-                            <AccordionTab header="Gráfico de Barra">
-                                <BarChart now={now} labels={labels} last={last} year={year} totais={totais} />
-                            </AccordionTab>
-                        </Accordion>
-                    </div>
-
+                    <CultosView totais={totais} now={now} labels={labels} last={last} year={year}
+                                isLoading={isLoading} />
                 </div>
             </div>
         </Suspense>
