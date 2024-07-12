@@ -25,6 +25,12 @@ export default function MeterStats({ totais }: MeterStatsProps) {
             color: '#60a5fa',
             value: Math.round(((totais.salvacoes * 100) / totais.total)),
             icon: 'pi pi-image'
+        },
+        {
+            label: 'Membros',
+            color: '#60a5fa',
+            value: Math.round(((totais.total - totais.salvacoes - totais.voluntarios - totais.visitantes) * 100 / totais.total)),
+            icon: 'pi pi-image'
         }
     ];
 
