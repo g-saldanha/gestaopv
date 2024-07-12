@@ -1,7 +1,7 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { Chart } from 'primereact/chart';
 
-interface BarchartProps {
+interface LineChartProps {
     now: number[];
     last: number[];
     labels: string[];
@@ -9,54 +9,48 @@ interface BarchartProps {
     year: any;
 }
 
-export default function BarChart(props: Readonly<BarchartProps>) {
+export default function LineChart(props: LineChartProps) {
+
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
     const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-
     const data = {
         labels: props.labels,
         datasets: [
             {
                 label: props.year.code - 1,
-                backgroundColor: 'grey',
+                data: props.last,
+                fill: false,
                 borderColor: 'grey',
-                data: props.last
+                tension: 0.4
             },
             {
                 label: props.year.code,
-                backgroundColor: 'black',
+                data: props.now,
+                fill: false,
                 borderColor: 'black',
-                data: props.now
+                tension: 0.4
             }
         ]
     };
     const options = {
         maintainAspectRatio: false,
-        aspectRatio: 0.8,
+        aspectRatio: 0.6,
         plugins: {
             legend: {
-                title: {
-                    display: true,
-                    text: `Média por culto ${Math.round(props.totais.total / props.totais.cultos)}`
-                },
                 labels: {
-                    fontColor: textColor
+                    color: textColor
                 }
             }
         },
         scales: {
             x: {
                 ticks: {
-                    color: textColorSecondary,
-                    font: {
-                        weight: 500
-                    }
+                    color: textColorSecondary
                 },
                 grid: {
-                    display: false,
-                    drawBorder: false
+                    color: surfaceBorder
                 }
             },
             y: {
@@ -64,18 +58,14 @@ export default function BarChart(props: Readonly<BarchartProps>) {
                     color: textColorSecondary
                 },
                 grid: {
-                    color: surfaceBorder,
-                    drawBorder: false
+                    color: surfaceBorder
                 }
             }
         }
     };
-    // @ts-ignore
     return (
-        <Suspense>
-            <div className="card">
-                <Chart type="bar" data={data} options={options} />
-            </div>
-        </Suspense>
+        <div className="card">
+            <Chart type="line" data={data} options={options} />
+        </div>
     );
 }
