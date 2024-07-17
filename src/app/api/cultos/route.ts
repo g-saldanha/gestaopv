@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
         const url = new URL(request.url);
         let ano = url.searchParams.get('ano');
         let servicos = url.searchParams.get('servicesId');
-        let verylast = await prisma.culto.findMany({
+        let veryLast = await prisma.culto.findMany({
             where: {
                 // @ts-ignore
                 serviceid: { in: JSON.parse(servicos) },
@@ -44,8 +44,8 @@ export async function GET(request: NextRequest) {
 
         now = now.map((culto) => ({ ...culto, data: new Date(culto.data_hora) })).sort(sortByDate);
         last = last.map((culto) => ({ ...culto, data: new Date(culto.data_hora) })).sort(sortByDate);
-        verylast = verylast.map((culto) => ({ ...culto, data: new Date(culto.data_hora) })).sort(sortByDate);
-        return NextResponse.json({ last, now, verylast }, {
+        veryLast = veryLast.map((culto) => ({ ...culto, data: new Date(culto.data_hora) })).sort(sortByDate);
+        return NextResponse.json({ last, now, veryLast }, {
             status: 200
         });
     } catch (error) {

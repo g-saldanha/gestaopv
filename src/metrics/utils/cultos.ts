@@ -1,3 +1,5 @@
+import { formatDatetoDayMonth } from '@/metrics/utils/date';
+
 export const getTotals = (cultos: Metrics.Cultos): Metrics.CultosTotais => {
     const now = {
         total: parseInt(String(cultos.now.reduce((accumulator, current) => accumulator + current.total, 0))),
@@ -28,4 +30,14 @@ export const getTotals = (cultos: Metrics.Cultos): Metrics.CultosTotais => {
     };
 
     return { now, last, veryLast };
+};
+
+export const transformCultosData = (cultos: Metrics.Cultos) => {
+    let fill = Array(cultos.last.length - cultos.veryLast.length).fill(null);
+    return {
+        labels: cultos.now.map(culto => formatDatetoDayMonth(culto.data)),
+        now: cultos.last.map((culto => culto.total)),
+        veryLast: fill.concat(cultos.veryLast.map((culto => culto.total))),
+        last: cultos.now.map((culto => culto.total))
+    };
 };

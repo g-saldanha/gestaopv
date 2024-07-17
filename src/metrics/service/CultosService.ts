@@ -11,7 +11,6 @@ async function fetchCultos(year: number, cultosArray: (number)[]) {
     let cultos = await res.json() as Metrics.Cultos;
     cultos.now = cultos.now.map((culto) => ({ ...culto, data: new Date(culto.data_hora) })).sort(sortByDate);
     cultos.last = cultos.last.map((culto) => ({ ...culto, data: new Date(culto.data_hora) })).sort(sortByDate);
-    console.log(cultos.veryLast);
     cultos.veryLast = cultos.veryLast.map((culto) => ({ ...culto, data: new Date(culto.data_hora) })).sort(sortByDate);
     return cultos;
 }

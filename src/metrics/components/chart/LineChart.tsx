@@ -20,21 +20,21 @@ export default function LineChart(props: LineChartProps) {
         labels: props.labels,
         datasets: [
             {
-                label: props.year.code - 2,
+                label: props.year - 2,
                 data: props.veryLast,
                 fill: false,
                 borderColor: '#ADD8E6',
                 tension: 0.4
             },
             {
-                label: props.year.code - 1,
+                label: props.year - 1,
                 data: props.last,
                 fill: false,
                 borderColor: '#90EE90',
                 tension: 0.4
             },
             {
-                label: props.year.code,
+                label: props.year,
                 data: props.now,
                 fill: false,
                 borderColor: '#FFA07A',

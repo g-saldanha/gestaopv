@@ -1,31 +1,39 @@
 'use client';
 import React, { Suspense, useEffect, useState } from 'react';
 import { CultosService } from '@/metrics/service/CultosService';
-import { formatDatetoDayMonth } from '@/metrics/utils/date';
-import AnoButton from '@/metrics/components/button/AnoButton';
 import CultosView from '@/metrics/components/CultosView';
-import { getTotals } from '@/metrics/utils/totals';
+import { getTotals, transformCultosData } from '@/metrics/utils/cultos';
+import MonthButton from '@/metrics/components/button/MonthButton';
 
 const DomingoManha = () => {
-    const fullYear = new Date().getFullYear();
+    const year = new Date().getFullYear();
+    // @ts-ignore
+    const [cultos, setCultos] = useState<Metrics.Cultos>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [labels, setLabels] = useState<string[]>([]);
     const [now, setNow] = useState<number[]>([]);
     const [last, setLast] = useState<number[]>([]);
     const [veryLast, setVeryLast] = useState<number[]>([]);
     const [totais, setTotais] = useState<Metrics.CultosTotais | null>(null);
-    const [year, setYear] = useState({ name: fullYear, code: fullYear });
+    const [month, setMonth] = useState('Todos');
     useEffect(() => {
-        CultosService.getDomingosManha(year.code).then(cultos => {
+        CultosService.getDomingosManha(year).then(cultos => {
+            setCultos(cultos);
+        });
+    }, []);
+
+    useEffect(() => {
+        if (month == 'Todos') {
             const totals = getTotals(cultos);
             setTotais(totals);
-            setLabels(cultos.now.map(culto => formatDatetoDayMonth(culto.data)));
-            setLast(cultos.last.map((culto => culto.total)));
-            setVeryLast(cultos.veryLast.map((culto => culto.total)));
-            setNow(cultos.now.map((culto => culto.total)));
-        }).then(() => setIsLoading(false));
-    }, [year]);
-
+            let transformCultos = transformCultosData(cultos);
+            setLabels(transformCultos.labels);
+            setLast(transformCultos.last);
+            setVeryLast(transformCultos.veryLast);
+            setNow(transformCultos.now);
+            setIsLoading(false);
+        }
+    }, [month]);
 
     return (
         <Suspense>
@@ -33,10 +41,10 @@ const DomingoManha = () => {
                 <div className="col-12">
                     <div className="card">
                         <h5>Métricas de Domingo Manhã</h5>
-                        <AnoButton year={year} handleYear={setYear} />
+                        <MonthButton month={month} handleMonth={setMonth} />
                     </div>
                     {/*// @ts-ignore*/}
-                    <CultosView totais={totais} now={now} labels={labels} last={last} year={year}
+                    <CultosView totais={totais} now={now} labels={labels} last={last} month={month}
                                 isLoading={isLoading} veryLast={veryLast} />
                 </div>
             </div>

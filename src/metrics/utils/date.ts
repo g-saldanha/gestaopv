@@ -24,3 +24,15 @@ export const formatDatetoDayMonth = (value: Date | undefined) => {
         month: '2-digit'
     });
 };
+
+export const getPastMonths = () => {
+    const months = [
+        'Todos', 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+        'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+    ];
+
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 2; // Janeiro é 0, Dezembro é 11
+
+    return months.slice(0, currentMonth);
+};

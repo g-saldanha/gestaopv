@@ -17,13 +17,12 @@ interface CultosViewProps {
     labels: string[],
     last: number[],
     veryLast: number[],
-    year: object,
     isLoading: boolean
 }
 
 export default function CultosView(props: CultosViewProps) {
-    const { totais, now, labels, last, year, isLoading, veryLast } = props;
-
+    const { totais, now, labels, last, isLoading, veryLast } = props;
+    const year = new Date().getFullYear();
     if (isLoading) {
         return <CardSkeleton />;
     }
