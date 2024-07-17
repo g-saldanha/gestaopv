@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface VisitantesCardProps {
-    totais: Metrics.Totais;
+    totais: Metrics.CultosTotais;
 }
 
 export default function VisitantesCard({ totais }: VisitantesCardProps) {
@@ -12,7 +12,7 @@ export default function VisitantesCard({ totais }: VisitantesCardProps) {
                     <div>
                         <span className="block text-500 font-medium mb-3">Visitantes</span>
                         <div
-                            className="text-900 font-medium text-xl">{totais.visitantes}</div>
+                            className="text-900 font-medium text-xl">{totais.now.visitantes}</div>
                     </div>
                     <div
                         className="flex align-items-center justify-content-center bg-blue-100 border-round"
@@ -22,7 +22,7 @@ export default function VisitantesCard({ totais }: VisitantesCardProps) {
                 </div>
                 <span className="text-500">Média por culto de </span>
                 <span
-                    className="text-green-500 font-medium">{Math.round(totais.visitantes / totais.cultos)} visitantes </span>
+                    className="text-green-500 font-medium">{Math.round(totais.now.visitantes / totais.now.cultos)} visitantes </span>
             </div>
         </div>
     );

@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface SalvacoesCardProps {
-    totais: Metrics.Totais;
+    totais: Metrics.CultosTotais;
 }
 
 export default function SalvacoesCard({ totais }: SalvacoesCardProps) {
@@ -12,7 +12,7 @@ export default function SalvacoesCard({ totais }: SalvacoesCardProps) {
                     <div>
                         <span className="block text-500 font-medium mb-3">Salvações</span>
                         <div
-                            className="text-900 font-medium text-xl">{totais.salvacoes}</div>
+                            className="text-900 font-medium text-xl">{totais.now.salvacoes}</div>
                     </div>
                     <div
                         className="flex align-items-center justify-content-center bg-blue-100 border-round"
@@ -22,7 +22,7 @@ export default function SalvacoesCard({ totais }: SalvacoesCardProps) {
                 </div>
                 <span className="text-500">Média por culto de </span>
                 <span
-                    className="text-green-500 font-medium">{Math.round(totais.salvacoes / totais.cultos)} salvações </span>
+                    className="text-green-500 font-medium">{Math.round(totais.now.salvacoes / totais.now.cultos)} salvações </span>
             </div>
         </div>
     );

@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface VoluntariosCardProps {
-    totais: Metrics.Totais;
+    totais: Metrics.CultosTotais;
 }
 
 export default function VoluntariosCard({ totais }: VoluntariosCardProps) {
@@ -12,7 +12,7 @@ export default function VoluntariosCard({ totais }: VoluntariosCardProps) {
                     <div>
                         <span className="block text-500 font-medium mb-3">Voluntários</span>
                         <div
-                            className="text-900 font-medium text-xl">{totais.voluntarios}</div>
+                            className="text-900 font-medium text-xl">{totais.now.voluntarios}</div>
                     </div>
                     <div
                         className="flex align-items-center justify-content-center bg-blue-100 border-round"
@@ -22,7 +22,7 @@ export default function VoluntariosCard({ totais }: VoluntariosCardProps) {
                 </div>
                 <span className="text-500">Média por culto de </span>
                 <span
-                    className="text-green-500 font-medium">{Math.round(totais.voluntarios / totais.cultos)} voluntários</span>
+                    className="text-green-500 font-medium">{Math.round(totais.now.voluntarios / totais.now.cultos)} voluntários</span>
             </div>
         </div>
     );

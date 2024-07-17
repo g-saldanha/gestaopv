@@ -12,16 +12,17 @@ import React from 'react';
 import CardSkeleton from '@/metrics/components/loading/CardSkeleton';
 
 interface CultosViewProps {
-    totais: Metrics.Totais,
+    totais: Metrics.CultosTotais,
     now: number[],
     labels: string[],
     last: number[],
+    veryLast: number[],
     year: object,
     isLoading: boolean
 }
 
 export default function CultosView(props: CultosViewProps) {
-    const { totais, now, labels, last, year, isLoading } = props;
+    const { totais, now, labels, last, year, isLoading, veryLast } = props;
 
     if (isLoading) {
         return <CardSkeleton />;
@@ -30,6 +31,9 @@ export default function CultosView(props: CultosViewProps) {
     return (
         <div className="card">
             <Accordion multiple activeIndex={[0, 1, 2]}>
+                <AccordionTab header="Gráfico de Linhas">
+                    <LineChart now={now} labels={labels} last={last} year={year} totais={totais} veryLast={veryLast} />
+                </AccordionTab>
                 <AccordionTab header="Estatísticas">
                     <div className="grid">
                         <TotalCard totais={totais} />
@@ -41,11 +45,8 @@ export default function CultosView(props: CultosViewProps) {
                     </div>
                     <MeterStats totais={totais} />
                 </AccordionTab>
-                <AccordionTab header="Gráfico de Linhas">
-                    <LineChart now={now} labels={labels} last={last} year={year} totais={totais} />
-                </AccordionTab>
                 <AccordionTab header="Gráfico de Barra">
-                    <BarChart now={now} labels={labels} last={last} year={year} totais={totais} />
+                    <BarChart now={now} labels={labels} last={last} year={year} totais={totais} veryLast={veryLast} />
                 </AccordionTab>
             </Accordion>
         </div>

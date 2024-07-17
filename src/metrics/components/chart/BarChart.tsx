@@ -5,8 +5,9 @@ interface BarchartProps {
     now: number[];
     last: number[];
     labels: string[];
-    totais: Metrics.Totais;
+    totais: Metrics.CultosTotais;
     year: any;
+    veryLast: number[],
 }
 
 export default function BarChart(props: Readonly<BarchartProps>) {
@@ -20,14 +21,20 @@ export default function BarChart(props: Readonly<BarchartProps>) {
         datasets: [
             {
                 label: props.year.code - 1,
-                backgroundColor: 'grey',
-                borderColor: 'grey',
+                backgroundColor: '#ADD8E6',
+                borderColor: '#ADD8E6',
+                data: props.veryLast
+            },
+            {
+                label: props.year.code - 1,
+                backgroundColor: '#90EE90',
+                borderColor: '#90EE90',
                 data: props.last
             },
             {
                 label: props.year.code,
-                backgroundColor: 'black',
-                borderColor: 'black',
+                backgroundColor: '#FFA07A',
+                borderColor: '#FFA07A',
                 data: props.now
             }
         ]
@@ -39,7 +46,7 @@ export default function BarChart(props: Readonly<BarchartProps>) {
             legend: {
                 title: {
                     display: true,
-                    text: `Média por culto ${Math.round(props.totais.total / props.totais.cultos)}`
+                    text: `Média por culto ${Math.round(props.totais.now.total / props.totais.now.cultos)}`
                 },
                 labels: {
                     fontColor: textColor

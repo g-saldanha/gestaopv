@@ -5,8 +5,9 @@ interface LineChartProps {
     now: number[];
     last: number[];
     labels: string[];
-    totais: Metrics.Totais;
+    totais: Metrics.CultosTotais;
     year: any;
+    veryLast: number[],
 }
 
 export default function LineChart(props: LineChartProps) {
@@ -19,17 +20,24 @@ export default function LineChart(props: LineChartProps) {
         labels: props.labels,
         datasets: [
             {
+                label: props.year.code - 2,
+                data: props.veryLast,
+                fill: false,
+                borderColor: '#ADD8E6',
+                tension: 0.4
+            },
+            {
                 label: props.year.code - 1,
                 data: props.last,
                 fill: false,
-                borderColor: 'grey',
+                borderColor: '#90EE90',
                 tension: 0.4
             },
             {
                 label: props.year.code,
                 data: props.now,
                 fill: false,
-                borderColor: 'black',
+                borderColor: '#FFA07A',
                 tension: 0.4
             }
         ]
@@ -39,6 +47,10 @@ export default function LineChart(props: LineChartProps) {
         aspectRatio: 0.6,
         plugins: {
             legend: {
+                title: {
+                    display: true,
+                    text: `Média por culto ${Math.round(props.totais.now.total / props.totais.now.cultos)}`
+                },
                 labels: {
                     color: textColor
                 }

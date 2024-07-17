@@ -28,4 +28,16 @@ declare namespace Metrics {
         salvacoes: number;
         cultos: number;
     }
+
+    interface CultosTotais {
+        now: Totais,
+        last: Totais,
+        veryLast: Totais
+    }
+
+    interface Cultos {
+        last: Metrics.Culto[];
+        now: Metrics.Culto[];
+        veryLast: Metrics.Culto[];
+    }
 }

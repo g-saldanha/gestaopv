@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface TotalCardProps {
-    totais: Metrics.Totais;
+    totais: Metrics.CultosTotais;
 }
 
 export default function TotalCard({ totais }: TotalCardProps) {
@@ -12,7 +12,7 @@ export default function TotalCard({ totais }: TotalCardProps) {
                     <div>
                         <span className="block text-500 font-medium mb-3">Total</span>
                         <div
-                            className="text-900 font-medium text-xl">{totais.total}</div>
+                            className="text-900 font-medium text-xl">{totais.now.total}</div>
                     </div>
                     <div
                         className="flex align-items-center justify-content-center bg-blue-100 border-round"
@@ -22,7 +22,7 @@ export default function TotalCard({ totais }: TotalCardProps) {
                 </div>
                 <span className="text-500">Média por culto de </span>
                 <span
-                    className="text-green-500 font-medium">{Math.round(totais.total / totais.cultos)} pessoas </span>
+                    className="text-green-500 font-medium">{Math.round(totais.now.total / totais.now.cultos)} pessoas </span>
             </div>
         </div>
     );

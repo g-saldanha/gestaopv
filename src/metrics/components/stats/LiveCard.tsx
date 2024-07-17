@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface LiveCardProps {
-    totais: Metrics.Totais;
+    totais: Metrics.CultosTotais;
 }
 
 export default function LiveCard({ totais }: LiveCardProps) {
@@ -12,7 +12,7 @@ export default function LiveCard({ totais }: LiveCardProps) {
                     <div>
                         <span className="block text-500 font-medium mb-3">Live</span>
                         <div
-                            className="text-900 font-medium text-xl">{totais.youtube}</div>
+                            className="text-900 font-medium text-xl">{totais.now.youtube}</div>
                     </div>
                     <div
                         className="flex align-items-center justify-content-center bg-blue-100 border-round"
@@ -22,7 +22,7 @@ export default function LiveCard({ totais }: LiveCardProps) {
                 </div>
                 <span className="text-500">Média por culto de </span>
                 <span
-                    className="text-green-500 font-medium">{Math.round(totais.youtube / totais.cultos)} streamers </span>
+                    className="text-green-500 font-medium">{Math.round(totais.now.youtube / totais.now.cultos)} streamers </span>
             </div>
         </div>
     );
