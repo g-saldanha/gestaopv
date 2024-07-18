@@ -41,9 +41,11 @@ export async function GET(request: NextRequest) {
                 }
             }
         });
-
+        // @ts-ignore
         now = now.map((culto) => ({ ...culto, data: new Date(culto.data_hora) })).sort(sortByDate);
+        // @ts-ignore
         last = last.map((culto) => ({ ...culto, data: new Date(culto.data_hora) })).sort(sortByDate);
+        // @ts-ignore
         veryLast = veryLast.map((culto) => ({ ...culto, data: new Date(culto.data_hora) })).sort(sortByDate);
         return NextResponse.json({ last, now, veryLast }, {
             status: 200
