@@ -38,7 +38,6 @@ const Dashboard = () => {
     const menu2 = useRef<Menu>(null);
     const [lineOptions, setLineOptions] = useState<ChartOptions>({});
     const { layoutConfig } = useContext(LayoutContext);
-
     const applyLightTheme = () => {
         const lineOptions: ChartOptions = {
             plugins: {
@@ -128,7 +127,8 @@ const Dashboard = () => {
                                 <span className="block text-500 font-medium mb-3">Orders</span>
                                 <div className="text-900 font-medium text-xl">152</div>
                             </div>
-                            <div className="flex align-items-center justify-content-center bg-blue-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
+                            <div className="flex align-items-center justify-content-center bg-blue-100 border-round"
+                                 style={{ width: '2.5rem', height: '2.5rem' }}>
                                 <i className="pi pi-shopping-cart text-blue-500 text-xl" />
                             </div>
                         </div>
@@ -143,7 +143,8 @@ const Dashboard = () => {
                                 <span className="block text-500 font-medium mb-3">Revenue</span>
                                 <div className="text-900 font-medium text-xl">$2.100</div>
                             </div>
-                            <div className="flex align-items-center justify-content-center bg-orange-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
+                            <div className="flex align-items-center justify-content-center bg-orange-100 border-round"
+                                 style={{ width: '2.5rem', height: '2.5rem' }}>
                                 <i className="pi pi-map-marker text-orange-500 text-xl" />
                             </div>
                         </div>
@@ -158,7 +159,8 @@ const Dashboard = () => {
                                 <span className="block text-500 font-medium mb-3">Customers</span>
                                 <div className="text-900 font-medium text-xl">28441</div>
                             </div>
-                            <div className="flex align-items-center justify-content-center bg-cyan-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
+                            <div className="flex align-items-center justify-content-center bg-cyan-100 border-round"
+                                 style={{ width: '2.5rem', height: '2.5rem' }}>
                                 <i className="pi pi-inbox text-cyan-500 text-xl" />
                             </div>
                         </div>
@@ -173,7 +175,8 @@ const Dashboard = () => {
                                 <span className="block text-500 font-medium mb-3">Comments</span>
                                 <div className="text-900 font-medium text-xl">152 Unread</div>
                             </div>
-                            <div className="flex align-items-center justify-content-center bg-purple-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
+                            <div className="flex align-items-center justify-content-center bg-purple-100 border-round"
+                                 style={{ width: '2.5rem', height: '2.5rem' }}>
                                 <i className="pi pi-comment text-purple-500 text-xl" />
                             </div>
                         </div>
@@ -186,17 +189,22 @@ const Dashboard = () => {
                     <div className="card">
                         <h5>Recent Sales</h5>
                         <DataTable value={products} rows={5} paginator>
-                            <Column header="Image" body={(data) => <img className="shadow-2" src={`/demo/images/product/${data.image}`} alt={data.image} width="50" />} />
+                            <Column header="Image"
+                                    body={(data) => <img className="shadow-2" src={`/demo/images/product/${data.image}`}
+                                                         alt={data.image} width="50" />} />
                             <Column field="name" header="Name" sortable style={{ width: '35%' }} />
-                            <Column field="price" header="Price" sortable style={{ width: '35%' }} body={(data) => formatCurrency(data.price)} />
-                            <Column header="View" style={{ width: '15%' }} body={() => <Button icon="pi pi-search" text />} />
+                            <Column field="price" header="Price" sortable style={{ width: '35%' }}
+                                    body={(data) => formatCurrency(data.price)} />
+                            <Column header="View" style={{ width: '15%' }}
+                                    body={() => <Button icon="pi pi-search" text />} />
                         </DataTable>
                     </div>
                     <div className="card">
                         <div className="flex justify-content-between align-items-center mb-5">
                             <h5>Best Selling Products</h5>
                             <div>
-                                <Button type="button" icon="pi pi-ellipsis-v" rounded text className="p-button-plain" onClick={(event) => menu1.current?.toggle(event)} />
+                                <Button type="button" icon="pi pi-ellipsis-v" rounded text className="p-button-plain"
+                                        onClick={(event) => menu1.current?.toggle(event)} />
                                 <Menu
                                     ref={menu1}
                                     popup
@@ -214,7 +222,8 @@ const Dashboard = () => {
                                     <div className="mt-1 text-600">Clothing</div>
                                 </div>
                                 <div className="mt-2 md:mt-0 flex align-items-center">
-                                    <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: '8px' }}>
+                                    <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem"
+                                         style={{ height: '8px' }}>
                                         <div className="bg-orange-500 h-full" style={{ width: '50%' }} />
                                     </div>
                                     <span className="text-orange-500 ml-3 font-medium">%50</span>
@@ -226,7 +235,8 @@ const Dashboard = () => {
                                     <div className="mt-1 text-600">Accessories</div>
                                 </div>
                                 <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                                    <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: '8px' }}>
+                                    <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem"
+                                         style={{ height: '8px' }}>
                                         <div className="bg-cyan-500 h-full" style={{ width: '16%' }} />
                                     </div>
                                     <span className="text-cyan-500 ml-3 font-medium">%16</span>
@@ -238,7 +248,8 @@ const Dashboard = () => {
                                     <div className="mt-1 text-600">Accessories</div>
                                 </div>
                                 <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                                    <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: '8px' }}>
+                                    <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem"
+                                         style={{ height: '8px' }}>
                                         <div className="bg-pink-500 h-full" style={{ width: '67%' }} />
                                     </div>
                                     <span className="text-pink-500 ml-3 font-medium">%67</span>
@@ -250,7 +261,8 @@ const Dashboard = () => {
                                     <div className="mt-1 text-600">Office</div>
                                 </div>
                                 <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                                    <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: '8px' }}>
+                                    <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem"
+                                         style={{ height: '8px' }}>
                                         <div className="bg-green-500 h-full" style={{ width: '35%' }} />
                                     </div>
                                     <span className="text-green-500 ml-3 font-medium">%35</span>
@@ -262,7 +274,8 @@ const Dashboard = () => {
                                     <div className="mt-1 text-600">Accessories</div>
                                 </div>
                                 <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                                    <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: '8px' }}>
+                                    <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem"
+                                         style={{ height: '8px' }}>
                                         <div className="bg-purple-500 h-full" style={{ width: '75%' }} />
                                     </div>
                                     <span className="text-purple-500 ml-3 font-medium">%75</span>
@@ -274,7 +287,8 @@ const Dashboard = () => {
                                     <div className="mt-1 text-600">Clothing</div>
                                 </div>
                                 <div className="mt-2 md:mt-0 ml-0 md:ml-8 flex align-items-center">
-                                    <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem" style={{ height: '8px' }}>
+                                    <div className="surface-300 border-round overflow-hidden w-10rem lg:w-6rem"
+                                         style={{ height: '8px' }}>
                                         <div className="bg-teal-500 h-full" style={{ width: '40%' }} />
                                     </div>
                                     <span className="text-teal-500 ml-3 font-medium">%40</span>
@@ -294,7 +308,8 @@ const Dashboard = () => {
                         <div className="flex align-items-center justify-content-between mb-4">
                             <h5>Notifications</h5>
                             <div>
-                                <Button type="button" icon="pi pi-ellipsis-v" rounded text className="p-button-plain" onClick={(event) => menu2.current?.toggle(event)} />
+                                <Button type="button" icon="pi pi-ellipsis-v" rounded text className="p-button-plain"
+                                        onClick={(event) => menu2.current?.toggle(event)} />
                                 <Menu
                                     ref={menu2}
                                     popup
@@ -309,7 +324,8 @@ const Dashboard = () => {
                         <span className="block text-600 font-medium mb-3">TODAY</span>
                         <ul className="p-0 mx-0 mt-0 mb-4 list-none">
                             <li className="flex align-items-center py-2 border-bottom-1 surface-border">
-                                <div className="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
+                                <div
+                                    className="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
                                     <i className="pi pi-dollar text-xl text-blue-500" />
                                 </div>
                                 <span className="text-900 line-height-3">
@@ -321,11 +337,13 @@ const Dashboard = () => {
                                 </span>
                             </li>
                             <li className="flex align-items-center py-2">
-                                <div className="w-3rem h-3rem flex align-items-center justify-content-center bg-orange-100 border-circle mr-3 flex-shrink-0">
+                                <div
+                                    className="w-3rem h-3rem flex align-items-center justify-content-center bg-orange-100 border-circle mr-3 flex-shrink-0">
                                     <i className="pi pi-download text-xl text-orange-500" />
                                 </div>
                                 <span className="text-700 line-height-3">
-                                    Your request for withdrawal of <span className="text-blue-500 font-medium">2500$</span> has been initiated.
+                                    Your request for withdrawal of <span
+                                    className="text-blue-500 font-medium">2500$</span> has been initiated.
                                 </span>
                             </li>
                         </ul>
@@ -333,7 +351,8 @@ const Dashboard = () => {
                         <span className="block text-600 font-medium mb-3">YESTERDAY</span>
                         <ul className="p-0 m-0 list-none">
                             <li className="flex align-items-center py-2 border-bottom-1 surface-border">
-                                <div className="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
+                                <div
+                                    className="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
                                     <i className="pi pi-dollar text-xl text-blue-500" />
                                 </div>
                                 <span className="text-900 line-height-3">
@@ -345,7 +364,8 @@ const Dashboard = () => {
                                 </span>
                             </li>
                             <li className="flex align-items-center py-2 border-bottom-1 surface-border">
-                                <div className="w-3rem h-3rem flex align-items-center justify-content-center bg-pink-100 border-circle mr-3 flex-shrink-0">
+                                <div
+                                    className="w-3rem h-3rem flex align-items-center justify-content-center bg-pink-100 border-circle mr-3 flex-shrink-0">
                                     <i className="pi pi-question text-xl text-pink-500" />
                                 </div>
                                 <span className="text-900 line-height-3">

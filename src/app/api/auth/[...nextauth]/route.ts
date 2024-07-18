@@ -1,8 +1,10 @@
 import NextAuth from 'next-auth/next';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bunyan from 'bunyan';
-import { sql } from '@vercel/postgres';
 import { compare } from 'bcryptjs';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 const log = bunyan.createLogger({
     name: 'pv-metrics',
@@ -52,12 +54,15 @@ const handler = NextAuth({
                 },
                 // @ts-ignore
                 async authorize(credentials, req) {
-                    const response = await sql`
-                     SELECT * FROM users WHERE email=${credentials?.email}
-                    `;
-                    const user = response.rows[0];
+                    const user = await prisma.user.findUnique({
+                        where: {
+                            email: credentials?.email
+                        }
+                    });
+
                     const passwordCorrect = await compare(
                         credentials?.password || '',
+                        // @ts-ignore
                         user.senha
                     );
                     // const passwordCorrect = await compare(credentials?.password ?? '', user.password);
@@ -65,8 +70,11 @@ const handler = NextAuth({
                     // const emailCorrect = credentials?.email === user.email;
                     if (passwordCorrect) {
                         return {
+                            // @ts-ignore
                             id: user.id,
+                            // @ts-ignore
                             email: user.email,
+                            // @ts-ignore
                             name: user.name
                         };
                     }
