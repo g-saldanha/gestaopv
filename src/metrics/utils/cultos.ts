@@ -32,6 +32,40 @@ export const getTotals = (cultos: Metrics.Cultos): Metrics.CultosTotais => {
     return { now, last, veryLast };
 };
 
+
+export const getMonthTotals = (cultos: Metrics.Cultos, month: number): Metrics.CultosTotais => {
+    const now = {
+        total: parseInt(String(cultos.now.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.total, 0))),
+        youtube: parseInt(String(cultos.now.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.youtube, 0)), 10),
+        kids: parseInt(String(cultos.now.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.kids, 0)), 10),
+        visitantes: parseInt(String(cultos.now.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.visitantes, 0)), 10),
+        voluntarios: parseInt(String(cultos.now.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.voluntarios, 0)), 10),
+        salvacoes: parseInt(String(cultos.now.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.salvacoes, 0)), 10),
+        cultos: cultos.now.length
+    };
+    const last = {
+        total: parseInt(String(cultos.last.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.total, 0))),
+        youtube: parseInt(String(cultos.last.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.youtube, 0)), 10),
+        kids: parseInt(String(cultos.last.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.kids, 0)), 10),
+        visitantes: parseInt(String(cultos.last.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.visitantes, 0)), 10),
+        voluntarios: parseInt(String(cultos.last.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.voluntarios, 0)), 10),
+        salvacoes: parseInt(String(cultos.last.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.salvacoes, 0)), 10),
+        cultos: cultos.last.length
+    };
+    const veryLast = {
+        total: parseInt(String(cultos.veryLast.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.total, 0))),
+        youtube: parseInt(String(cultos.veryLast.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.youtube, 0)), 10),
+        kids: parseInt(String(cultos.veryLast.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.kids, 0)), 10),
+        visitantes: parseInt(String(cultos.veryLast.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.visitantes, 0)), 10),
+        voluntarios: parseInt(String(cultos.veryLast.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.voluntarios, 0)), 10),
+        salvacoes: parseInt(String(cultos.veryLast.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.salvacoes, 0)), 10),
+        cultos: cultos.veryLast.length
+    };
+
+
+    return { now, last, veryLast };
+};
+
 export const transformCultosData = (cultos: Metrics.Cultos) => {
     let fill = Array(cultos.last.length - cultos.veryLast.length).fill(null);
     return {
@@ -39,5 +73,15 @@ export const transformCultosData = (cultos: Metrics.Cultos) => {
         now: cultos.last.map((culto => culto.total)),
         veryLast: fill.concat(cultos.veryLast.map((culto => culto.total))),
         last: cultos.now.map((culto => culto.total))
+    };
+};
+
+export const transformMonthCultosData = (cultos: Metrics.Cultos, month: number) => {
+    let fill = Array(cultos.last.length - cultos.veryLast.length).fill(null);
+    return {
+        labels: cultos.now.filter(culto => culto.data?.getMonth() === month).map(culto => formatDatetoDayMonth(culto.data)),
+        now: cultos.last.filter(culto => culto.data?.getMonth() === month).map((culto => culto.total)),
+        last: cultos.now.filter(culto => culto.data?.getMonth() === month).map((culto => culto.total)),
+        veryLast: fill.concat(cultos.veryLast.filter(culto => culto.data?.getMonth() === month).map((culto => culto.total)))
     };
 };

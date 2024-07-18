@@ -36,3 +36,13 @@ export const getPastMonths = () => {
 
     return months.slice(0, currentMonth);
 };
+
+
+export const getMonth = (month: string) => {
+    const months = [
+        'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+        'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+    ];
+
+    return months.indexOf(month);
+};

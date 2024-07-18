@@ -2,8 +2,9 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import { CultosService } from '@/metrics/service/CultosService';
 import CultosView from '@/metrics/components/CultosView';
-import { getTotals, transformCultosData } from '@/metrics/utils/cultos';
+import { getMonthTotals, getTotals, transformCultosData, transformMonthCultosData } from '@/metrics/utils/cultos';
 import MonthButton from '@/metrics/components/button/MonthButton';
+import { getMonth } from '@/metrics/utils/date';
 
 const DomingoNoite = () => {
     const year = new Date().getFullYear();
@@ -23,17 +24,29 @@ const DomingoNoite = () => {
     }, []);
 
     useEffect(() => {
-        if (month == 'Todos') {
-            const totals = getTotals(cultos);
-            setTotais(totals);
-            let transformCultos = transformCultosData(cultos);
-            setLabels(transformCultos.labels);
-            setLast(transformCultos.last);
-            setVeryLast(transformCultos.veryLast);
-            setNow(transformCultos.now);
-            setIsLoading(false);
+        if (cultos !== null) {
+            if (month == 'Todos') {
+                const totals = getTotals(cultos);
+                setTotais(totals);
+                let transformCultos = transformCultosData(cultos);
+                setLabels(transformCultos.labels);
+                setLast(transformCultos.last);
+                setVeryLast(transformCultos.veryLast);
+                setNow(transformCultos.now);
+                setIsLoading(false);
+            } else {
+                const monthIndex = getMonth(month);
+                const totals = getMonthTotals(cultos, monthIndex);
+                setTotais(totals);
+                let transformCultos = transformMonthCultosData(cultos, monthIndex);
+                setLabels(transformCultos.labels);
+                setLast(transformCultos.last);
+                setVeryLast(transformCultos.veryLast);
+                setNow(transformCultos.now);
+                setIsLoading(false);
+            }
         }
-    }, [month]);
+    }, [month, cultos]);
 
     return (
         <Suspense>
