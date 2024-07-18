@@ -24,17 +24,20 @@ export default function Domingo() {
     }, []);
 
     useEffect(() => {
-        if (month == 'Todos') {
+        if (cultos !== null) {
             const totals = getTotals(cultos);
-            setTotais(totals);
-            let transformCultos = transformCultosData(cultos);
-            setLabels(transformCultos.labels);
-            setLast(transformCultos.last);
-            setVeryLast(transformCultos.veryLast);
-            setNow(transformCultos.now);
-            setIsLoading(false);
+            if (month == 'Todos') {
+
+                setTotais(totals);
+                let transformCultos = transformCultosData(cultos);
+                setLabels(transformCultos.labels);
+                setLast(transformCultos.last);
+                setVeryLast(transformCultos.veryLast);
+                setNow(transformCultos.now);
+                setIsLoading(false);
+            }
         }
-    }, [month]);
+    }, [month, cultos]);
 
     return (
         <Suspense>
