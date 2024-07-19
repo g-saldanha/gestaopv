@@ -53,7 +53,7 @@ export const orgdata = [
                                 style: { borderRadius: '12px' }
                             },
                             {
-                                expand: true,
+                                expanded: true,
                                 label: 'Líderes de Culto',
                                 className: 'bg-teal-500 text-white',
                                 style: { borderRadius: '12px' },
