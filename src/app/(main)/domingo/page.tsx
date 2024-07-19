@@ -2,7 +2,13 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import { CultosService } from '@/metrics/service/CultosService';
 import CultosView from '@/metrics/components/CultosView';
-import { getMonthTotals, getTotals, transformCultosData, transformMonthCultosData } from '@/metrics/utils/cultos';
+import {
+    arrumaDadosGerais,
+    getMonthTotals,
+    getTotals,
+    transformCultosData,
+    transformMonthCultosData
+} from '@/metrics/utils/cultos';
 import MonthButton from '@/metrics/components/button/MonthButton';
 import { getMonth } from '@/metrics/utils/date';
 
@@ -29,7 +35,7 @@ export default function Domingo() {
             if (month == 'Todos') {
                 const totals = getTotals(cultos);
                 setTotais(totals);
-                let transformCultos = transformCultosData(cultos);
+                let transformCultos = transformCultosData(arrumaDadosGerais(cultos));
                 setLabels(transformCultos.labels);
                 setLast(transformCultos.last);
                 setVeryLast(transformCultos.veryLast);
@@ -39,7 +45,7 @@ export default function Domingo() {
                 const monthIndex = getMonth(month);
                 const totals = getMonthTotals(cultos, monthIndex);
                 setTotais(totals);
-                let transformCultos = transformMonthCultosData(cultos, monthIndex);
+                let transformCultos = transformMonthCultosData(arrumaDadosGerais(cultos), monthIndex);
                 setLabels(transformCultos.labels);
                 setLast(transformCultos.last);
                 setVeryLast(transformCultos.veryLast);

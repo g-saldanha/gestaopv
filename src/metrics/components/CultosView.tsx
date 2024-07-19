@@ -10,6 +10,7 @@ import LineChart from '@/metrics/components/chart/LineChart';
 import BarChart from '@/metrics/components/chart/BarChart';
 import React from 'react';
 import CardSkeleton from '@/metrics/components/loading/CardSkeleton';
+import MeterStatsWithLotation from '@/metrics/components/stats/MeterStatsWithLotation';
 
 interface CultosViewProps {
     totais: Metrics.CultosTotais,
@@ -43,6 +44,7 @@ export default function CultosView(props: CultosViewProps) {
                         <VisitantesCard totais={totais} />
                     </div>
                     <MeterStats totais={totais} />
+                    <MeterStatsWithLotation totais={totais} />
                 </AccordionTab>
                 <AccordionTab header="Gráfico de Barra">
                     <BarChart now={now} labels={labels} last={last} year={year} totais={totais} veryLast={veryLast} />

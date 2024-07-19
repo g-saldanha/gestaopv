@@ -1,13 +1,13 @@
 'use client';
 import React, { Suspense } from 'react';
 
-const Organograma = () => {
+const Sorteios = () => {
     return (
         <Suspense>
             <div className="grid">
                 <div className="col-12">
                     <div className="card">
-                        <h5>Organograma</h5>
+                        <h5>Métricas Gerais do Galera</h5>
                         <div style={{ textAlign: 'center' }}>
                             <img src={`/pv/images/notfound/emconstrucao.png`} alt="Wed logo"
                                  className="mb-5 w-24rem flex-shrink-0" />
@@ -19,4 +19,4 @@ const Organograma = () => {
     );
 };
 
-export default Organograma;
+export default Sorteios;

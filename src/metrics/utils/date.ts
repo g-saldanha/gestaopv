@@ -46,3 +46,20 @@ export const getMonth = (month: string) => {
 
     return months.indexOf(month);
 };
+
+export function findMinMaxDates(array: Metrics.Culto[]) {
+    if (array.length === 0) return { minDate: null, maxDate: null };
+
+    let minDate = array[0].data;
+    let maxDate = array[0].data;
+
+    array.forEach(item => {
+        const itemDate = item.data;
+        // @ts-ignore
+        if (itemDate < minDate) minDate = itemDate;
+        // @ts-ignore
+        if (itemDate > maxDate) maxDate = itemDate;
+    });
+
+    return { minDate, maxDate };
+}

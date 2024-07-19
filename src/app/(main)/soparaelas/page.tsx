@@ -1,14 +1,17 @@
 'use client';
-import React, { Suspense, useState } from 'react';
+import React, { Suspense } from 'react';
 
 const Sorteios = () => {
-    const [records, setRecords] = useState<any>([]);
     return (
         <Suspense>
             <div className="grid">
                 <div className="col-12">
                     <div className="card">
-                        <h5>Métricas Gerais de Domingo</h5>
+                        <h5>Métricas Gerais do Evento só para elas</h5>
+                        <div style={{ textAlign: 'center' }}>
+                            <img src={`/pv/images/notfound/emconstrucao.png`} alt="Wed logo"
+                                 className="mb-5 w-24rem flex-shrink-0" />
+                        </div>
                     </div>
                 </div>
             </div>

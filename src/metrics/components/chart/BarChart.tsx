@@ -20,7 +20,7 @@ export default function BarChart(props: Readonly<BarchartProps>) {
         labels: props.labels,
         datasets: [
             {
-                label: props.year - 1,
+                label: props.year - 2,
                 backgroundColor: '#ADD8E6',
                 borderColor: '#ADD8E6',
                 data: props.veryLast

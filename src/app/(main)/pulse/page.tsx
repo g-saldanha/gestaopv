@@ -8,6 +8,10 @@ const Sorteios = () => {
                 <div className="col-12">
                     <div className="card">
                         <h5>Métricas Gerais do Pulse</h5>
+                        <div style={{ textAlign: 'center' }}>
+                            <img src={`/pv/images/notfound/emconstrucao.png`} alt="Wed logo"
+                                 className="mb-5 w-24rem flex-shrink-0" />
+                        </div>
                     </div>
                 </div>
             </div>

@@ -12,9 +12,9 @@ export const metadata: Metadata = {
     openGraph: {
         type: 'website',
         title: 'Palavra Viva Church Gestão',
-        url: 'https://wedadmin.weddigital.com.br',
-        description: 'Gerenciador Church Metrics detalhado',
-        images: ['https://weddigital.com.br/static/media/logo-weddigital.0645902689ed62a4fbd5.png'],
+        url: 'https://gestao.weddigital.com.br',
+        description: 'Gerenciador detalhado de gestão Palavra Viva',
+        images: ['https://www.palavravivachurch.org/wp-content/themes/pvsede/lib/img/sprite-pvsede.svg'],
         ttl: 604800
     },
     icons: {

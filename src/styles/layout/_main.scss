@@ -25,3 +25,19 @@ a {
 .layout-wrapper {
     min-height: 100vh;
 }
+
+.p-metergroup-meter {
+    height: 7px !important;
+    margin-bottom: 14px !important;
+}
+
+.p-metergroup-label-icon {
+    width: 1rem !important;
+    height: 1rem !important;
+    margin-right: 0.5rem !important;
+}
+
+.p-metergroup-label {
+    margin-right: 1rem;
+}
+

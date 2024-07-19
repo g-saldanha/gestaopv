@@ -11,12 +11,12 @@ const AppMenu = () => {
             label: 'Home',
             items: [
                 { label: 'Dashboard', icon: 'pi pi-fw pi-chart-bar', to: '/' },
-                { label: 'Organograma', icon: 'pi pi-fw pi-sitemap', to: '/organograma' },
-                {
-                    label: 'Usuários',
-                    icon: 'pi pi-fw pi-users',
-                    to: '/usuarios'
-                }
+                { label: 'Organograma', icon: 'pi pi-fw pi-sitemap', to: '/organograma' }
+                // {
+                //     label: 'Usuários',
+                //     icon: 'pi pi-fw pi-users',
+                //     to: '/usuarios'
+                // }
             ]
         }, {
             label: 'Cultos',
