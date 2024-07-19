@@ -29,17 +29,17 @@ const handler = NextAuth({
             error: '/auth/error'
         },
         secret: process.env.NEXTAUTH_SECRET,
-        logger: {
-            error(code, metadata) {
-                log.error(code, metadata);
-            },
-            warn(code) {
-                log.warn(code);
-            },
-            debug(code, metadata) {
-                log.debug(code, metadata);
-            }
-        },
+        // logger: {
+        //     error(code, metadata) {
+        //         log.error(code, metadata);
+        //     },
+        //     warn(code) {
+        //         log.warn(code);
+        //     },
+        //     debug(code, metadata) {
+        //         log.debug(code, metadata);
+        //     }
+        // },
         providers: [
             CredentialsProvider({
                 // The name to display on the sign in form (e.g. 'Sign in with...')
