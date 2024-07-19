@@ -59,6 +59,7 @@ export const orgdata = [
                                 style: { borderRadius: '12px' },
                                 children: [
                                     {
+                                        expanded: true,
                                         label: 'Culto de Quarta',
                                         className: 'bg-teal-500 text-white',
                                         style: { borderRadius: '12px' },
@@ -77,6 +78,7 @@ export const orgdata = [
                                         ]
                                     },
                                     {
+                                        expanded: true,
                                         label: 'Culto de Domingo',
                                         className: 'bg-teal-500 text-white',
                                         style: { borderRadius: '12px' },
