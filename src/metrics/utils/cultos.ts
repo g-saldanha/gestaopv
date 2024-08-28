@@ -76,7 +76,6 @@ function mergeAndSumNumericAttributes(obj1: any, obj2: any) {
 
 export const getTotals = (cultos: Metrics.Cultos): Metrics.CultosTotais => {
     const { minDate, maxDate } = findMinMaxDates(cultos.now);
-    console.log(minDate, maxDate);
     const now = {
         total: parseInt(String(cultos.now.reduce((accumulator, current) => accumulator + current.total, 0))),
         youtube: parseInt(String(cultos.now.reduce((accumulator, current) => accumulator + current.youtube, 0)), 10),
@@ -159,9 +158,9 @@ export const transformCultosData = (cultos: Metrics.Cultos) => {
     let fill = Array(cultos.last.length - cultos.veryLast.length).fill(null);
     return {
         labels: cultos.now.map(culto => formatDatetoDayMonth(culto.data)),
-        now: cultos.last.map((culto => culto.total)),
+        now: cultos.now.map((culto => culto.total)),
         veryLast: fill.concat(cultos.veryLast.map((culto => culto.total))),
-        last: cultos.now.map((culto => culto.total))
+        last: cultos.last.map((culto => culto.total))
     };
 };
 
@@ -169,8 +168,8 @@ export const transformMonthCultosData = (cultos: Metrics.Cultos, month: number) 
     let fill = Array(cultos.last.length - cultos.veryLast.length).fill(null);
     return {
         labels: cultos.now.filter(culto => culto.data?.getMonth() === month).map(culto => formatDatetoDayMonth(culto.data)),
-        now: cultos.last.filter(culto => culto.data?.getMonth() === month).map((culto => culto.total)),
-        last: cultos.now.filter(culto => culto.data?.getMonth() === month).map((culto => culto.total)),
+        last: cultos.last.filter(culto => culto.data?.getMonth() === month).map((culto => culto.total)),
+        now: cultos.now.filter(culto => culto.data?.getMonth() === month).map((culto => culto.total)),
         veryLast: fill.concat(cultos.veryLast.filter(culto => culto.data?.getMonth() === month).map((culto => culto.total)))
     };
 };

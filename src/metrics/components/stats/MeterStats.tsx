@@ -5,7 +5,7 @@ interface MeterStatsProps {
     totais: Metrics.CultosTotais;
 }
 
-export default function MeterStats({ totais }: MeterStatsProps) {
+export default function MeterStats({ totais }: Readonly<MeterStatsProps>) {
     const values = [
         {
             label: 'Visitantes',
@@ -14,7 +14,7 @@ export default function MeterStats({ totais }: MeterStatsProps) {
             icon: 'pi pi-bell'
         },
         {
-            label: 'Voluntários',
+            label: 'Membros Voluntários',
             color: '#fbbf24',
             value: Math.round(((totais.now.voluntarios * 100) / totais.now.total)),
             icon: 'pi pi-id-card'

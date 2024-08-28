@@ -1,4 +1,4 @@
-export const orgdata = [
+export const orgdatalideresdepartamentos = [
     {
         expanded: true,
         type: 'person',

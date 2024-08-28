@@ -1,8 +1,11 @@
 import React from 'react';
 import { OrganizationChart } from 'primereact/organizationchart';
-import { orgdata } from '@/metrics/components/organograma/orgdata';
 
-export default function OrgChart() {
+interface OrgChartProps {
+    orgdata: any;
+}
+
+export default function OrgChart(props: Readonly<OrgChartProps>) {
 
     const nodeTemplate = (node: any) => {
         if (node.type === 'person') {
@@ -22,7 +25,7 @@ export default function OrgChart() {
 
     return (
         <div className="card overflow-x-auto">
-            <OrganizationChart value={orgdata} nodeTemplate={nodeTemplate} />
+            <OrganizationChart value={props.orgdata} nodeTemplate={nodeTemplate} />
         </div>
     );
 }

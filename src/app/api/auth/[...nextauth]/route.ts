@@ -61,7 +61,7 @@ const handler = NextAuth({
                     });
 
                     const passwordCorrect = await compare(
-                        credentials?.password || '',
+                        credentials?.password ?? '',
                         // @ts-ignore
                         user.senha
                     );

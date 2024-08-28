@@ -10,7 +10,7 @@ interface LineChartProps {
     veryLast: number[],
 }
 
-export default function LineChart(props: LineChartProps) {
+export default function LineChart(props: Readonly<LineChartProps>) {
 
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
@@ -23,6 +23,7 @@ export default function LineChart(props: LineChartProps) {
                 label: props.year - 2,
                 data: props.veryLast,
                 fill: false,
+                backgroundColor: '#ADD8E6',
                 borderColor: '#ADD8E6',
                 tension: 0.4
             },
@@ -30,6 +31,7 @@ export default function LineChart(props: LineChartProps) {
                 label: props.year - 1,
                 data: props.last,
                 fill: false,
+                backgroundColor: '#90EE90',
                 borderColor: '#90EE90',
                 tension: 0.4
             },
@@ -37,6 +39,7 @@ export default function LineChart(props: LineChartProps) {
                 label: props.year,
                 data: props.now,
                 fill: false,
+                backgroundColor: '#FFA07A',
                 borderColor: '#FFA07A',
                 tension: 0.4
             }

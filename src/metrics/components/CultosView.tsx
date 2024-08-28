@@ -21,7 +21,7 @@ interface CultosViewProps {
     isLoading: boolean
 }
 
-export default function CultosView(props: CultosViewProps) {
+export default function CultosView(props: Readonly<CultosViewProps>) {
     const { totais, now, labels, last, isLoading, veryLast } = props;
     const year = new Date().getFullYear();
     if (isLoading) {

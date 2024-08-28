@@ -5,7 +5,7 @@ interface MeterStatsProps {
     totais: Metrics.CultosTotais;
 }
 
-export default function MeterStatsWithLotation({ totais }: MeterStatsProps) {
+export default function MeterStatsWithLotation({ totais }: Readonly<MeterStatsProps>) {
     const values = [
         {
             label: 'Visitantes',
@@ -14,7 +14,7 @@ export default function MeterStatsWithLotation({ totais }: MeterStatsProps) {
             icon: 'pi pi-bell'
         },
         {
-            label: 'Voluntários',
+            label: 'Membros Voluntários',
             color: '#fbbf24',
             value: Math.round(((totais.now.voluntarios * 100) / (totais.now.cultos * 800))),
             icon: 'pi pi-id-card'
@@ -35,7 +35,7 @@ export default function MeterStatsWithLotation({ totais }: MeterStatsProps) {
 
     return (
         <div className="card flex flex-column justify-content-center align-items-center">
-            <h4>Em relação a lotação máxima</h4><br />
+            <h4>Em relação a lotação máxima (800 pessoas)</h4><br />
             <MeterGroup values={values} />
         </div>
     );

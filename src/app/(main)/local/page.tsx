@@ -1,6 +1,7 @@
 'use client';
 import React, { Suspense } from 'react';
 import OrgChart from '@/metrics/components/organograma/OrgChart';
+import { orgdatalocal } from '@/metrics/components/organograma/orgdatalocal';
 
 const Organograma = () => {
     return (
@@ -9,7 +10,7 @@ const Organograma = () => {
                 <div className="col-12">
                     <div className="card">
                         <h5>Organograma</h5>
-                        <OrgChart />
+                        <OrgChart orgdata={orgdatalocal} />
                     </div>
                 </div>
             </div>
