@@ -30,9 +30,9 @@ declare namespace Metrics {
     }
 
     interface CultosTotais {
-        now: Totais,
-        last: Totais,
-        veryLast: Totais
+        now: Totais;
+        last: Totais;
+        veryLast: Totais;
     }
 
     interface Cultos {

@@ -19,17 +19,7 @@ import {
     Page,
     TaskContextProps
 } from './layout';
-import {
-    AppMailProps,
-    AppMailReplyProps,
-    AppMailSidebarItem,
-    ChartDataState,
-    ChartOptionsState,
-    CustomEvent,
-    Demo,
-    LayoutType,
-    SortOrderType
-} from './demo';
+import { AppMailProps, AppMailReplyProps, AppMailSidebarItem, ChartDataState, ChartOptionsState, CustomEvent, Demo, LayoutType, SortOrderType } from './demo';
 import { Metrics } from './metrics';
 
 type ChildContainerProps = {
