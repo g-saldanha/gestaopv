@@ -7,7 +7,8 @@ interface VisitantesCardProps {
 
 export default function VisitantesCard({ totais }: VisitantesCardProps) {
     const reference = totais.now.kids > totais.last.kids;
-    const calc = Math.round(((totais.now.kids - totais.last.kids) / totais.last.kids) * 100);
+    let calc = Math.round(((totais.now.kids - totais.last.kids) / totais.last.kids) * 100);
+    calc = Number.isFinite(calc) ? calc : 0;
     const classTypefrom = () => {
         if (reference) return 'pi pi-arrow-up text-green-500 text-xl font-medium ';
         else return 'pi pi-arrow-down text-red-500 text-xl font-medium';
@@ -23,7 +24,7 @@ export default function VisitantesCard({ totais }: VisitantesCardProps) {
                             className="text-900 font-medium text-xl">{formatBigNumber(totais.now.visitantes)}&nbsp;<i
                             className={classTypefrom()} />
                             <span
-                                className={reference ? 'text-green-500 text-md' : 'text-red-500 text-md'}>{calc}%</span>
+                                className={reference ? 'text-green-500 text-md' : 'text-red-500 text-md'}>{calc || 0}%</span>
                         </div>
                     </div>
                     <div
@@ -34,7 +35,7 @@ export default function VisitantesCard({ totais }: VisitantesCardProps) {
                 </div>
                 <div className="mb-1">
                         <span
-                            className={reference ? 'text-green-500' : 'text-red-500'}>{formatBigNumber(totais.last.visitantes)} em 2023</span>
+                            className={reference ? 'text-green-500' : 'text-red-500'}>{formatBigNumber(totais.last.visitantes)} em {new Date().getFullYear() - 1}</span>
                 </div>
                 <hr />
                 <span className="text-500">Média por culto de </span>

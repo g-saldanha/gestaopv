@@ -7,7 +7,7 @@ interface AnoProps {
     handleMonth: Function;
 }
 
-export default function AnoButton(props: AnoProps) {
+export default function AnoButton(props: Readonly<AnoProps>) {
     const months = getPastMonths();
 
     return (

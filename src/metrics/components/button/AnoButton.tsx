@@ -18,7 +18,7 @@ interface AnoProps {
     handleYear: Function;
 }
 
-export default function AnoButton(props: AnoProps) {
+export default function AnoButton(props: Readonly<AnoProps>) {
     const years = getYearsFrom2022();
 
     return (

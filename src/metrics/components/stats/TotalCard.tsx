@@ -5,9 +5,10 @@ interface TotalCardProps {
     totais: Metrics.CultosTotais;
 }
 
-export default function TotalCard({ totais }: TotalCardProps) {
+export default function TotalCard({ totais }: Readonly<TotalCardProps>) {
     const reference = totais.now.total > totais.last.total;
-    const calc = Math.round(((totais.now.total - totais.last.total) / totais.last.total) * 100);
+    let calc = Math.round(((totais.now.total - totais.last.total) / totais.last.total) * 100);
+    calc = Number.isFinite(calc) ? calc : 0;
     const classTypefrom = () => {
         if (reference) return 'pi pi-arrow-up text-green-500 text-xl font-medium ';
         else return 'pi pi-arrow-down text-red-500 text-xl font-medium';
@@ -23,7 +24,7 @@ export default function TotalCard({ totais }: TotalCardProps) {
                             className="text-900 font-medium text-xl">{formatBigNumber(totais.now.total)}&nbsp;<i
                             className={classTypefrom()} />
                             <span
-                                className={reference ? 'text-green-500 text-md' : 'text-red-500 text-md'}>{calc}%</span>
+                                className={reference ? 'text-green-500 text-md' : 'text-red-500 text-md'}>{calc || 0}%</span>
                         </div>
                     </div>
                     <div
@@ -34,7 +35,7 @@ export default function TotalCard({ totais }: TotalCardProps) {
                 </div>
                 <div className="mb-1">
                         <span
-                            className={reference ? 'text-green-500' : 'text-red-500'}>{formatBigNumber(totais.last.total)} em 2023</span>
+                            className={reference ? 'text-green-500' : 'text-red-500'}>{formatBigNumber(totais.last.total)} em {new Date().getFullYear() - 1}</span>
                 </div>
                 <hr />
                 <span className="text-500">Média por culto de </span>

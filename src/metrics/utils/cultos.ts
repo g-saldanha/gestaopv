@@ -105,13 +105,20 @@ export const getTotals = (cultos: Metrics.Cultos): Metrics.CultosTotais => {
         cultos: cultos.last.filter(culto => culto.data.getMonth() >= minDate.getMonth() && culto.data.getMonth() <= maxDate.getMonth()).length
     };
     const veryLast = {
-        total: parseInt(String(cultos.veryLast.reduce((accumulator, current) => accumulator + current.total, 0))),
-        youtube: parseInt(String(cultos.veryLast.reduce((accumulator, current) => accumulator + current.youtube, 0)), 10),
-        kids: parseInt(String(cultos.veryLast.reduce((accumulator, current) => accumulator + current.kids, 0)), 10),
-        visitantes: parseInt(String(cultos.veryLast.reduce((accumulator, current) => accumulator + current.visitantes, 0)), 10),
-        voluntarios: parseInt(String(cultos.veryLast.reduce((accumulator, current) => accumulator + current.voluntarios, 0)), 10),
-        salvacoes: parseInt(String(cultos.veryLast.reduce((accumulator, current) => accumulator + current.salvacoes, 0)), 10),
-        cultos: cultos.veryLast.length
+        // @ts-ignore
+        total: parseInt(String(cultos.veryLast.filter(culto => culto.data.getMonth() >= minDate.getMonth() && culto.data.getMonth() <= maxDate.getMonth()).reduce((accumulator, current) => accumulator + current.total, 0))),
+        // @ts-ignore
+        youtube: parseInt(String(cultos.veryLast.filter(culto => culto.data.getMonth() >= minDate.getMonth() && culto.data.getMonth() <= maxDate.getMonth()).reduce((accumulator, current) => accumulator + current.youtube, 0)), 10),
+        // @ts-ignore
+        kids: parseInt(String(cultos.veryLast.filter(culto => culto.data.getMonth() >= minDate.getMonth() && culto.data.getMonth() <= maxDate.getMonth()).reduce((accumulator, current) => accumulator + current.kids, 0)), 10),
+        // @ts-ignore
+        visitantes: parseInt(String(cultos.veryLast.filter(culto => culto.data.getMonth() >= minDate.getMonth() && culto.data.getMonth() <= maxDate.getMonth()).reduce((accumulator, current) => accumulator + current.visitantes, 0)), 10),
+        // @ts-ignore
+        voluntarios: parseInt(String(cultos.veryLast.filter(culto => culto.data.getMonth() >= minDate.getMonth() && culto.data.getMonth() <= maxDate.getMonth()).reduce((accumulator, current) => accumulator + current.voluntarios, 0)), 10),
+        // @ts-ignore
+        salvacoes: parseInt(String(cultos.veryLast.filter(culto => culto.data.getMonth() >= minDate.getMonth() && culto.data.getMonth() <= maxDate.getMonth()).reduce((accumulator, current) => accumulator + current.salvacoes, 0)), 10),
+        // @ts-ignore
+        cultos: cultos.veryLast.filter(culto => culto.data.getMonth() >= minDate.getMonth() && culto.data.getMonth() <= maxDate.getMonth()).length
     };
 
     return { now, last, veryLast };
@@ -127,9 +134,8 @@ export const getMonthTotals = (cultos: Metrics.Cultos, month: number): Metrics.C
         visitantes: parseInt(String(cultos.now.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.visitantes, 0)), 10),
         voluntarios: parseInt(String(cultos.now.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.voluntarios, 0)), 10),
         salvacoes: parseInt(String(cultos.now.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.salvacoes, 0)), 10),
-        cultos: cultos.now.length
+        cultos: cultos.now.filter(culto => culto.data?.getMonth() === month).length
     };
-
     const last = {
         total: parseInt(String(cultos.last.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.total, 0))),
         youtube: parseInt(String(cultos.last.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.youtube, 0)), 10),
@@ -138,7 +144,7 @@ export const getMonthTotals = (cultos: Metrics.Cultos, month: number): Metrics.C
         voluntarios: parseInt(String(cultos.last.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.voluntarios, 0)), 10),
         salvacoes: parseInt(String(cultos.last.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.salvacoes, 0)), 10),
         // @ts-ignore
-        cultos: cultos.last.filter(culto => culto.data.getMonth() >= minDate.getMonth() && culto.data.getMonth() <= maxDate.getMonth()).length
+        cultos: cultos.last.filter(culto => culto.data?.getMonth() === month).length
     };
     const veryLast = {
         total: parseInt(String(cultos.veryLast.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.total, 0))),
@@ -147,7 +153,7 @@ export const getMonthTotals = (cultos: Metrics.Cultos, month: number): Metrics.C
         visitantes: parseInt(String(cultos.veryLast.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.visitantes, 0)), 10),
         voluntarios: parseInt(String(cultos.veryLast.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.voluntarios, 0)), 10),
         salvacoes: parseInt(String(cultos.veryLast.filter(culto => culto.data?.getMonth() === month).reduce((accumulator, current) => accumulator + current.salvacoes, 0)), 10),
-        cultos: cultos.veryLast.length
+        cultos: cultos.veryLast.filter(culto => culto.data?.getMonth() === month).length
     };
 
 

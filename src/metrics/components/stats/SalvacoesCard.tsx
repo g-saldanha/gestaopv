@@ -5,9 +5,10 @@ interface SalvacoesCardProps {
     totais: Metrics.CultosTotais;
 }
 
-export default function SalvacoesCard({ totais }: SalvacoesCardProps) {
+export default function SalvacoesCard({ totais }: Readonly<SalvacoesCardProps>) {
     const reference = totais.now.salvacoes > totais.last.salvacoes;
-    const calc = Math.round(((totais.now.salvacoes - totais.last.salvacoes) / totais.last.salvacoes) * 100);
+    let calc = Math.round(((totais.now.salvacoes - totais.last.salvacoes) / totais.last.salvacoes) * 100);
+    calc = Number.isFinite(calc) ? calc : 0;
     const classTypefrom = () => {
         if (reference) return 'pi pi-arrow-up text-green-500 text-md font-medium ';
         else return 'pi pi-arrow-down text-red-500 text-md font-medium';
@@ -23,7 +24,7 @@ export default function SalvacoesCard({ totais }: SalvacoesCardProps) {
                             className="text-900 font-medium text-xl">{formatBigNumber(totais.now.salvacoes)}&nbsp; <i
                             className={classTypefrom()} />
                             <span
-                                className={reference ? 'text-green-500 text-md' : 'text-red-500 text-md '}>{calc}%</span>
+                                className={reference ? 'text-green-500 text-md' : 'text-red-500 text-md '}>{calc || 0}%</span>
                         </div>
 
                     </div>
@@ -36,7 +37,7 @@ export default function SalvacoesCard({ totais }: SalvacoesCardProps) {
 
                 <div className="mb-1">
                         <span
-                            className={reference ? 'text-green-500' : 'text-red-500'}>{formatBigNumber(totais.last.salvacoes)} em 2023</span>
+                            className={reference ? 'text-green-500' : 'text-red-500'}>{formatBigNumber(totais.last.salvacoes)} em {new Date().getFullYear() - 1}</span>
                 </div>
                 <hr />
                 <span className="text-500">Média por culto de </span>

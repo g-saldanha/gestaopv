@@ -46,7 +46,7 @@ export default function BarChart(props: Readonly<BarchartProps>) {
             legend: {
                 title: {
                     display: true,
-                    text: `Média por culto ${Math.round(props.totais.now.total / props.totais.now.cultos)}`
+                    text: `Gráfico de Cultos do Ano Vigente`
                 },
                 labels: {
                     fontColor: textColor

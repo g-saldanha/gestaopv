@@ -7,7 +7,8 @@ interface youtubeCardProps {
 
 export default function youtubeCard({ totais }: youtubeCardProps) {
     const reference = totais.now.youtube > totais.last.youtube;
-    const calc = Math.round(((totais.now.youtube - totais.last.youtube) / totais.last.youtube) * 100);
+    let calc = Math.round(((totais.now.youtube - totais.last.youtube) / totais.last.youtube) * 100);
+    calc = Number.isFinite(calc) ? calc : 0;
     const classTypefrom = () => {
         if (reference) return 'pi pi-arrow-up text-green-500 text-md font-medium ';
         else return 'pi pi-arrow-down text-red-500 text-md font-medium';
@@ -22,7 +23,7 @@ export default function youtubeCard({ totais }: youtubeCardProps) {
                             className="text-900 font-medium text-xl">{formatBigNumber(totais.now.youtube)} &nbsp;<i
                             className={classTypefrom()} />
                             <span
-                                className={reference ? 'text-green-500 text-md' : 'text-red-500 text-md'}>{calc}%</span>
+                                className={reference ? 'text-green-500 text-md' : 'text-red-500 text-md'}>{calc || 0}%</span>
                         </div>
                     </div>
                     <div
@@ -38,7 +39,7 @@ export default function youtubeCard({ totais }: youtubeCardProps) {
                 <hr />
                 <span className="text-500">Média por culto de </span>
                 <span
-                    className="text-green-500 font-medium">{Math.round(totais.now.youtube / totais.now.cultos)} streamers </span>
+                    className="text-green-500 font-medium">{Math.round(totais.now.youtube / totais.now.cultos)} viewers </span>
             </div>
         </div>
     );

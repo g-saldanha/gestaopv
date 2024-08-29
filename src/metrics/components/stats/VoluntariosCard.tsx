@@ -5,9 +5,10 @@ interface VoluntariosCardProps {
     totais: Metrics.CultosTotais;
 }
 
-export default function VoluntariosCard({ totais }: VoluntariosCardProps) {
+export default function VoluntariosCard({ totais }: Readonly<VoluntariosCardProps>) {
     const reference = totais.now.voluntarios > totais.last.voluntarios;
-    const calc = Math.round(((totais.now.voluntarios - totais.last.voluntarios) / totais.last.voluntarios) * 100);
+    let calc = Math.round(((totais.now.voluntarios - totais.last.voluntarios) / totais.last.voluntarios) * 100);
+    calc = Number.isFinite(calc) ? calc : 0;
     const classTypefrom = () => {
         if (reference) return 'pi pi-arrow-up text-green-500 text-md font-medium ';
         else return 'pi pi-arrow-down text-red-500 text-md font-medium';
@@ -23,7 +24,7 @@ export default function VoluntariosCard({ totais }: VoluntariosCardProps) {
                             className="text-900 font-medium text-xl">{formatBigNumber(totais.now.voluntarios)}&nbsp;<i
                             className={classTypefrom()} />
                             <span
-                                className={reference ? 'text-green-500 text-md' : 'text-red-500 text-md'}>{calc}%</span>
+                                className={reference ? 'text-green-500 text-md' : 'text-red-500 text-md'}>{calc || 0}%</span>
                         </div>
                     </div>
                     <div
@@ -34,7 +35,7 @@ export default function VoluntariosCard({ totais }: VoluntariosCardProps) {
                 </div>
                 <div className="mb-1">
                         <span
-                            className={reference ? 'text-green-500' : 'text-red-500'}>{formatBigNumber(totais.last.voluntarios)} em 2023</span>
+                            className={reference ? 'text-green-500' : 'text-red-500'}>{formatBigNumber(totais.last.voluntarios)} em {new Date().getFullYear() - 1}</span>
                 </div>
                 <hr />
                 <span className="text-500">Média por culto de </span>

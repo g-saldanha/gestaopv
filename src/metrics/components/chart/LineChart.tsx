@@ -52,7 +52,7 @@ export default function LineChart(props: Readonly<LineChartProps>) {
             legend: {
                 title: {
                     display: true,
-                    text: `Média por culto ${Math.round(props.totais.now.total / props.totais.now.cultos)}`
+                    text: `Gráfico de Cultos do Ano Vigente`
                 },
                 labels: {
                     color: textColor

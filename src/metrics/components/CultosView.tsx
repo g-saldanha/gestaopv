@@ -11,6 +11,7 @@ import BarChart from '@/metrics/components/chart/BarChart';
 import React from 'react';
 import CardSkeleton from '@/metrics/components/loading/CardSkeleton';
 import MeterStatsWithLotation from '@/metrics/components/stats/MeterStatsWithLotation';
+import MeanCard from '@/metrics/components/stats/MeanCard';
 
 interface CultosViewProps {
     totais: Metrics.CultosTotais,
@@ -36,6 +37,7 @@ export default function CultosView(props: Readonly<CultosViewProps>) {
                 </AccordionTab>
                 <AccordionTab header="Estatísticas">
                     <div className="grid">
+                        <MeanCard totais={totais} />
                         <TotalCard totais={totais} />
                         <VoluntariosCard totais={totais} />
                         <KidsCard totais={totais} />
