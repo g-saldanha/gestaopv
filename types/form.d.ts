@@ -12,5 +12,3 @@ declare namespace Form {
         bairro: string | null;
     }
 }
-
-
