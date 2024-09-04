@@ -18,5 +18,6 @@ export const da = {
     havechildren: 'Har du børn?',
     howmany: 'Hvor mange?',
     job: 'Erhverv',
-    campus: 'Campus'
+    campus: 'Campus',
+    register: 'Registrer'
 };

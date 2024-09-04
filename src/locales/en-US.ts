@@ -4,7 +4,7 @@ export const enUS = {
     ...english.en,
     required: 'Required',
     optional: 'Optional',
-    welcome: 'Welcome home',
+    welcome: 'welcome home',
     firstName: 'First Name',
     lastName: 'Last Name',
     birthDate: 'Birthdate',
@@ -18,5 +18,6 @@ export const enUS = {
     havechildren: 'Do you have children?',
     howmany: 'How many?',
     job: 'Job',
-    campus: 'Church Campus'
+    campus: 'Church Campus',
+    register: 'Sign up'
 };

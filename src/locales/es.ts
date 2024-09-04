@@ -18,5 +18,6 @@ export const es = {
     havechildren: '¿Tiene hijos?',
     howmany: '¿Cuántos?',
     job: 'Profesión',
-    campus: 'Campus'
+    campus: 'Campus',
+    register: 'Registrarse'
 };

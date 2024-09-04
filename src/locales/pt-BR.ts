@@ -4,7 +4,7 @@ export const ptBR = {
     ...brazuka['pt-br'],
     required: 'Obrigatório',
     optional: 'Opcional',
-    welcome: 'Bem vindo a sua casa',
+    welcome: 'Bem-vindo a sua casa',
     firstName: 'Nome',
     lastName: 'Sobrenome',
     birthDate: 'Data de Nascimento',
@@ -18,5 +18,6 @@ export const ptBR = {
     havechildren: 'Tem filhos?',
     howmany: 'Quantos?',
     job: 'Profissão',
-    campus: 'Campus'
+    campus: 'Campus',
+    register: 'Cadastrar-se'
 };

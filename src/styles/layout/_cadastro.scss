@@ -1,10 +1,38 @@
-.cadastro-form .p-datepicker-trigger {
+#cadastro .p-button:not(:disabled):hover {
+    background-color: black !important;
+    border-color: black;
+}
+
+.cadastro-form .p-datepicker-trigger, .cadastro-form .p-autocomplete-dropdown {
     background-color: black;
     border-color: black;
 }
+
+
+#select-button-flag .p-highlight {
+    background: black;
+    border-color: black;
+}
+
+.p-button:focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: 0 0 0 0.2rem rgb(0, 0, 0);
+}
+
+button:focus, button:hover {
+    border-color: black;
+}
+
+//.p-selectbutton .p-button.p-highlight {
+//    background: black;
+//    border-color: black;
+//    color: #ffffff;
+//}
 
 .cadastro-form #membership {
     span {
         font-size: 0.8rem;
     }
 }
+

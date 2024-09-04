@@ -18,5 +18,6 @@ export const fr = {
     havechildren: 'Avez-vous des enfants?',
     howmany: 'Combien?',
     job: 'Profession',
-    campus: 'Campus'
+    campus: 'Campus',
+    register: 'S\'inscrire'
 };

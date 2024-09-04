@@ -79,20 +79,28 @@ export default function Cadastro() {
     if (!selectedLocale) {
         return null;
     }
-    
+
     return (
-        <div className="flex align-items-center justify-content-center">
+        <div className="flex align-items-center justify-content-center" id="cadastro">
             <div className="surface-card p-4 shadow-2 border-round w-full lg:w-6">
                 <div className="text-center mb-5">
                     <img src="/pv/images/logo/2-inteira preta.png" alt="hyper" height={150} />
-                    {/*// @ts-ignore*/}
-                    <div className="text-900 text-3xl font-medium mb-1">{selectedLocale.options.welcome}</div>
-                    <SelectButton value={value} onChange={onLocaleChange}
-                                  itemTemplate={justifyTemplate} optionLabel="value" options={justifyOptions} />
+                    <div className="text-6xl font-bold mb-1"
+                         style={{
+                             fontFamily: 'Slimbits',
+                             fontWeight: 'bold',
+                             color: '#66fffe'
+                         }}>
+                         {/*@ts-ignore*/}
+                             {selectedLocale.options.welcome}</div>
+                    <SelectButton value={value} onChange={onLocaleChange} id="select-button-flag"
+                                  itemTemplate={justifyTemplate} optionLabel="value" options={justifyOptions}
+                    />
                 </div>
 
                 <RegisterForm locale={selectedLocale} />
-                <Button label="Sign In" icon="pi pi-user" className="w-full" />
+                {/*@ts-ignore*/}
+                <Button label={selectedLocale.options.register} icon="pi pi-user-plus" className="w-full" />
             </div>
         </div>
     );

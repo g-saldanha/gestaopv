@@ -41,3 +41,12 @@ a {
     margin-right: 1rem;
 }
 
+@font-face {
+    font-family: 'Slimbits';
+    src: url('/pv/fonts/Slimbits.ttf.woff') format('woff'),
+    url('/pv/fonts/Slimbits.ttf.eot'),
+    url('/pv/fonts/Slimbits.ttf.eot?#iefix') format('embedded-opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
