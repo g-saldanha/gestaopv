@@ -74,6 +74,15 @@ const AppMenu = () => {
                         to: '/pulse'
                     }
                 ]
+            }, {
+                label: 'Membresia',
+                items: [
+                    {
+                        label: 'Demografia',
+                        icon: 'pi pi-fw pi-dollar',
+                        to: '/demografia'
+                    }
+                ]
             }
         ];
 

@@ -17,5 +17,6 @@ export const de = {
     anniversary: 'Hochzeitstag',
     havechildren: 'Haben Sie Kinder?',
     howmany: 'Wie viele?',
-    job: 'Beruf'
+    job: 'Beruf',
+    campus: 'Campus'
 };

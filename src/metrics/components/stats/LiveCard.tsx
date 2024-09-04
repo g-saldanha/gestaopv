@@ -1,11 +1,11 @@
 import React from 'react';
 import { formatBigNumber } from '@/metrics/utils/cultos';
 
-interface youtubeCardProps {
+interface YouTubeCardProps {
     totais: Metrics.CultosTotais;
 }
 
-export default function youtubeCard({ totais }: youtubeCardProps) {
+export default function youtubeCard({ totais }: YouTubeCardProps) {
     const reference = totais.now.youtube > totais.last.youtube;
     let calc = Math.round(((totais.now.youtube - totais.last.youtube) / totais.last.youtube) * 100);
     calc = Number.isFinite(calc) ? calc : 0;

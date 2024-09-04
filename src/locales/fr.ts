@@ -17,5 +17,6 @@ export const fr = {
     anniversary: 'Anniversaire de Mariage',
     havechildren: 'Avez-vous des enfants?',
     howmany: 'Combien?',
-    job: 'Profession'
+    job: 'Profession',
+    campus: 'Campus'
 };

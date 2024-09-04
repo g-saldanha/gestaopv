@@ -1,6 +1,6 @@
 import dansk from 'primelocale/da.json';
 
-export const daDK = {
+export const da = {
     ...dansk['da'],
     required: 'Påkrævet',
     optional: 'Valgfri',
@@ -17,5 +17,6 @@ export const daDK = {
     anniversary: 'Bryllupsdag',
     havechildren: 'Har du børn?',
     howmany: 'Hvor mange?',
-    job: 'Erhverv'
+    job: 'Erhverv',
+    campus: 'Campus'
 };

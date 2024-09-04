@@ -17,5 +17,6 @@ export const enUS = {
     anniversary: 'Wedding Anniversary',
     havechildren: 'Do you have children?',
     howmany: 'How many?',
-    job: 'Job'
+    job: 'Job',
+    campus: 'Church Campus'
 };

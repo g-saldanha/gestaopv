@@ -13,10 +13,10 @@ model User {
     name      String?
     email     String?  @unique
     senha     String
-    createdAt DateTime @default(now()) @map(name: "created_at")
-    updatedAt DateTime @updatedAt @map(name: "updated_at")
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
 
-    @@map(name: "pvusers")
+    @@map("pvusers")
 }
 
 model Culto {
@@ -32,5 +32,47 @@ model Culto {
     periodo        String?  @default("Noite")
     total          Int      @default(0)
 
-    @@map(name: "cultos")
+    @@map("cultos")
+}
+
+model DemografiaMembros {
+    idMembro    Int       @id
+    cep         String?   @default("")
+    estado      String?   @default("")
+    cidade      String?   @default("")
+    bairro      String?   @default("")
+    pais        String?   @default("")
+    latitude    String?   @default("")
+    longitude   String?   @default("")
+    sexo        String?   @default("")
+    kids        Boolean?  @default(false)
+    estadocivil String?   @default("")
+    membresia   String?   @default("")
+    campus      String?   @default("")
+    temconnect  Boolean?  @default(false)
+    profissao   String?   @default("")
+    endereco    String?   @default("")
+    whatsapp    String?   @default("")
+    nascimento  DateTime?
+    email       String?   @default("")
+
+    @@map(name: "demografiamembros")
+}
+
+model ContatoMembros {
+    idMembro    Int       @id
+    nome        String?   @default("")
+    sobrenome   String?   @default("")
+    sexo        String?   @default("")
+    estadocivil String?   @default("")
+    membresia   String?   @default("")
+    campus      String?   @default("")
+    temconnect  Boolean?  @default(false)
+    profissao   String?   @default("")
+    whatsapp    String?   @default("")
+    nascimento  DateTime?
+    email       String?   @default("")
+    ativo       Boolean   @default(true)
+
+    @@map(name: "contatomembros")
 }

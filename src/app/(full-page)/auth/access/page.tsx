@@ -25,8 +25,8 @@ const AccessDeniedPage = () => {
                              style={{ height: '3.2rem', width: '3.2rem' }}>
                             <i className="pi pi-fw pi-exclamation-circle text-2xl text-white"></i>
                         </div>
-                        <h1 className="text-900 font-bold text-5xl mb-2">Access Denied</h1>
-                        <div className="text-600 mb-5">You do not have the necessary permisions.</div>
+                        <h1 className="text-900 font-bold text-5xl mb-2">Acesso Negado</h1>
+                        <div className="text-600 mb-5">Você não tem as permissões necessárias.</div>
                         <img src="/pv/images/access/asset-access.svg" alt="Error" className="mb-5" width="80%" />
                         <Button icon="pi pi-arrow-left" label="Go to Dashboard" text onClick={() => router.push('/')} />
                     </div>
