@@ -1,28 +1,25 @@
 #cadastro .p-button:not(:disabled):hover {
-    background-color: black !important;
-    border-color: black;
+    background-color: white !important;
+    border-color: white;
 }
 
 .cadastro-form .p-datepicker-trigger, .cadastro-form .p-autocomplete-dropdown {
-    background-color: black;
-    border-color: black;
+    background-color: white;
+    border-color: white;
 }
 
 
 #select-button-flag .p-highlight {
-    background: black;
-    border-color: black;
+    background: white;
+    border-color: white;
 }
 
 .p-button:focus {
     outline: 0 none;
     outline-offset: 0;
-    box-shadow: 0 0 0 0.2rem rgb(0, 0, 0);
+    box-shadow: 0 0 0 0.2rem rgb(255, 255, 255);
 }
 
-button:focus, button:hover {
-    border-color: black;
-}
 
 //.p-selectbutton .p-button.p-highlight {
 //    background: black;
@@ -35,4 +32,43 @@ button:focus, button:hover {
         font-size: 0.8rem;
     }
 }
+
+#cadastro-page {
+    background-color: black !important;
+}
+
+#cadastro {
+    background-color: black;
+
+    .p-button {
+        background-color: black;
+    }
+
+    .p-highlight, .p-focus {
+        background: white;
+        border-color: white;
+    }
+
+    label {
+        color: white !important;
+    }
+
+    button {
+        background-color: white !important;
+        color: black;
+    }
+
+    button:focus, button:hover {
+        border-color: white;
+    }
+
+    .p-button-label {
+        color: grey;
+    }
+
+    .p-button-label:after {
+        color: black;
+    }
+}
+
 

@@ -82,9 +82,9 @@ export default function Cadastro() {
 
     return (
         <div className="flex align-items-center justify-content-center" id="cadastro">
-            <div className="surface-card p-4 shadow-2 border-round w-full lg:w-6">
+            <div className="surface-card p-4 shadow-2 border-round w-full lg:w-6" id="cadastro-page">
                 <div className="text-center mb-5">
-                    <img src="/pv/images/logo/2-inteira preta.png" alt="hyper" height={150} />
+                    <img src="/pv/images/logo/2-inteira branca.png" alt="hyper" height={150} />
                     <div className="text-6xl font-bold mb-1"
                          style={{
                              fontFamily: 'Slimbits',

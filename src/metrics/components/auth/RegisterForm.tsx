@@ -19,11 +19,11 @@ interface RegisterFormProps {
 export default function RegisterForm(props: Readonly<RegisterFormProps>) {
     const { locale } = props;
     const [form, setForm] = useState<Form.Cadastro>();
+    const [children, setChildren] = useState();
     const handleChange = (field: any, value: any) => {
         // @ts-ignore
         setForm((prevState) => ({ ...prevState, [field]: value }));
     };
-    console.log(form);
     // @ts-ignore
     const countryProps = {
         buttonStyle: {
@@ -33,7 +33,7 @@ export default function RegisterForm(props: Readonly<RegisterFormProps>) {
         }
     };
 
-
+    console.log(form);
     if (!locale) {
         return null;
     }
@@ -53,6 +53,8 @@ export default function RegisterForm(props: Readonly<RegisterFormProps>) {
             <label htmlFor="birthDate" className="block text-900 font-medium mb-2">{locale.options.birthDate}
                 ({locale.options.required})</label>
             <Calendar id="birthDate" showIcon required touchUI selectionMode="single"
+                      value={form?.birthDate}
+                      onChange={(e) => handleChange('birthDate', e.value)}
                       placeholder={locale.options.birthDate}
                       className="w-full mb-3" />
 
@@ -79,7 +81,9 @@ export default function RegisterForm(props: Readonly<RegisterFormProps>) {
                 defaultCountry="br"
                 inputClassName="w-full p-component p-inputtext"
                 preferredCountries={['br', 've', 'ht', 'us', 'gb', 'pt', 'it', 'de', 'cl', 'uy']}
+                value={form?.whatsapp}
                 onChange={(e) => {
+                    handleChange('whatsapp', e);
                 }}
                 className="w-full mb-3"
             />
@@ -103,14 +107,21 @@ export default function RegisterForm(props: Readonly<RegisterFormProps>) {
                 ({locale.options.required})</label>
             <div
                 className="w-full text-center">
-                <SelectButton className="w-full mb-3" options={[locale.options.accept, locale.options.reject]} />
+                <SelectButton className="w-full mb-3" options={[locale.options.accept, locale.options.reject]}
+                              value={form?.married ? locale.options.accept : locale.options.reject}
+                              onChange={event => handleChange('married', event.value == locale.options.accept)} />
             </div>
-
-            <label htmlFor="anniversary" className="block text-900 font-medium mb-2">{locale.options.anniversary}
-                ({locale.options.optional})</label>
-            <Calendar id="anniversary" showIcon required touchUI selectionMode="single"
-                      placeholder={locale.options.anniversary}
-                      className="w-full mb-3" />
+            {form?.married && (
+                <>
+                    <label htmlFor="anniversary"
+                           className="block text-900 font-medium mb-2">{locale.options.anniversary}
+                        ({locale.options.optional})</label>
+                    <Calendar id="anniversary" showIcon required touchUI selectionMode="single"
+                              placeholder={locale.options.anniversary}
+                              className="w-full mb-3" onChange={(e) => handleChange('anniversary', e.value)} />
+                </>
+            )
+            }
 
             <label htmlFor="filhos" className="block text-900 font-medium mb-2">{locale.options.havechildren}
                 ({locale.options.optional})</label>

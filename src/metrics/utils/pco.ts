@@ -759,12 +759,197 @@ export const campusesResponse: PCO.CampusResponse = {
             'links': {
                 'self': 'https://api.planningcenteronline.com/people/v2/campuses/96726'
             }
+        },
+        {
+            'type': 'Campus',
+            'id': '97745',
+            'attributes': {
+                'avatar_url': null,
+                'church_center_enabled': true,
+                'city': 'Urubici',
+                'contact_email_address': null,
+                'country': 'BR',
+                'created_at': '2024-08-31T00:43:36Z',
+                'date_format': null,
+                'description': null,
+                'geolocation_set_manually': false,
+                'latitude': '-28.001085',
+                'longitude': '-49.5874287',
+                'name': 'Palavra Viva Urubici',
+                'phone_number': null,
+                'state': 'Santa Catarina',
+                'street': 'Av. Adolfo Konder, 1115 - Traçado',
+                'time_zone': 'America/Sao_Paulo',
+                'twenty_four_hour_time': null,
+                'updated_at': '2024-08-31T00:43:36Z',
+                'website': null,
+                'zip': '88650000'
+            },
+            'relationships': {
+                'organization': {
+                    'data': {
+                        'type': 'Organization',
+                        'id': '465565'
+                    }
+                }
+            },
+            'links': {
+                'self': 'https://api.planningcenteronline.com/people/v2/campuses/97745'
+            }
+        },
+        {
+            'type': 'Campus',
+            'id': '97746',
+            'attributes': {
+                'avatar_url': null,
+                'church_center_enabled': true,
+                'city': 'Vidira',
+                'contact_email_address': null,
+                'country': 'BR',
+                'created_at': '2024-08-31T00:54:10Z',
+                'date_format': null,
+                'description': null,
+                'geolocation_set_manually': false,
+                'latitude': '-27.0061915',
+                'longitude': '-51.1493262',
+                'name': 'Palavra Viva Videira',
+                'phone_number': null,
+                'state': 'Santa Catarina',
+                'street': 'Rua Saul Brandalise, 480 - Centro',
+                'time_zone': 'America/Sao_Paulo',
+                'twenty_four_hour_time': null,
+                'updated_at': '2024-08-31T00:54:10Z',
+                'website': null,
+                'zip': '89560170'
+            },
+            'relationships': {
+                'organization': {
+                    'data': {
+                        'type': 'Organization',
+                        'id': '465565'
+                    }
+                }
+            },
+            'links': {
+                'self': 'https://api.planningcenteronline.com/people/v2/campuses/97746'
+            }
+        },
+        {
+            'type': 'Campus',
+            'id': '97747',
+            'attributes': {
+                'avatar_url': null,
+                'church_center_enabled': true,
+                'city': 'Garopaba ',
+                'contact_email_address': null,
+                'country': 'BR',
+                'created_at': '2024-08-31T01:11:04Z',
+                'date_format': null,
+                'description': null,
+                'geolocation_set_manually': false,
+                'latitude': '-28.0501883',
+                'longitude': '-48.643156',
+                'name': 'Palavra Viva Garopaba',
+                'phone_number': null,
+                'state': 'Santa Catarina',
+                'street': 'SC-434',
+                'time_zone': 'America/Sao_Paulo',
+                'twenty_four_hour_time': null,
+                'updated_at': '2024-08-31T01:11:04Z',
+                'website': null,
+                'zip': '88495-000'
+            },
+            'relationships': {
+                'organization': {
+                    'data': {
+                        'type': 'Organization',
+                        'id': '465565'
+                    }
+                }
+            },
+            'links': {
+                'self': 'https://api.planningcenteronline.com/people/v2/campuses/97747'
+            }
+        },
+        {
+            'type': 'Campus',
+            'id': '97804',
+            'attributes': {
+                'avatar_url': null,
+                'church_center_enabled': true,
+                'city': 'Danbury',
+                'contact_email_address': null,
+                'country': 'US',
+                'created_at': '2024-09-03T04:23:53Z',
+                'date_format': null,
+                'description': null,
+                'geolocation_set_manually': false,
+                'latitude': '41.3979626',
+                'longitude': '-73.4557965',
+                'name': 'Palavra Viva Danbury',
+                'phone_number': null,
+                'state': 'Connecticut',
+                'street': '337 Main St',
+                'time_zone': 'America/Sao_Paulo',
+                'twenty_four_hour_time': null,
+                'updated_at': '2024-09-03T04:23:53Z',
+                'website': null,
+                'zip': '06810'
+            },
+            'relationships': {
+                'organization': {
+                    'data': {
+                        'type': 'Organization',
+                        'id': '465565'
+                    }
+                }
+            },
+            'links': {
+                'self': 'https://api.planningcenteronline.com/people/v2/campuses/97804'
+            }
+        },
+        {
+            'type': 'Campus',
+            'id': '97805',
+            'attributes': {
+                'avatar_url': null,
+                'church_center_enabled': true,
+                'city': 'Quinta do Anjo',
+                'contact_email_address': null,
+                'country': 'PT',
+                'created_at': '2024-09-03T04:31:24Z',
+                'date_format': null,
+                'description': null,
+                'geolocation_set_manually': false,
+                'latitude': '38.5672551',
+                'longitude': '-8.9408587',
+                'name': 'Palavra Viva Setúbal',
+                'phone_number': null,
+                'state': 'Palmela/Setúbal',
+                'street': '106 Rua Venâncio da Costa Lima',
+                'time_zone': 'America/Sao_Paulo',
+                'twenty_four_hour_time': null,
+                'updated_at': '2024-09-03T04:31:24Z',
+                'website': null,
+                'zip': '2950-701'
+            },
+            'relationships': {
+                'organization': {
+                    'data': {
+                        'type': 'Organization',
+                        'id': '465565'
+                    }
+                }
+            },
+            'links': {
+                'self': 'https://api.planningcenteronline.com/people/v2/campuses/97805'
+            }
         }
     ],
     'included': [],
     'meta': {
-        'total_count': 20,
-        'count': 20,
+        'total_count': 25,
+        'count': 25,
         'can_order_by': [
             'name',
             'created_at',
@@ -785,4 +970,3 @@ export const campusesResponse: PCO.CampusResponse = {
         }
     }
 };
-

@@ -50,14 +50,15 @@ export default function Campus() {
             items:
                 campuses
                     .filter((campus) => campus.country === 'IT') as Campus[]
+        },
+        {
+            label: 'Portugal',
+            code: 'PT',
+            items:
+                campuses
+                    .filter((campus) => campus.country === 'PT')
         }
-        // {
-        //     label: 'Portugal',
-        //     code: 'PT',
-        //     items:
-        //         campuses
-        //             .filter((campus) => campus.country === 'PT')
-        // }, {
+        // , {
         //     label: 'Alemanha',
         //     code: 'DE',
         //     items:
