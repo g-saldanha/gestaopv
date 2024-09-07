@@ -19,7 +19,7 @@ interface RegisterFormProps {
 export default function RegisterForm(props: Readonly<RegisterFormProps>) {
     const { locale } = props;
     const [form, setForm] = useState<Form.Cadastro>();
-    const [children, setChildren] = useState();
+    const [children, setChildren] = useState([]);
     const handleChange = (field: any, value: any) => {
         // @ts-ignore
         setForm((prevState) => ({ ...prevState, [field]: value }));
@@ -33,11 +33,21 @@ export default function RegisterForm(props: Readonly<RegisterFormProps>) {
         }
     };
 
+    const handleChooseChildren = (value: number) => {
+        const children = [];
+        for (let i = 0; i < value; i++) {
+            children.push({ nome: '', birthDate: '' }); // Cria uma cópia do objeto e insere no array
+        }
+        // @ts-ignore
+        setChildren(children);
+    };
+
     console.log(form);
     if (!locale) {
         return null;
     }
 
+    // @ts-ignore
     return (
         <div className="cadastro-form">
             <label htmlFor="firstName"
@@ -100,7 +110,9 @@ export default function RegisterForm(props: Readonly<RegisterFormProps>) {
                 <SelectButton
                     id="membership"
                     className="w-full mb-3"
-                    options={[locale.options.regular, locale.options.volunteer]} />
+                    options={[locale.options.regular, locale.options.volunteer]}
+                    onChange={event => handleChange('volunteer', event.value == locale.options.volunteer)}
+                />
             </div>
 
             <label htmlFor="married" className="block text-900 font-medium mb-2">{locale.options.married}?
@@ -132,17 +144,28 @@ export default function RegisterForm(props: Readonly<RegisterFormProps>) {
 
             <label htmlFor="quantos" className="block text-900 font-medium mb-2">{locale.options.howmany}
                 ({locale.options.optional})</label>
-            <InputNumber inputId="quantos" onValueChange={(e: InputNumberValueChangeEvent) => () => (e.value)}
-                         useGrouping={false} min={0} max={4} className="w-full mb-3" />
 
-            <label htmlFor="firstname" className="block text-900 font-medium mb-2">Nome
-                ({locale.options.required})</label>
-            <InputText id="firstname" type="text" placeholder="Nome" className="w-full mb-3" required />
+            <InputNumber
+                inputId="quantos"
+                onValueChange={(e: InputNumberValueChangeEvent) => () => {
+                    // @ts-ignore
+                    handleChooseChildren(e.value);
+                }}
+                useGrouping={false} min={0} max={4} className="w-full mb-3" />
 
-            <label htmlFor="birthdate" className="block text-900 font-medium mb-2">Nascimento
-                ({locale.options.required})</label>
-            <Calendar id="birthdate" showIcon required touchUI selectionMode="single" placeholder="Nascimento"
-                      className="w-full mb-3" />
+            {children.map((child, idx) => {
+                return (<>
+                    <label htmlFor="firstname" className="block text-900 font-medium mb-2">Nome
+                        ({locale.options.required})</label>
+                    <InputText id="firstname" type="text" placeholder="Nome" className="w-full mb-3" required />
+
+                    <label htmlFor="birthdate" className="block text-900 font-medium mb-2">Nascimento
+                        ({locale.options.required})</label>
+                    <Calendar id="birthdate" showIcon required touchUI selectionMode="single" placeholder="Nascimento"
+                              className="w-full mb-3" />
+                </>);
+            })}
+
 
             <label htmlFor={locale.options.campus}
                    className="block text-900 font-medium mb-2">{locale.options.campus}({locale.options.required})</label>
