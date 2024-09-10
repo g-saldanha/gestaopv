@@ -24,6 +24,11 @@ export default async function RootLayout({
     return (
         <html lang="pt-BR" suppressHydrationWarning>
         <head>
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            {/*// @ts-ignore*/}
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
+            <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap"
+                  rel="stylesheet" />
             <link id="theme-css" href={`/themes/lara-light-indigo/theme.css`} rel="stylesheet"></link>
             <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
             <title>Palavra Viva Church Gestão</title>

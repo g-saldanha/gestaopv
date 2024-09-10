@@ -85,14 +85,9 @@ export default function Cadastro() {
             <div className="surface-card p-4 shadow-2 border-round w-full lg:w-6" id="cadastro-page">
                 <div className="text-center mb-5">
                     <img src="/pv/images/logo/2-inteira branca.png" alt="hyper" height={150} />
-                    <div className="text-6xl font-bold mb-1"
-                         style={{
-                             fontFamily: 'Slimbits',
-                             fontWeight: 'bold',
-                             color: '#66fffe'
-                         }}>
-                         {/*@ts-ignore*/}
-                             {selectedLocale.options.welcome}</div>
+                    <div className="text-6xl font-bold mb-3" id="bemvindo">
+                        {/*@ts-ignore*/}
+                        {selectedLocale.options.welcome}</div>
                     <SelectButton value={value} onChange={onLocaleChange} id="select-button-flag"
                                   itemTemplate={justifyTemplate} optionLabel="value" options={justifyOptions}
                     />

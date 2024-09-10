@@ -24,6 +24,16 @@ export default function RegisterForm(props: Readonly<RegisterFormProps>) {
         // @ts-ignore
         setForm((prevState) => ({ ...prevState, [field]: value }));
     };
+    const handleChangeChildren = (field: any, value: any, index: number) => {
+        // @ts-ignore
+        setChildren((prevState) => {
+            if (prevState) {
+                // @ts-ignore
+                prevState[index][field] = value;
+            }
+            return prevState;
+        });
+    };
     // @ts-ignore
     const countryProps = {
         buttonStyle: {
@@ -36,7 +46,7 @@ export default function RegisterForm(props: Readonly<RegisterFormProps>) {
     const handleChooseChildren = (value: number) => {
         const children = [];
         for (let i = 0; i < value; i++) {
-            children.push({ nome: '', birthDate: '' }); // Cria uma cópia do objeto e insere no array
+            children.push({ firstname: '', birthDate: '' }); // Cria uma cópia do objeto e insere no array
         }
         // @ts-ignore
         setChildren(children);
@@ -67,8 +77,6 @@ export default function RegisterForm(props: Readonly<RegisterFormProps>) {
                       onChange={(e) => handleChange('birthDate', e.value)}
                       placeholder={locale.options.birthDate}
                       className="w-full mb-3" />
-
-
             <label htmlFor="whatsapp" className="block text-900 font-medium mb-2">Whatsapp
                 ({locale.options.required})</label>
             <PhoneInput
@@ -155,14 +163,18 @@ export default function RegisterForm(props: Readonly<RegisterFormProps>) {
 
             {children.map((child, idx) => {
                 return (<>
-                    <label htmlFor="firstname" className="block text-900 font-medium mb-2">Nome
+                    <label htmlFor="firstname" className="block text-900 font-medium mb-2">{locale.options.firstname}
                         ({locale.options.required})</label>
-                    <InputText id="firstname" type="text" placeholder="Nome" className="w-full mb-3" required />
+                    <InputText id="firstname" type="text" placeholder={locale.options.firstname} className="w-full mb-3"
+                               onChange={(event) => handleChangeChildren('firstname', event.target.value, idx)}
+                               required />
 
-                    <label htmlFor="birthdate" className="block text-900 font-medium mb-2">Nascimento
+                    <label htmlFor="birthDate" className="block text-900 font-medium mb-2">{locale.options.birthDate}
                         ({locale.options.required})</label>
-                    <Calendar id="birthdate" showIcon required touchUI selectionMode="single" placeholder="Nascimento"
-                              className="w-full mb-3" />
+                    <Calendar id="birthDate" showIcon required touchUI selectionMode="single"
+                              className="w-full mb-3"
+                              placeholder={locale.options.birthDate}
+                              onChange={(event) => handleChangeChildren('birthDate', event.value, idx)} />
                 </>);
             })}
 

@@ -14,10 +14,31 @@
     border-color: white;
 }
 
+
+@media screen and (max-width: 400px) {
+    #select-button-flag .p-component {
+        padding: 1rem 0.75rem;
+    }
+}
+
+
 .p-button:focus {
     outline: 0 none;
     outline-offset: 0;
     box-shadow: 0 0 0 0.2rem rgb(255, 255, 255);
+}
+
+#bemvindo {
+    font-family: 'Amatic SC';
+    color: #fff;
+    text-shadow: 0 0 7px #fff,
+    0 0 10px #fff,
+    0 0 21px #fff,
+    0 0 42px #5271ff,
+    0 0 82px #5271ff,
+    0 0 92px #5271ff,
+    0 0 102px #5271ff,
+    0 0 151px #5271ff;
 }
 
 
