@@ -1,5 +1,4 @@
-import { campusesResponse, getAuth } from '@/metrics/utils/pco';
-import axios from 'axios';
+import { campusesResponse } from '@/metrics/utils/pco';
 
 export interface Campuses {
     value: string,
@@ -8,13 +7,19 @@ export interface Campuses {
 }
 
 async function getCampuses(): Promise<Campuses[]> {
-    let axiosResponse = await axios.get(`https://api.planningcenteronline.com/people/v2/campuses`, getAuth());
-    let rest = axiosResponse.data as PCO.CampusResponse;
-    return rest.data.map(campus => ({
-        value: campus.id,
-        label: campus.attributes.name === 'Palavra Viva Church' ? 'Sede Capoeiras' : campus.attributes.name.replace('Palavra Viva ', ''),
-        country: campus.attributes.country
-    }));
+    const res = await fetch(`/api/campus`, {
+        headers: { 'Cache-Control': 'no-cache' },
+        method: 'GET'
+    });
+    return await res.json() as Campuses[];
+}
+
+async function checkWhatsapp(numero: string): Promise<boolean> {
+    const res = await fetch(`/api/whatsapp?zap=${numero}`, {
+        headers: { 'Cache-Control': 'no-cache' },
+        method: 'GET'
+    });
+    return await res.json() as boolean;
 }
 
 function getCampusesMem(): Campuses[] {
@@ -28,6 +33,9 @@ function getCampusesMem(): Campuses[] {
 export const CadastroService = {
     async getCampuses() {
         return await getCampuses();
+    },
+    async checkWhatsapp(numero: string) {
+        return await checkWhatsapp(numero);
     },
     getCampusesMem() {
         return getCampusesMem();

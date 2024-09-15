@@ -11,5 +11,6 @@ export const Constantes = {
     CULTO_DOMINGO_MANHA: 318932,
     CULTO_DOMINGO_NOITE: 318933,
     CULTO_QUARTA: 318934,
-    LIMITE_IGREJA: 800
+    LIMITE_IGREJA: 850,
+    EVO_INSTANCE: 'contatopvsede'
 };

@@ -11,7 +11,6 @@ interface LocaleFiles {
     [key: string]: any;
 }
 
-
 interface JustifyOption {
     country: string;
     value: string;
