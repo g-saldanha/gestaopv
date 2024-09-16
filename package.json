@@ -41,7 +41,8 @@
         "typescript": "5.5.4",
         "xlsx": "^0.18.5",
         "zod": "^3.23.8",
-        "intl-tel-input": "latest"
+        "intl-tel-input": "latest",
+        "@vis.gl/react-google-maps": "latest"
     },
     "devDependencies": {
         "@types/bcryptjs": "^2.4.6",
