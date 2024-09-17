@@ -19,5 +19,6 @@ export const enUS = {
     howmany: 'How many?',
     job: 'Job',
     campus: 'Church Campus',
-    register: 'Sign up'
+    register: 'Sign up',
+    address: 'Address'
 };

@@ -3,11 +3,11 @@ declare namespace Form {
         firstName: string | null;
         lastName: string | null;
         birthDate: Date | null;
-        email: string | null;
-        anniversary: Date | null;
-        children: object[] | null;
+        email?: string | null;
+        anniversary?: Date | null;
+        children?: object[] | null;
         campus: string | null;
-        job: string | null;
+        job?: string | null;
         cep: string | null;
         bairro: string | null;
         married: boolean;

@@ -1,13 +1,15 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import { useMapsLibrary } from '@vis.gl/react-google-maps';
+import { InputText } from 'primereact/inputtext';
 
 
 interface PlaceAutocompleteProps {
     onPlaceSelect: (place: google.maps.places.PlaceResult | null) => void;
 }
 
-export default function GoogleAutoComplete({ onPlaceSelect }: PlaceAutocompleteProps) {
+// @ts-ignore
+export default function GoogleAutoComplete({ onPlaceSelect }: Readonly<PlaceAutocompleteProps>) {
     const [placeAutocomplete, setPlaceAutocomplete] =
         useState<google.maps.places.Autocomplete | null>(null);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -33,7 +35,8 @@ export default function GoogleAutoComplete({ onPlaceSelect }: PlaceAutocompleteP
 
     return (
         <div className="autocomplete-container">
-            <InputText ref={inputRef} />
+            <InputText id="address" type="address" className="w-full mb-3" required
+                       ref={inputRef} />
         </div>
     );
 }

@@ -19,5 +19,6 @@ export const da = {
     howmany: 'Hvor mange?',
     job: 'Erhverv',
     campus: 'Campus',
-    register: 'Registrer'
+    register: 'Registrer',
+    address: 'Endereço'
 };

@@ -14,7 +14,11 @@ interface Country {
     items: Campus[];
 }
 
-export default function Campus() {
+interface CampusProps {
+    handleCampus: Function;
+}
+
+export default function Campus({ handleCampus }: CampusProps) {
     const [campuses] = useState<Campuses[]>(CadastroService.getCampusesMem());
 
     // @ts-ignore
@@ -103,7 +107,7 @@ export default function Campus() {
     };
 
     return (
-        <AutoComplete value={selectedCampus} onChange={(e: AutoCompleteChangeEvent) => setSelectedCampus(e.value)}
+        <AutoComplete value={selectedCampus} onChange={(e: AutoCompleteChangeEvent) => handleCampus('campus', e.value)}
                       suggestions={filteredCities} completeMethod={search}
                       field="label" optionGroupLabel="label" optionGroupChildren="items"
                       optionGroupTemplate={groupedItemTemplate} placeholder="Digite a sua PV"

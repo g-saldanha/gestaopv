@@ -19,5 +19,6 @@ export const ptBR = {
     howmany: 'Quantos?',
     job: 'Profissão',
     campus: 'Campus',
-    register: 'Cadastrar-se'
+    register: 'Cadastrar-se',
+    address: 'Endereço'
 };
