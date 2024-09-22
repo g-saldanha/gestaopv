@@ -23,14 +23,11 @@ export async function GET(request: NextRequest) {
                 ]
             })
         };
-        // @ts-ignore
-        console.log({ config, zap });
         let axiosResponse = await axios.request(config);
         return NextResponse.json(axiosResponse.data[0].exists, {
             status: 200
         });
     } catch (error) {
-        console.log(error);
         return NextResponse.json(
             { error: 'Failed to get admins', errorobj: error },
             {

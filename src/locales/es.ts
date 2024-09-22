@@ -20,5 +20,8 @@ export const es = {
     job: 'Profesión',
     campus: 'Campus',
     register: 'Registrarse',
-    address: 'Endereço'
+    address: 'Dirección',
+    errorField: 'Por favor, introduce un valor válido',
+    error: 'Uy, algo salió mal. ¡Inténtalo de nuevo más tarde!',
+    errorSummary: 'Error'
 };

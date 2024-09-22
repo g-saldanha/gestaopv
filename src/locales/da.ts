@@ -20,5 +20,8 @@ export const da = {
     job: 'Erhverv',
     campus: 'Campus',
     register: 'Registrer',
-    address: 'Endereço'
+    address: 'Adresse',
+    errorField: 'Bitte geben Sie einen gültigen Wert ein',
+    error: 'Ups, noget gik galt. Prøv igen senere!',
+    errorSummary: 'Fejl'
 };

@@ -2,14 +2,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useMapsLibrary } from '@vis.gl/react-google-maps';
 import { InputText } from 'primereact/inputtext';
+import { ValidateCadastro } from '@/metrics/components/auth/validation';
 
 
 interface PlaceAutocompleteProps {
     onPlaceSelect: (place: google.maps.places.PlaceResult | null) => void;
+    cadastro: ValidateCadastro;
 }
 
 // @ts-ignore
-export default function GoogleAutoComplete({ onPlaceSelect }: Readonly<PlaceAutocompleteProps>) {
+export default function GoogleAutoComplete({ onPlaceSelect, cadastro }: Readonly<PlaceAutocompleteProps>) {
     const [placeAutocomplete, setPlaceAutocomplete] =
         useState<google.maps.places.Autocomplete | null>(null);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -19,9 +21,10 @@ export default function GoogleAutoComplete({ onPlaceSelect }: Readonly<PlaceAuto
         if (!places || !inputRef.current) return;
 
         const options = {
-            fields: ['geometry', 'name', 'formatted_address']
+            fields: ['geometry', 'name', 'formatted_address', 'address_components']
         };
 
+        console.log(options);
         setPlaceAutocomplete(new places.Autocomplete(inputRef.current, options));
     }, [places]);
 
@@ -35,7 +38,7 @@ export default function GoogleAutoComplete({ onPlaceSelect }: Readonly<PlaceAuto
 
     return (
         <div className="autocomplete-container">
-            <InputText id="address" type="address" className="w-full mb-3" required
+            <InputText id="address" type="address" className="w-full mb-3" required invalid={cadastro.errors?.address}
                        ref={inputRef} />
         </div>
     );

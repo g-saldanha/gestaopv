@@ -1,4 +1,6 @@
 import { campusesResponse } from '@/metrics/utils/pco';
+import { transformCadastro } from '@/metrics/components/auth/transform';
+import { ValidateCadastro } from '@/metrics/components/auth/validation';
 
 export interface Campuses {
     value: string,
@@ -30,6 +32,15 @@ function getCampusesMem(): Campuses[] {
     }));
 }
 
+async function sendToPCO(form: ValidateCadastro): Promise<boolean> {
+    let toSend = transformCadastro(form);
+    const res = await fetch(`/api/pco`, {
+        method: 'POST',
+        body: JSON.stringify(toSend)
+    });
+    return await res.json() as boolean;
+}
+
 export const CadastroService = {
     async getCampuses() {
         return await getCampuses();
@@ -39,5 +50,8 @@ export const CadastroService = {
     },
     getCampusesMem() {
         return getCampusesMem();
+    },
+    async sendCadastro(form: ValidateCadastro) {
+        return await sendToPCO(form);
     }
 };

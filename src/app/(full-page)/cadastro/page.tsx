@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
-import { Button } from 'primereact/button';
 import React, { useEffect, useState } from 'react';
 import RegisterForm from '@/metrics/components/auth/RegisterForm';
 import { addLocale, locale } from 'primereact/api';
@@ -20,7 +19,7 @@ interface JustifyOption {
 const primeReactLocaleFiles: LocaleFiles = getLocales;
 export default function Cadastro() {
     const browserLocale = Object.keys(primeReactLocaleFiles)?.includes(navigator.languages?.[0] || navigator.language) ? navigator.languages?.[0] || navigator.language : 'pt-BR';
-    const osLocale = new Intl.DateTimeFormat().resolvedOptions().locale;
+    // const osLocale = new Intl.DateTimeFormat().resolvedOptions().locale;
     const [selectedLocale, setSelectedLocale] = useState();
     const justifyOptions: JustifyOption[] = [
         { country: 'Espanha', name: 'ES', value: 'es' },
@@ -39,10 +38,7 @@ export default function Cadastro() {
         locale(browserLocale);
         // @ts-ignore
         setSelectedLocale(locale());
-        console.log('Browser locale: ', browserLocale);
-        console.log('OS locale: ', osLocale);
         // @ts-ignore
-        console.log('Locale', locale());
         // @ts-ignore
     }, []);
     /**
@@ -93,8 +89,6 @@ export default function Cadastro() {
                 </div>
 
                 <RegisterForm locale={selectedLocale} />
-                {/*@ts-ignore*/}
-                <Button label={selectedLocale.options.register} icon="pi pi-user-plus" className="w-full" />
             </div>
         </div>
     );

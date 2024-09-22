@@ -19,6 +19,9 @@ export const pt = {
     howmany: 'Quantos?',
     job: 'Profissão',
     campus: 'Campus',
-    register: 'Registrieren',
-    address: 'Endereço'
+    register: 'Cadastrar',
+    address: 'Endereço',
+    errorField: 'Por favor, insira um valor válido',
+    error: 'Opa, algo deu errado. Tenta de novo mais tarde!',
+    errorSummary: 'Erro'
 };

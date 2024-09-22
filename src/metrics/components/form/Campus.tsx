@@ -1,9 +1,10 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AutoComplete, AutoCompleteChangeEvent, AutoCompleteCompleteEvent } from 'primereact/autocomplete';
 import { CadastroService, Campuses } from '@/metrics/service/CadastroService';
+import { ValidateCadastro } from '@/metrics/components/auth/validation';
 
-interface Campus {
+export interface Campus {
     label: string;
     value: string;
 }
@@ -16,10 +17,11 @@ interface Country {
 
 interface CampusProps {
     handleCampus: Function;
+    cadastro: ValidateCadastro;
 }
 
-export default function Campus({ handleCampus }: CampusProps) {
-    const [campuses] = useState<Campuses[]>(CadastroService.getCampusesMem());
+export default function Campus({ handleCampus, cadastro }: Readonly<CampusProps>) {
+    const [campuses, setCampuses] = useState<Campuses[]>([]);
 
     // @ts-ignore
     const [selectedCampus, setSelectedCampus] = useState<Campus>(null);
@@ -106,13 +108,22 @@ export default function Campus({ handleCampus }: CampusProps) {
         setFilteredCities(_filteredCities);
     };
 
+    useEffect(() => {
+        CadastroService.getCampuses().then((result) => {
+            setCampuses(result);
+        });
+    }, []);
+
     return (
-        <AutoComplete value={selectedCampus} onChange={(e: AutoCompleteChangeEvent) => handleCampus('campus', e.value)}
+        <AutoComplete value={selectedCampus} onChange={(e: AutoCompleteChangeEvent) => {
+            handleCampus('campus', e.value);
+            setSelectedCampus(e.value);
+        }}
                       suggestions={filteredCities} completeMethod={search}
                       field="label" optionGroupLabel="label" optionGroupChildren="items"
                       optionGroupTemplate={groupedItemTemplate} placeholder="Digite a sua PV"
                       className="w-full mb-3"
-                      inputClassName="w-full" required dropdown />
+                      inputClassName="w-full" required dropdown invalid={cadastro.errors?.campus} />
     );
 }
 

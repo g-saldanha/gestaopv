@@ -61,4 +61,20 @@ export async function GET(request: NextRequest) {
 }
 
 
+const axios = require('axios');
+let data = JSON.stringify({
+    'data': {
+        'type': 'Person',
+        'attributes': {
+            'first_name': 'Hillary',
+            'last_name': 'Desconhecido',
+            'membership': 'Visitante',
+            'gender': 'Male',
+            'primary_campus_id': '89632'
+        }
+    }
+});
+
+
+
 

@@ -20,5 +20,8 @@ export const it = {
     job: 'Professione',
     campus: 'Campus',
     register: 'Registrarsi',
-    address: 'Endereço'
+    address: 'Indirizzo',
+    errorField: 'Si prega di inserire un valore valido',
+    error: 'Ops, qualcosa è andato storto. Riprova più tardi!',
+    errorSummary: 'Errore'
 };

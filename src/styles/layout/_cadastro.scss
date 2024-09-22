@@ -90,6 +90,14 @@
     .p-button-label:after {
         color: black;
     }
+
+    .p-invalid {
+        border: 3px solid #e24c4c !important;
+    }
+
+    .p-calendar.p-invalid.p-component > .p-inputtext {
+        border-color: #d1d5db;
+    }
 }
 
 

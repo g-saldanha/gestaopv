@@ -20,5 +20,8 @@ export const de = {
     job: 'Beruf',
     campus: 'Campus',
     register: 'Registrieren',
-    address: 'Endereço'
+    address: 'Adresse',
+    errorField: 'Indtast venligst en gyldig værdi',
+    error: 'Ups, da ist was schiefgelaufen. Versuch es später noch mal!',
+    errorSummary: 'Fehler'
 };

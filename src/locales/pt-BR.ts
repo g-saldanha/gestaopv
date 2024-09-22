@@ -20,5 +20,8 @@ export const ptBR = {
     job: 'Profissão',
     campus: 'Campus',
     register: 'Cadastrar-se',
-    address: 'Endereço'
+    address: 'Endereço',
+    errorField: 'Por favor, insira um valor válido',
+    error: 'Opa, algo deu errado. Tenta de novo mais tarde!',
+    errorSummary: 'Erro'
 };

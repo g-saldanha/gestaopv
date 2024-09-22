@@ -20,5 +20,8 @@ export const enUS = {
     job: 'Job',
     campus: 'Church Campus',
     register: 'Sign up',
-    address: 'Address'
+    address: 'Address',
+    errorField: 'Please enter a valid value',
+    error: 'Oops, something went wrong. Please try again later!',
+    errorSummary: 'Error'
 };

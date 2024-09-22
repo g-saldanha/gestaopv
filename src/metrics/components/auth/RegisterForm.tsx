@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
 import { SelectButton } from 'primereact/selectbutton';
@@ -11,6 +11,13 @@ import 'react-international-phone/style.css';
 import Profissoes from '@/metrics/components/form/Profissoes';
 import GoogleAutoComplete from '@/metrics/components/form/GoogleAutoComplete';
 import { APIProvider } from '@vis.gl/react-google-maps';
+import { initCadastro, validateCadastro, ValidateCadastro } from '@/metrics/components/auth/validation';
+import { Button } from 'primereact/button';
+import { ProgressSpinner } from 'primereact/progressspinner';
+import { Message } from 'primereact/message';
+import { CadastroService } from '@/metrics/service/CadastroService';
+import { Toast } from 'primereact/toast';
+import { useRouter } from 'next/navigation';
 
 
 interface RegisterFormProps {
@@ -18,13 +25,16 @@ interface RegisterFormProps {
 }
 
 export default function RegisterForm(props: Readonly<RegisterFormProps>) {
+    const toast = useRef(null);
     const { locale } = props;
-    const [form, setForm] = useState<Form.Cadastro>();
+    const { push } = useRouter();
+    const [vCadastro, setVCadastro] = useState<ValidateCadastro>(initCadastro);
     const [isChildren, setIsChildren] = useState(false);
     const [children, setChildren] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const handleChange = (field: any, value: any) => {
         // @ts-ignore
-        setForm((prevState) => ({ ...prevState, [field]: value }));
+        setVCadastro((prevState) => ({ ...prevState, form: { ...prevState?.form, [field]: value } }));
     };
     const handleChangeChildren = (field: any, value: any, index: number) => {
         // @ts-ignore
@@ -53,36 +63,86 @@ export default function RegisterForm(props: Readonly<RegisterFormProps>) {
         // @ts-ignore
         setChildren(children);
     };
+    const handleSubmit = async () => {
+        setIsLoading(true);
+        // @ts-ignore
+        vCadastro.errors = initCadastro.errors;
+        let cadastro = await validateCadastro(vCadastro);
+        if (cadastro.isValid) {
+            try {
+                if (children.length > 0) {
+                    // @ts-ignore
+                    cadastro.form.children = children;
+                }
+                let confirm = await CadastroService.sendCadastro(cadastro);
+                if (confirm) {
+                    push('/cadastro-confirmado');
+                } else {
+                    // @ts-ignore
+                    toast.current.show({
+                        severity: 'error',
+                        summary: locale.options.errorSummary,
+                        detail: locale.options.error,
+                        life: 3000
+                    });
+                }
+            } catch (e) {
+                console.error(e);
+                // @ts-ignore
+                toast.current.show({
+                    severity: 'error',
+                    summary: locale.options.errorSummary,
+                    detail: locale.options.error,
+                    life: 3000
+                });
+            }
+        } else {
+            setVCadastro(cadastro);
+        }
+        setIsLoading(false);
+    };
 
-    console.log(children);
     if (!locale) {
         return null;
     }
-
     // @ts-ignore
     return (
         <APIProvider apiKey="AIzaSyCdVvFlHiCZjhXPEl1lnj-zuyM2AilWO-o">
+            <Toast ref={toast} position="center" />
             <div className="cadastro-form">
                 <label htmlFor="firstName"
                        className="block text-900 font-medium mb-2">{locale.options.firstName}({locale.options.required})</label>
+                {vCadastro.errors?.firstName && <Message
+                    severity="error" text={locale.options.errorField} className="w-full m-1" />}
                 <InputText id="firstName" type="text" placeholder={locale.options.firstName} className="w-full mb-3"
-                           required value={form?.firstName}
+                           required value={vCadastro?.form?.firstName}
+                           invalid={vCadastro.errors?.firstName}
                            onChange={(e) => handleChange('firstName', e.target.value)} />
+
 
                 <label htmlFor="lastName" className="block text-900 font-medium mb-2">{locale.options.lastName}
                     ({locale.options.required})</label>
+                {vCadastro.errors?.lastName && <Message
+                    severity="error" text={locale.options.errorField} className="w-full m-1" />}
                 <InputText id="lastName" type="text" placeholder={locale.options.lastName} className="w-full mb-3"
-                           required value={form?.lastName} onChange={(e) => handleChange('lastname', e.target.value)} />
+                           invalid={vCadastro.errors?.lastName}
+                           required value={vCadastro?.form?.lastName}
+                           onChange={(e) => handleChange('lastName', e.target.value)} />
 
                 <label htmlFor="birthDate" className="block text-900 font-medium mb-2">{locale.options.birthDate}
                     ({locale.options.required})</label>
+                {vCadastro.errors?.birthDate && <Message
+                    severity="error" text={locale.options.errorField} className="w-full m-1" />}
                 <Calendar id="birthDate" showIcon required touchUI selectionMode="single"
-                          value={form?.birthDate}
+                          value={vCadastro?.form?.birthDate}
+                          invalid={vCadastro.errors?.birthDate}
                           onChange={(e) => handleChange('birthDate', e.value)}
                           placeholder={locale.options.birthDate}
                           className="w-full mb-3" />
                 <label htmlFor="whatsapp" className="block text-900 font-medium mb-2">Whatsapp
                     ({locale.options.required})</label>
+                {vCadastro.errors?.whatsapp && <Message
+                    severity="error" text={locale.options.errorField} className="w-full m-1" />}
                 <PhoneInput
                     prefix=""
                     inputStyle={{
@@ -103,7 +163,7 @@ export default function RegisterForm(props: Readonly<RegisterFormProps>) {
                     defaultCountry="br"
                     inputClassName="w-full p-component p-inputtext"
                     preferredCountries={['br', 've', 'ht', 'us', 'gb', 'pt', 'it', 'de', 'cl', 'uy']}
-                    value={form?.whatsapp}
+                    value={vCadastro?.form?.whatsapp}
                     onChange={(e) => {
                         handleChange('whatsapp', e);
                     }}
@@ -112,35 +172,47 @@ export default function RegisterForm(props: Readonly<RegisterFormProps>) {
 
                 <label htmlFor="email" className="block text-900 font-medium mb-2">{locale.options.email}
                     ({locale.options.optional})</label>
+                {vCadastro.errors?.email && <Message
+                    severity="error" text={locale.options.errorField} className="w-full m-1" />}
                 <InputText id="email" type="email" placeholder="Email" className="w-full mb-3" required
-                           value={form?.email} onChange={(e) => handleChange('email', e.target.value)} />
+                           value={vCadastro?.form?.email}
+                           invalid={vCadastro.errors?.email}
+                           onChange={(e) => handleChange('email', e.target.value)} keyfilter="email" />
 
                 <label htmlFor="address" className="block text-900 font-medium mb-2">{locale.options.address}
                     ({locale.options.required})</label>
-                <GoogleAutoComplete onPlaceSelect={(e) => handleChange('address', e)}
+                {vCadastro.errors?.address && <Message
+                    severity="error" text={locale.options.errorField} className="w-full m-1" />}
+                <GoogleAutoComplete cadastro={vCadastro} onPlaceSelect={(e) => handleChange('address', e)}
                 />
-                {/*value={form?.email}*/}
                 <label htmlFor="membership" className="block text-900 font-medium mb-2">{locale.options.membership}
                     ({locale.options.required})</label>
+                {vCadastro.errors?.membership && <Message
+                    severity="error" text={locale.options.errorField} className="w-full m-1" />}
                 <div
                     className="w-full text-center">
                     <SelectButton
                         id="membership"
                         className="w-full mb-3"
+                        value={vCadastro?.form?.volunteer ? locale.options.volunteer : locale.options.regular}
                         options={[locale.options.regular, locale.options.volunteer]}
                         onChange={event => handleChange('volunteer', event.value == locale.options.volunteer)}
+                        invalid={vCadastro.errors?.membership}
                     />
                 </div>
 
                 <label htmlFor="married" className="block text-900 font-medium mb-2">{locale.options.married}?
                     ({locale.options.required})</label>
+                {vCadastro.errors?.married && <Message
+                    severity="error" text={locale.options.errorField} className="w-full m-1" />}
                 <div
                     className="w-full text-center">
                     <SelectButton className="w-full mb-3" options={[locale.options.accept, locale.options.reject]}
-                                  value={form?.married ? locale.options.accept : locale.options.reject}
+                                  value={vCadastro?.form?.married ? locale.options.accept : locale.options.reject}
+                                  invalid={vCadastro.errors?.married}
                                   onChange={event => handleChange('married', event.value == locale.options.accept)} />
                 </div>
-                {form?.married && (
+                {vCadastro?.form?.married && (
                     <>
                         <label htmlFor="anniversary"
                                className="block text-900 font-medium mb-2">{locale.options.anniversary}
@@ -156,6 +228,7 @@ export default function RegisterForm(props: Readonly<RegisterFormProps>) {
                     ({locale.options.optional})</label>
                 <div className="w-full text-center">
                     <SelectButton className="w-full mb-3" options={[locale.options.accept, locale.options.reject]}
+                                  value={isChildren ? locale.options.accept : locale.options.reject}
                                   onChange={event => setIsChildren(event.value === locale.options.accept)} />
                 </div>
                 {isChildren && <><label htmlFor="quantos"
@@ -194,10 +267,17 @@ export default function RegisterForm(props: Readonly<RegisterFormProps>) {
 
                 <label htmlFor={locale.options.campus}
                        className="block text-900 font-medium mb-2">{locale.options.campus}({locale.options.required})</label>
-                <Campus handleCampus={handleChange} />
+                {vCadastro.errors?.campus && <Message
+                    severity="error" text={locale.options.errorField} className="w-full m-1" />}
+                <Campus cadastro={vCadastro} handleCampus={handleChange} />
                 <label htmlFor="job"
                        className="block text-900 font-medium mb-2">{locale.options.job}</label>
-                <Profissoes />
+                <Profissoes handleJob={handleChange} />
+                <Button
+                    label={isLoading ? <ProgressSpinner style={{ maxWidth: '20px', maxHeight: '20px' }} strokeWidth="8"
+                                                        fill="var(--surface-ground)" animationDuration=".5s" />
+                        : locale.options.register} icon="pi pi-user-plus" className="w-full"
+                    onClick={handleSubmit} />
             </div>
         </APIProvider>
     );
