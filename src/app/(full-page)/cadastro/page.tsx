@@ -18,8 +18,9 @@ interface JustifyOption {
 
 const primeReactLocaleFiles: LocaleFiles = getLocales;
 export default function Cadastro() {
-    const browserLocale = Object.keys(primeReactLocaleFiles)?.includes(navigator.languages?.[0] || navigator.language) ? navigator.languages?.[0] || navigator.language : 'pt-BR';
-    // const osLocale = new Intl.DateTimeFormat().resolvedOptions().locale;
+    // const browserLocale = Object.keys(primeReactLocaleFiles)?.includes(navigator.languages?.[0] || navigator.language) ? navigator.languages?.[0] || navigator.language : 'pt-BR';
+    let searchElement = new Intl.DateTimeFormat().resolvedOptions().locale;
+    const browserLocale = Object.keys(primeReactLocaleFiles)?.includes(searchElement) ? searchElement : 'pt-BR';
     const [selectedLocale, setSelectedLocale] = useState();
     const justifyOptions: JustifyOption[] = [
         { country: 'Espanha', name: 'ES', value: 'es' },

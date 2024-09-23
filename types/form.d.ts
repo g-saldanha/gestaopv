@@ -1,7 +1,6 @@
 import { Campus } from '@/metrics/components/form/Campus';
 
 declare namespace Form {
-
     interface Cadastro {
         firstName: string | null;
         lastName: string | null;
@@ -22,21 +21,20 @@ declare namespace Form {
     }
 
     interface Person {
-        'data': {
-            'type': string,
-            'attributes': {
-                first_name: string,
-                last_name: string,
-                birthdate?: string,
-                child?: boolean
-                gender?: string,
-                membership?: string,
-                anniversary?: string,
-                primary_campus_id?: string,
-            }
+        data: {
+            type: string;
+            attributes: {
+                first_name: string;
+                last_name: string;
+                birthdate?: string;
+                child?: boolean;
+                gender?: string;
+                membership?: string;
+                anniversary?: string;
+                primary_campus_id?: string;
+            };
         };
     }
-
 
     interface PCO {
         person: Person;
