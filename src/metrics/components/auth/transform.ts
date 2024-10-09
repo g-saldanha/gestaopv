@@ -86,7 +86,7 @@ export function transformCadastro(cadastro: ValidateCadastro) {
                     gender: '',
                     birthdate: child.birthDate.toISOString(),
                     membership: 'Membro(a)',
-                    first_name: child.firsName,
+                    first_name: child.firstName,
                     primary_campus_id: cadastro.form?.campus.value
                 }
             }

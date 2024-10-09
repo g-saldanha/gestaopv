@@ -58,7 +58,7 @@ export default function RegisterForm(props: Readonly<RegisterFormProps>) {
     const handleChooseChildren = (value: number) => {
         const children = [];
         for (let i = 0; i < value; i++) {
-            children.push({ firstname: '', birthDate: '' }); // Cria uma cópia do objeto e insere no array
+            children.push({ firstName: '', birthDate: '' }); // Cria uma cópia do objeto e insere no array
         }
         // @ts-ignore
         setChildren(children);
@@ -67,7 +67,9 @@ export default function RegisterForm(props: Readonly<RegisterFormProps>) {
         setIsLoading(true);
         // @ts-ignore
         vCadastro.errors = initCadastro.errors;
+
         let cadastro = await validateCadastro(vCadastro);
+        console.log(vCadastro, cadastro);
         if (cadastro.isValid) {
             try {
                 if (children.length > 0) {

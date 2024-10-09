@@ -34,6 +34,7 @@ function getCampusesMem(): Campuses[] {
 
 async function sendToPCO(form: ValidateCadastro): Promise<boolean> {
     let toSend = transformCadastro(form);
+    console.log(toSend);
     const res = await fetch(`/api/pco`, {
         method: 'POST',
         body: JSON.stringify(toSend)

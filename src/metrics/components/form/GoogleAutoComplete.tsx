@@ -24,7 +24,6 @@ export default function GoogleAutoComplete({ onPlaceSelect, cadastro }: Readonly
             fields: ['geometry', 'name', 'formatted_address', 'address_components']
         };
 
-        console.log(options);
         setPlaceAutocomplete(new places.Autocomplete(inputRef.current, options));
     }, [places]);
 

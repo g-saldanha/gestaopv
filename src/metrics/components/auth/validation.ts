@@ -59,81 +59,82 @@ export interface ValidateCadastro {
 }
 
 export const validateCadastro = async (cadastro: ValidateCadastro): Promise<ValidateCadastro> => {
-    cadastro.isValid = true;
-    if (!cadastro?.form?.firstName && !cadastro.form?.firstName?.length) {
+    let vCadastro = cadastro;
+    vCadastro.isValid = true;
+    if (!vCadastro?.form?.firstName && !vCadastro.form?.firstName?.length) {
         // @ts-ignore
-        cadastro.errors.firstName = true;
-        cadastro.isValid = false;
+        vCadastro.errors.firstName = true;
+        vCadastro.isValid = false;
     }
 // @ts-ignore
-    if (!cadastro?.form?.lastName && !cadastro?.form?.lastName?.length) {
+    if (!vCadastro?.form?.lastName && !vCadastro?.form?.lastName?.length) {
         // @ts-ignore
-        cadastro.errors.lastName = true;
-        cadastro.isValid = false;
+        vCadastro.errors.lastName = true;
+        vCadastro.isValid = false;
     }
 
-    if (!cadastro?.form?.birthDate) {
+    if (!vCadastro?.form?.birthDate) {
         // @ts-ignore
-        cadastro.errors.birthDate = true;
-        cadastro.isValid = false;
+        vCadastro.errors.birthDate = true;
+        vCadastro.isValid = false;
     }
 // @ts-ignore
-    let isWpChecked = await CadastroService.checkWhatsapp(cadastro?.form?.whatsapp);
-    if (!cadastro?.form?.whatsapp || !isWpChecked) {
+    let isWpChecked = await CadastroService.checkWhatsapp(vCadastro?.form?.whatsapp);
+    if (!vCadastro?.form?.whatsapp || !isWpChecked) {
         // @ts-ignore
-        cadastro.errors.whatsapp = true;
-        cadastro.isValid = false;
+        vCadastro.errors.whatsapp = true;
+        vCadastro.isValid = false;
     }
 // @ts-ignore
-    if (cadastro?.form?.email !== '' && !validator.isEmail(cadastro?.form?.email)) {
+    if (vCadastro?.form?.email !== '' && !validator.isEmail(vCadastro?.form?.email)) {
         // @ts-ignore
-        cadastro.errors.email = true;
-        cadastro.isValid = false;
+        vCadastro.errors.email = true;
+        vCadastro.isValid = false;
     }
 
     // @ts-ignore
-    if (!cadastro?.form?.address) {
+    if (!vCadastro?.form?.address) {
         // @ts-ignore
-        cadastro.errors.address = true;
-        cadastro.isValid = false;
+        vCadastro.errors.address = true;
+        vCadastro.isValid = false;
     }
 
-    if (cadastro?.form?.volunteer !== null) {
+    if (vCadastro?.form?.volunteer !== null) {
         // @ts-ignore
-        cadastro.form.membership = cadastro.form.volunteer ? 'Voluntário(a)' : 'Membro(a)';
+        vCadastro.form.membership = vCadastro.form.volunteer ? 'Voluntário(a)' : 'Membro(a)';
     } else {
         // @ts-ignore
-        cadastro.errors.membership = true;
-        cadastro.isValid = false;
+        vCadastro.errors.membership = true;
+        vCadastro.isValid = false;
     }
 
-    if (cadastro?.form?.married !== null) {
-        if (cadastro?.form?.married === true) {
+    if (vCadastro?.form?.married !== null) {
+        if (vCadastro?.form?.married === true) {
             // @ts-ignore
-            cadastro.form.maritalStatus = 'Married';
+            vCadastro.form.maritalStatus = 'Married';
         } else {
             // @ts-ignore
-            cadastro.form.maritalStatus = 'Solteiro(a)';
+            vCadastro.form.maritalStatus = 'Solteiro(a)';
         }
     } else {
         // @ts-ignore
-        cadastro.errors.married = true;
-        cadastro.isValid = false;
+        vCadastro.errors.married = true;
+        vCadastro.isValid = false;
     }
 
-    if (!cadastro?.form?.campus) {
+    if (!vCadastro?.form?.campus) {
         // @ts-ignore
-        cadastro.errors.campus = true;
-        cadastro.isValid = false;
+        vCadastro.errors.campus = true;
+        vCadastro.isValid = false;
     }
 
 
     // @ts-ignore
-    if (!cadastro?.form?.job && cadastro?.form?.job === '') {
+    if (!vCadastro?.form?.job && vCadastro?.form?.job === '') {
         // @ts-ignore
-        cadastro.errors.job = true;
-        cadastro.isValid = false;
+        vCadastro.errors.job = true;
+        vCadastro.isValid = false;
     }
 
-    return cadastro;
+    return vCadastro;
 };
