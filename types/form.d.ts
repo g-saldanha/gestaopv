@@ -20,6 +20,18 @@ declare namespace Form {
         maritalStatus?: string;
     }
 
+    interface CadastroKids {
+        firstName: string | null;
+        lastName: string | null;
+        birthDate?: Date | null;
+        email?: string | null;
+        children: any[];
+        cep?: string | null;
+        bairro?: string | null;
+        whatsapp: string | undefined;
+        address?: google.maps.places.PlaceResult;
+    }
+
     interface Person {
         data: {
             type: string;

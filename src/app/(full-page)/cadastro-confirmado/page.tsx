@@ -3,14 +3,13 @@
 
 /* eslint-disable @next/next/no-img-element */
 import React from 'react';
-import { getLocales } from '@/locales/getLocales';
+import { useSearchParams } from 'next/navigation';
 
-interface LocaleFiles {
-    [key: string]: any;
-}
 
-const primeReactLocaleFiles: LocaleFiles = getLocales;
 export default function Cadastro() {
+    const searchParams = useSearchParams();
+    const isKidsPV = searchParams.get('kidspv');
+
     return (
         <div className="surface-0 flex justify-content-center">
             <div id="home" className="landing-wrapper overflow-hidden">
@@ -39,6 +38,12 @@ export default function Cadastro() {
                             </a>
                         </div>
                     </div>
+                    {isKidsPV && <div className="mx-4 md:mx-8 mt-0 md:mt-4 mb-4">
+                        <a href="/cadastrokids" rel="noopener noreferrer"
+                           className="p-button p-button-success font-bold">
+                            Cadastrar Novamente
+                        </a>
+                    </div>}
                     <div className="flex justify-content-center md:justify-content-end">
                         <img src="/pv/images/landing/churchcenter.svg" alt="Hero"
                              className="w-7 md:w-auto" />

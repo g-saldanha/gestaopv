@@ -17,6 +17,7 @@ export const ptBR = {
     anniversary: 'Aniversário de Casamento',
     havechildren: 'Tem filhos?',
     howmany: 'Quantos?',
+    howmanychildren: 'Quantos filhos?',
     job: 'Profissão',
     campus: 'Campus',
     register: 'Cadastrar-se',

@@ -1,7 +1,7 @@
-import { ValidateCadastro } from '@/metrics/components/auth/validation';
+import { ValidateCadastroKids } from '@/metrics/components/auth/validationKids';
 
 
-export function transformCadastro(cadastro: ValidateCadastro) {
+export function transformCadastroKids(cadastro: ValidateCadastroKids) {
     const payload: any = {
         person: undefined
     };
@@ -14,25 +14,12 @@ export function transformCadastro(cadastro: ValidateCadastro) {
                 birthdate: cadastro.form?.birthDate?.toISOString(),
                 child: false,
                 gender: '',
-                membership: cadastro.form?.membership?.trim(),
-                anniversary: cadastro.form?.anniversary?.toISOString(),
-                primary_campus_id: cadastro.form?.campus.value
+                membership: 'Visitante',
+                primary_campus_id: '89632'
             }
         }
     };
 
-
-    if (cadastro.form?.job) {
-        //  /people/v2/people/{id}/field_data
-        payload.job = {
-            'data': {
-                'attributes': {
-                    'field_definition_id': '740340',
-                    'value': cadastro.form?.job?.trim()
-                }
-            }
-        };
-    }
 
     // /people/v2/people/{id}/phone_numbers
     payload.whatsapp = {
@@ -76,22 +63,20 @@ export function transformCadastro(cadastro: ValidateCadastro) {
         };
     }
 
-    if (cadastro.form?.children) {
-        payload.children = cadastro.form?.children.map((child) => ({
-            data: {
-                type: 'Person',
-                attributes: {
-                    child: true,
-                    last_name: cadastro.form?.lastName?.trim(),
-                    gender: '',
-                    birthdate: child.birthDate.toISOString(),
-                    membership: 'Membro(a)',
-                    first_name: child.firstName,
-                    primary_campus_id: cadastro.form?.campus.value
-                }
+    payload.children = cadastro.form?.children.map((child) => ({
+        data: {
+            type: 'Person',
+            attributes: {
+                child: true,
+                last_name: cadastro.form?.lastName?.trim(),
+                gender: '',
+                birthdate: child.birthDate.toISOString(),
+                first_name: child.firstName,
+                membership: 'Visitante',
+                primary_campus_id: '89632'
             }
-        }));
-    }
+        }
+    }));
 
 
     return payload;

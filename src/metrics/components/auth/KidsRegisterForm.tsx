@@ -3,35 +3,32 @@
 import React, { useRef, useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Calendar } from 'primereact/calendar';
-import { SelectButton } from 'primereact/selectbutton';
-import Campus from '@/metrics/components/form/Campus';
 import { InputNumber, InputNumberChangeEvent } from 'primereact/inputnumber';
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
-import Profissoes from '@/metrics/components/form/Profissoes';
 import GoogleAutoComplete from '@/metrics/components/form/GoogleAutoComplete';
 import { APIProvider } from '@vis.gl/react-google-maps';
-import { initCadastro, validateCadastro, ValidateCadastro } from '@/metrics/components/auth/validation';
 import { Button } from 'primereact/button';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Message } from 'primereact/message';
 import { CadastroService } from '@/metrics/service/CadastroService';
 import { Toast } from 'primereact/toast';
 import { useRouter } from 'next/navigation';
+import { initCadastroKids, validateCadastroKids, ValidateCadastroKids } from '@/metrics/components/auth/validationKids';
 
 
-interface RegisterFormProps {
+interface KidsRegisterFormProps {
     locale: any;
 }
 
-export default function RegisterForm(props: Readonly<RegisterFormProps>) {
+export default function KidsRegisterForm(props: Readonly<KidsRegisterFormProps>) {
     const toast = useRef(null);
     const { locale } = props;
     const { push } = useRouter();
-    const [vCadastro, setVCadastro] = useState<ValidateCadastro>(initCadastro);
-    const [isChildren, setIsChildren] = useState(false);
+    const [vCadastro, setVCadastro] = useState<ValidateCadastroKids>(initCadastroKids);
     const [children, setChildren] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    console.log(children);
     const handleChange = (field: any, value: any) => {
         // @ts-ignore
         setVCadastro((prevState) => ({ ...prevState, form: { ...prevState?.form, [field]: value } }));
@@ -66,19 +63,23 @@ export default function RegisterForm(props: Readonly<RegisterFormProps>) {
     const handleSubmit = async () => {
         setIsLoading(true);
         // @ts-ignore
-        vCadastro.errors = initCadastro.errors;
+        vCadastro.errors = initCadastroKids.errors;
 
-        let cadastro = await validateCadastro(vCadastro);
-        console.log(vCadastro, cadastro);
+        if (children.length > 0) {
+            // @ts-ignore
+            vCadastro.form.children = children;
+        }
+
+        let cadastro = await validateCadastroKids(vCadastro);
         if (cadastro.isValid) {
             try {
                 if (children.length > 0) {
                     // @ts-ignore
                     cadastro.form.children = children;
                 }
-                let confirm = await CadastroService.sendCadastro(cadastro);
+                let confirm = await CadastroService.sendCadastroKids(cadastro);
                 if (confirm) {
-                    push('/cadastro-confirmado');
+                    push('/cadastro-confirmado?kidspv=true');
                 } else {
                     // @ts-ignore
                     toast.current.show({
@@ -111,7 +112,7 @@ export default function RegisterForm(props: Readonly<RegisterFormProps>) {
     return (
         <APIProvider apiKey="AIzaSyCdVvFlHiCZjhXPEl1lnj-zuyM2AilWO-o">
             <Toast ref={toast} position="center" />
-            <div className="cadastro-form">
+            <div className="cadastro-form-kids" id="form-kids">
                 <label htmlFor="firstName"
                        className="block text-900 font-medium mb-2">{locale.options.firstName}({locale.options.required})</label>
                 {vCadastro.errors?.firstName && <Message
@@ -132,15 +133,15 @@ export default function RegisterForm(props: Readonly<RegisterFormProps>) {
                            onChange={(e) => handleChange('lastName', e.target.value)} />
 
                 <label htmlFor="birthDate" className="block text-900 font-medium mb-2">{locale.options.birthDate}
-                    ({locale.options.required})</label>
+                    ({locale.options.optional})</label>
                 {vCadastro.errors?.birthDate && <Message
                     severity="error" text={locale.options.errorField} className="w-full m-1" />}
-                <Calendar id="birthDate" showIcon required touchUI selectionMode="single"
+                <Calendar id="birthDate" showIcon touchUI selectionMode="single"
                           value={vCadastro?.form?.birthDate}
                           invalid={vCadastro.errors?.birthDate}
                           onChange={(e) => handleChange('birthDate', e.value)}
                           placeholder={locale.options.birthDate}
-                          locale={locale.locale}
+                          locale="pt-BR"
                           className="w-full mb-3" />
                 <label htmlFor="whatsapp" className="block text-900 font-medium mb-2">Whatsapp
                     ({locale.options.required})</label>
@@ -188,96 +189,55 @@ export default function RegisterForm(props: Readonly<RegisterFormProps>) {
                     severity="error" text={locale.options.errorField} className="w-full m-1" />}
                 <GoogleAutoComplete cadastro={vCadastro} onPlaceSelect={(e) => handleChange('address', e)}
                 />
-                <label htmlFor="membership" className="block text-900 font-medium mb-2">{locale.options.membership}
+
+                <label htmlFor="quantos"
+                       className="block text-900 font-medium mb-2">{locale.options.howmanychildren}
                     ({locale.options.required})</label>
-                {vCadastro.errors?.membership && <Message
+                {vCadastro.errors?.children && <Message
                     severity="error" text={locale.options.errorField} className="w-full m-1" />}
-                <div
-                    className="w-full text-center">
-                    <SelectButton
-                        id="membership"
-                        className="w-full mb-3"
-                        value={vCadastro?.form?.volunteer ? locale.options.volunteer : locale.options.regular}
-                        options={[locale.options.regular, locale.options.volunteer]}
-                        onChange={event => handleChange('volunteer', event.value == locale.options.volunteer)}
-                        invalid={vCadastro.errors?.membership}
-                    />
-                </div>
 
-                <label htmlFor="married" className="block text-900 font-medium mb-2">{locale.options.married}?
-                    ({locale.options.required})</label>
-                {vCadastro.errors?.married && <Message
-                    severity="error" text={locale.options.errorField} className="w-full m-1" />}
-                <div
-                    className="w-full text-center">
-                    <SelectButton className="w-full mb-3" options={[locale.options.accept, locale.options.reject]}
-                                  value={vCadastro?.form?.married ? locale.options.accept : locale.options.reject}
-                                  invalid={vCadastro.errors?.married}
-                                  onChange={event => handleChange('married', event.value == locale.options.accept)} />
-                </div>
-                {vCadastro?.form?.married && (
-                    <>
-                        <label htmlFor="anniversary"
-                               className="block text-900 font-medium mb-2">{locale.options.anniversary}
-                            ({locale.options.optional})</label>
-                        <Calendar id="anniversary" showIcon required touchUI selectionMode="single"
-                                  placeholder={locale.options.anniversary}
-                                  locale={locale.locale}
-                                  className="w-full mb-3" onChange={(e) => handleChange('anniversary', e.value)} />
-                    </>
-                )
-                }
-
-                <label htmlFor="filhos" className="block text-900 font-medium mb-2">{locale.options.havechildren}
-                    ({locale.options.optional})</label>
-                <div className="w-full text-center">
-                    <SelectButton className="w-full mb-3" options={[locale.options.accept, locale.options.reject]}
-                                  value={isChildren ? locale.options.accept : locale.options.reject}
-                                  onChange={event => setIsChildren(event.value === locale.options.accept)} />
-                </div>
-                {isChildren && <><label htmlFor="quantos"
-                                        className="block text-900 font-medium mb-2">{locale.options.howmany}
-                    ({locale.options.optional})</label>
-
-                    <InputNumber
-                        inputId="quantos"
-                        onChange={(e: InputNumberChangeEvent) => {
+                <InputNumber
+                    inputId="quantos"
+                    required
+                    invalid={vCadastro.errors?.children}
+                    onChange={(e: InputNumberChangeEvent) => {
+                        // @ts-ignore
+                        if (e.value <= 4) {
                             // @ts-ignore
-                            if (e.value <= 4) {
-                                // @ts-ignore
-                                handleChooseChildren(e.value);
-                            }
-                        }}
-                        useGrouping={false} min={0} max={4} className="w-full mb-3" /></>}
+                            handleChooseChildren(e.value);
+                        }
+                    }}
+                    useGrouping={false} min={0} max={4} className="w-full mb-3" />
 
                 {children.map((child, idx) => {
                     return (<>
                         <label htmlFor="firstname"
                                className="block text-900 font-medium mb-2">{idx + 1} - {locale.options.firstName}
                             ({locale.options.required})</label>
+                        {vCadastro.errors?.children && <Message
+                            severity="error" text={locale.options.errorField} className="w-full m-1" />}
                         <InputText id="firstname" type="text" placeholder={locale.options.firstName}
                                    className="w-full mb-3"
+                                   invalid={vCadastro.errors?.children}
                                    onChange={(event) => handleChangeChildren('firstName', event.target.value, idx)}
                                    required />
                         <label htmlFor="birthDate"
                                className="block text-900 font-medium mb-2">{idx + 1} - {locale.options.birthDate}
                             ({locale.options.required})</label>
-                        <Calendar id="birthDate" showIcon required touchUI selectionMode="single"
+                        {vCadastro.errors?.children && <Message
+                            severity="error" text={locale.options.errorField} className="w-full m-1" />}
+                        <Calendar id="birthDate"
+                                  showIcon
+                                  required
+                                  touchUI
+                                  selectionMode="single"
                                   className="w-full mb-3"
+                                  invalid={vCadastro.errors?.children}
                                   placeholder={locale.options.birthDate}
-                                  locale={locale.locale}
+                                  locale="pt-BR"
                                   onChange={(event) => handleChangeChildren('birthDate', event.value, idx)} />
                     </>);
                 })}
-
-                <label htmlFor={locale.options.campus}
-                       className="block text-900 font-medium mb-2">{locale.options.campus}({locale.options.required})</label>
-                {vCadastro.errors?.campus && <Message
-                    severity="error" text={locale.options.errorField} className="w-full m-1" />}
-                <Campus cadastro={vCadastro} handleCampus={handleChange} />
-                <label htmlFor="job"
-                       className="block text-900 font-medium mb-2">{locale.options.job}</label>
-                <Profissoes handleJob={handleChange} />
                 <Button
                     label={isLoading ? <ProgressSpinner style={{ maxWidth: '20px', maxHeight: '20px' }} strokeWidth="8"
                                                         fill="var(--surface-ground)" animationDuration=".5s" />
