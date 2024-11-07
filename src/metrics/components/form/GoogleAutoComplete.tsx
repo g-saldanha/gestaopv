@@ -4,11 +4,12 @@ import { useMapsLibrary } from '@vis.gl/react-google-maps';
 import { InputText } from 'primereact/inputtext';
 import { ValidateCadastro } from '@/metrics/components/auth/validation';
 import { ValidateCadastroKids } from '@/metrics/components/auth/validationKids';
+import { ValidateCadastroConnect } from '@/metrics/components/auth/validationConnect';
 
 
 interface PlaceAutocompleteProps {
     onPlaceSelect: (place: google.maps.places.PlaceResult | null) => void;
-    cadastro: ValidateCadastro | ValidateCadastroKids;
+    cadastro: ValidateCadastro | ValidateCadastroKids | ValidateCadastroConnect;
 }
 
 // @ts-ignore

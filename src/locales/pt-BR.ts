@@ -24,5 +24,11 @@ export const ptBR = {
     address: 'Endereço',
     errorField: 'Por favor, insira um valor válido',
     error: 'Opa, algo deu errado. Tenta de novo mais tarde!',
-    errorSummary: 'Erro'
+    errorSummary: 'Erro',
+    gender: 'Sexo',
+    male: 'Masculino',
+    female: 'Feminino',
+    question_one: 'Deseja servir em algum ministério?',
+    question_two: 'Já serviu em alguma outra igreja?',
+    question_three: 'Qual connect você se interessa mais?'
 };

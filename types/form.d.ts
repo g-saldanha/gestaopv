@@ -32,6 +32,22 @@ declare namespace Form {
         address?: google.maps.places.PlaceResult;
     }
 
+    interface CadastroConnect {
+        firstName: string | null;
+        lastName: string | null;
+        email?: string | null;
+        whatsapp: string | undefined;
+        birthDate?: Date | null;
+        married?: boolean;
+        gender: string;
+        cep?: string | null;
+        bairro?: string | null;
+        address?: google.maps.places.PlaceResult;
+        question_one?: boolean;
+        question_two?: boolean;
+        question_three?: boolean;
+    }
+
     interface Person {
         data: {
             type: string;
