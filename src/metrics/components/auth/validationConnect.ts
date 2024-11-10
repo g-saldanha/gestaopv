@@ -108,6 +108,25 @@ export const validateCadastroConnect = async (cadastro: ValidateCadastroConnect)
         vCadastro.errors.gender = true;
         vCadastro.isValid = false;
     }
+    // @ts-ignore
+    if (!vCadastro?.form?.question_one) {
+        // Ensure errors object exists
+        // @ts-ignore
+        vCadastro.errors.question_one = true;
+        vCadastro.isValid = false;
+    }
+    // @ts-ignore
+    if (!vCadastro?.form?.question_two) {
+        // @ts-ignore
+        vCadastro.errors.question_two = true;
+        vCadastro.isValid = false;
+    }
+    // @ts-ignore
+    if (!vCadastro?.form?.question_three) {
+        // @ts-ignore
+        vCadastro.errors.question_three = true;
+        vCadastro.isValid = false;
+    }
 
     return vCadastro;
 };

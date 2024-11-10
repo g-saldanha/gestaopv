@@ -29,7 +29,7 @@
 }
 
 #bemvindo {
-    font-family: 'Slimbits';
+    font-family: 'Slimbits', serif;
     color: #fff;
     text-shadow: 0 0 7px #fff,
     0 0 10px #fff,
@@ -120,6 +120,13 @@
     }
 
     .p-calendar.p-invalid.p-component > .p-inputtext {
+        border-color: #d1d5db;
+    }
+}
+
+.cadastro-form-connect {
+    .p-button:hover {
+        background-color: #fb7a46 !important;
         border-color: #d1d5db;
     }
 }

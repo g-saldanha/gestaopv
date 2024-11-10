@@ -10,7 +10,12 @@ export async function GET(request: NextRequest) {
             }
         });
 
-        return NextResponse.json(axiosResponse.data.data.map((groupType: any) => groupType.attributes.name), {
+        return NextResponse.json(axiosResponse.data.data.filter((groupType: any) => groupType.attributes.name !== 'Unique Groups').map((groupType: any) => {
+            if (groupType.attributes.name == 'Líderes') {
+                return 'Líderes (PV Ingleses)';
+            }
+            return groupType.attributes.name;
+        }), {
             status: 200
         });
     } catch (error) {

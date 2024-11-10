@@ -12,7 +12,6 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import { Message } from 'primereact/message';
 import { Toast } from 'primereact/toast';
 import { useRouter } from 'next/navigation';
-import { initCadastroKids } from '@/metrics/components/auth/validationKids';
 import axios from 'axios';
 import {
     initCadastroConnect,
@@ -21,6 +20,7 @@ import {
 } from '@/metrics/components/auth/validationConnect';
 import { SelectButton } from 'primereact/selectbutton';
 import { Dropdown } from 'primereact/dropdown';
+import { CadastroService } from '@/metrics/service/CadastroService';
 
 
 interface ConnectRegisterFormProps {
@@ -36,30 +36,50 @@ export default function ConnectRegisterForm(props: Readonly<ConnectRegisterFormP
     const [showCadastro, setShowCadastro] = useState(false);
     const [connectsTypes, setConnectsTypes] = useState([]);
     const handleChange = (field: any, value: any) => {
+        let data = value;
+        // if (field === 'gender') {
+        //     data = value == 'Masculino' ? 'Male' : 'Female';
+        // }
         // @ts-ignore
-        setVCadastro((prevState) => ({ ...prevState, form: { ...prevState?.form, [field]: value } }));
+        setVCadastro((prevState) => ({ ...prevState, form: { ...prevState?.form, [field]: data } }));
     };
-    const [selectedConnectType, setSelectedConnectType] = useState(null);
 
     const handleBuscar = async () => {
-            let axiosResponse = await axios.get(`/api/pco/search?phone=${vCadastro.form?.whatsapp}`);
-
-            if (axiosResponse.status === 200) {
-                let data = axiosResponse.data.attributes;
-                console.log(data);
+            try {
+                setIsLoading(true);
                 // @ts-ignore
-                setVCadastro((prevState) => ({
-                    ...prevState,
-                    form: {
-                        ...prevState?.form,
-                        firstName: data.first_name || '',
-                        lastName: data.last_name || '',
-                        birthDate: new Date(data.birthdate) || ''
-                    }
-                }));
-                setShowCadastro(true);
-            } else {
-                setShowCadastro(true);
+                if (!await CadastroService.checkWhatsapp(vCadastro.form?.whatsapp)) {
+                    // @ts-ignore
+                    setVCadastro((prevState) => ({ ...prevState, errors: { ...prevState?.errors, whatsapp: true } }));
+                    setIsLoading(false);
+                    return;
+                }
+
+                let axiosResponse = await axios.get(`/api/pco/search?phone=${vCadastro.form?.whatsapp}`);
+
+                if (axiosResponse.status === 200) {
+                    let data = axiosResponse.data.attributes;
+                    // @ts-ignore
+                    setVCadastro((prevState) => ({
+                        ...prevState,
+                        form: {
+                            ...prevState?.form,
+                            id: data.id || null,
+                            firstName: data.first_name || '',
+                            lastName: data.last_name || '',
+                            birthDate: new Date(data.birthdate) || null
+                        }
+                    }));
+                    setShowCadastro(true);
+                } else {
+                    setShowCadastro(true);
+                }
+                setIsLoading(false);
+            } catch (e) {
+                console.error(e);
+                // @ts-ignore
+                setVCadastro((prevState) => ({ ...prevState, errors: { ...prevState?.errors, whatsapp: true } }));
+                setIsLoading(false);
             }
         }
     ;
@@ -75,15 +95,14 @@ export default function ConnectRegisterForm(props: Readonly<ConnectRegisterFormP
     const handleSubmit = async () => {
         setIsLoading(true);
         // @ts-ignore
-        vCadastro.errors = initCadastroKids.errors;
+        vCadastro.errors = initCadastroConnect.errors;
 
         let cadastro = await validateCadastroConnect(vCadastro);
         if (cadastro.isValid) {
             try {
-                // let confirm = await CadastroService.sendCadastroKids(cadastro);
-                push('/cadastro-confirmado?kidspv=true');
-                if (true) {
-                    push('/cadastro-confirmado?kidspv=true');
+                let confirm = await CadastroService.sendToPCOConnect(cadastro);
+                if (confirm) {
+                    push('/cadastro-confirmado');
                 } else {
                     // @ts-ignore
                     toast.current.show({
@@ -116,11 +135,12 @@ export default function ConnectRegisterForm(props: Readonly<ConnectRegisterFormP
     if (!locale) {
         return null;
     }
+
     // @ts-ignore
     return (
         <APIProvider apiKey="AIzaSyCdVvFlHiCZjhXPEl1lnj-zuyM2AilWO-o">
             <Toast ref={toast} position="center" />
-            <div className="cadastro-form-kids" id="form-kids">
+            <div className="cadastro-form-connect" id="form-kids">
                 <label htmlFor="whatsapp" className="block text-900 font-medium mb-2">Whatsapp&nbsp;
                     ({locale.options.required})</label>
                 {vCadastro.errors?.whatsapp && <Message
@@ -222,7 +242,6 @@ export default function ConnectRegisterForm(props: Readonly<ConnectRegisterFormP
                                       value={vCadastro?.form?.married ? locale.options.accept : locale.options.reject}
                                       invalid={vCadastro.errors?.married}
                                       onChange={event => handleChange('married', event.value == locale.options.accept)} />
-
                     </div>
 
                     <label htmlFor="gender" className="block text-900 font-medium mb-2">{locale.options.gender}&nbsp;
@@ -249,9 +268,7 @@ export default function ConnectRegisterForm(props: Readonly<ConnectRegisterFormP
                                       value={vCadastro?.form?.question_one ? locale.options.accept : locale.options.reject}
                                       invalid={vCadastro.errors?.married}
                                       onChange={event => handleChange('question_one', event.value == locale.options.accept)} />
-
                     </div>
-
                     <label htmlFor="question_two"
                            className="block text-900 font-medium mb-2">{locale.options.question_two}&nbsp;
                         ({locale.options.optional})</label>
@@ -263,7 +280,6 @@ export default function ConnectRegisterForm(props: Readonly<ConnectRegisterFormP
                                       value={vCadastro?.form?.question_two ? locale.options.accept : locale.options.reject}
                                       invalid={vCadastro.errors?.question_two}
                                       onChange={event => handleChange('question_two', event.value == locale.options.accept)} />
-
                     </div>
 
                     <label htmlFor="question_three"
@@ -273,16 +289,20 @@ export default function ConnectRegisterForm(props: Readonly<ConnectRegisterFormP
                         severity="error" text={locale.options.errorField} className="w-full m-1" />}
                     <div
                         className="w-full text-center">
-                        <Dropdown value={selectedConnectType} onChange={(e) => setSelectedConnectType(e.value)}
-                                  options={connectsTypes}
-                                  optionLabel="question_three"
-                                  placeholder="Selecione um tipo de connect" className="w-full mb-3" />
+                        <Dropdown
+                            value={vCadastro.form?.question_three}
+                            onChange={(e) => handleChange('question_three', e.value)}
+                            options={connectsTypes}
+                            optionLabel="question_three"
+                            placeholder="Selecione um tipo de connect" className="w-full mb-3" />
                     </div>
-
                     <Button
                         label={isLoading ?
-                            <ProgressSpinner style={{ maxWidth: '20px', maxHeight: '20px' }} strokeWidth="8"
-                                             fill="var(--surface-ground)" animationDuration=".5s" />
+                            <ProgressSpinner
+                                style={{ maxWidth: '20px', maxHeight: '20px' }}
+                                strokeWidth="8"
+                                fill="var(--surface-ground)"
+                                animationDuration=".5s" />
                             : locale.options.register} icon="pi pi-user-plus" className="w-full"
                         onClick={handleSubmit} />
                 </>)}

@@ -12,13 +12,12 @@ export async function GET(request: NextRequest) {
                 'Authorization': 'Basic ZWI0MDk3NjdmMWIxMWFiZTI3NjM4ZjRiNjNmM2I2ZmViYjY1OGI2NGNmYjg1MmRlYmQ2ZTk0MDVhNWQ3MWU4OTozYTFhYjBlNzA1ZDE4OThkYTM5ZDgzNDBkZjg4M2IzZWJjMjUwYjg3M2Q5ZjMxYWMwZWFhYmM2ZjAyMTUwOTg4'
             }
         });
-
         if (axiosResponse.data.data.length > 0) {
             return NextResponse.json(axiosResponse.data.data[0], {
                 status: 200
             });
         }
-        return NextResponse.json('No content', {
+        return new NextResponse(undefined, {
             status: 204
         });
 
