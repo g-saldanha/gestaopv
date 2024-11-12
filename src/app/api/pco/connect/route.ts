@@ -97,10 +97,10 @@ export async function POST(request: NextRequest) {
         if (toPCO.connect) {
             const personId = toPCO.personId || personResponse?.data?.data?.id;
             const connect = {
-                'data': {
-                    'attributes': {
-                        'field_definition_id': '747255',
-                        'value': toPCO.connect
+                data: {
+                    attributes: {
+                        field_definition_id: '747255',
+                        value: toPCO.connect
                     }
                 }
             };

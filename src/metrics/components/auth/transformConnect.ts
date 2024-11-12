@@ -24,7 +24,8 @@ export function transformCadastroConnects(cadastro: ValidateCadastroConnect) {
                 child: false,
                 gender: cadastro.form?.gender == 'Masculino' ? 'Male' : 'Female',
                 membership: 'Visitante',
-                primary_campus_id: '89632'
+                primary_campus_id: '89632',
+                marital_status: cadastro.form?.married ? '8716007' : '8716006'
             }
         }
     };
