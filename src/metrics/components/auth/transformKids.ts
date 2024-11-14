@@ -5,6 +5,7 @@ export function transformCadastroKids(cadastro: ValidateCadastroKids) {
     const payload: any = {
         person: undefined
     };
+    payload.phone = cadastro.form?.whatsapp;
     payload.person = {
         data: {
             type: 'Person',
