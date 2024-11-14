@@ -191,8 +191,6 @@ export default function ConnectRegisterForm(props: Readonly<ConnectRegisterFormP
                                required value={vCadastro?.form?.firstName}
                                invalid={vCadastro.errors?.firstName}
                                onChange={(e) => handleChange('firstName', e.target.value)} />
-
-
                     <label htmlFor="lastName"
                            className="block text-900 font-medium mb-2">{locale.options.lastName}&nbsp;
                         ({locale.options.required})</label>
@@ -202,7 +200,6 @@ export default function ConnectRegisterForm(props: Readonly<ConnectRegisterFormP
                                invalid={vCadastro.errors?.lastName}
                                required value={vCadastro?.form?.lastName}
                                onChange={(e) => handleChange('lastName', e.target.value)} />
-
                     <label htmlFor="birthDate"
                            className="block text-900 font-medium mb-2">{locale.options.birthDate}&nbsp;
                         ({locale.options.optional})</label>

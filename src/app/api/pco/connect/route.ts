@@ -13,9 +13,9 @@ let config = {
 export async function POST(request: NextRequest) {
     try {
         let personResponse = null;
-        let toPCO = await request.json() as any;
+        let toPCO = await request.json();
         if (toPCO.personId) {
-            await axios.patch(`https://api.planningcenteronline.com/people/v2/people`, toPCO.person, { headers: config.headers });
+            await axios.patch(`https://api.planningcenteronline.com/people/v2/people/${toPCO.personId}`, toPCO.person, { headers: config.headers });
         } else {
             personResponse = await axios.post(`https://api.planningcenteronline.com/people/v2/people`, toPCO.person, { headers: config.headers });
         }

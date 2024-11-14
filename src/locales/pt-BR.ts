@@ -7,6 +7,7 @@ export const ptBR = {
     welcome: 'bem-vindo a sua casa',
     firstName: 'Nome',
     lastName: 'Sobrenome',
+    father_kids: 'Pai/Responsável',
     birthDate: 'Data de Nascimento',
     whatsApp: 'Whatsapp',
     email: 'Email',

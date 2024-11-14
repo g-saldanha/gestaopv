@@ -28,7 +28,6 @@ export default function KidsRegisterForm(props: Readonly<KidsRegisterFormProps>)
     const [vCadastro, setVCadastro] = useState<ValidateCadastroKids>(initCadastroKids);
     const [children, setChildren] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    console.log(children);
     const handleChange = (field: any, value: any) => {
         // @ts-ignore
         setVCadastro((prevState) => ({ ...prevState, form: { ...prevState?.form, [field]: value } }));
@@ -114,7 +113,7 @@ export default function KidsRegisterForm(props: Readonly<KidsRegisterFormProps>)
             <Toast ref={toast} position="center" />
             <div className="cadastro-form-kids" id="form-kids">
                 <label htmlFor="firstName"
-                       className="block text-900 font-medium mb-2">{locale.options.firstName}({locale.options.required})</label>
+                       className="block text-900 font-medium mb-2">{`${locale.options.firstName} do ${locale.options.father_kids} (${locale.options.required})`}</label>
                 {vCadastro.errors?.firstName && <Message
                     severity="error" text={locale.options.errorField} className="w-full m-1" />}
                 <InputText id="firstName" type="text" placeholder={locale.options.firstName} className="w-full mb-3"
@@ -123,8 +122,8 @@ export default function KidsRegisterForm(props: Readonly<KidsRegisterFormProps>)
                            onChange={(e) => handleChange('firstName', e.target.value)} />
 
 
-                <label htmlFor="lastName" className="block text-900 font-medium mb-2">{locale.options.lastName}
-                    ({locale.options.required})</label>
+                <label htmlFor="lastName"
+                       className="block text-900 font-medium mb-2">{`${locale.options.lastName} do ${locale.options.father_kids} (${locale.options.required})`}</label>
                 {vCadastro.errors?.lastName && <Message
                     severity="error" text={locale.options.errorField} className="w-full m-1" />}
                 <InputText id="lastName" type="text" placeholder={locale.options.lastName} className="w-full mb-3"
@@ -132,8 +131,8 @@ export default function KidsRegisterForm(props: Readonly<KidsRegisterFormProps>)
                            required value={vCadastro?.form?.lastName}
                            onChange={(e) => handleChange('lastName', e.target.value)} />
 
-                <label htmlFor="birthDate" className="block text-900 font-medium mb-2">{locale.options.birthDate}
-                    ({locale.options.optional})</label>
+                <label htmlFor="birthDate"
+                       className="block text-900 font-medium mb-2">{`${locale.options.birthDate} do ${locale.options.father_kids} (${locale.options.optional})`}</label>
                 {vCadastro.errors?.birthDate && <Message
                     severity="error" text={locale.options.errorField} className="w-full m-1" />}
                 <Calendar id="birthDate" showIcon touchUI selectionMode="single"

@@ -72,5 +72,6 @@ declare namespace Form {
         address: any;
         email?: any;
         children?: Person[];
+        phone: string;
     }
 }
