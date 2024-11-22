@@ -59,17 +59,22 @@ export default function ConnectRegisterForm(props: Readonly<ConnectRegisterFormP
 
                 if (axiosResponse.status === 200) {
                     let data = axiosResponse.data.attributes;
-                    // @ts-ignore
-                    setVCadastro((prevState) => ({
-                        ...prevState,
-                        form: {
-                            ...prevState?.form,
-                            id: data.id || null,
-                            firstName: data.first_name || '',
-                            lastName: data.last_name || '',
-                            birthDate: new Date(data.birthdate) || null
-                        }
-                    }));
+                    console.log(axiosResponse.data);
+                    if (axiosResponse.data.relationships.households.data > 0) {
+
+                    } else {
+                        // @ts-ignore
+                        setVCadastro((prevState) => ({
+                            ...prevState,
+                            form: {
+                                ...prevState?.form,
+                                id: data.id || null,
+                                firstName: data.first_name || '',
+                                lastName: data.last_name || '',
+                                birthDate: new Date(data.birthdate) || null
+                            }
+                        }));
+                    }
                     setShowCadastro(true);
                 } else {
                     setShowCadastro(true);

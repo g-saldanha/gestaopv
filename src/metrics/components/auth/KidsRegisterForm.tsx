@@ -15,6 +15,7 @@ import { CadastroService } from '@/metrics/service/CadastroService';
 import { Toast } from 'primereact/toast';
 import { useRouter } from 'next/navigation';
 import { initCadastroKids, validateCadastroKids, ValidateCadastroKids } from '@/metrics/components/auth/validationKids';
+import axios from 'axios';
 
 
 interface KidsRegisterFormProps {
@@ -28,6 +29,59 @@ export default function KidsRegisterForm(props: Readonly<KidsRegisterFormProps>)
     const [vCadastro, setVCadastro] = useState<ValidateCadastroKids>(initCadastroKids);
     const [children, setChildren] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [showCadastro, setShowCadastro] = useState(false);
+
+    const handleBuscar = async () => {
+        try {
+            setIsLoading(true);
+            // @ts-ignore
+            if (!await CadastroService.checkWhatsapp(vCadastro.form?.whatsapp)) {
+                // @ts-ignore
+                setVCadastro((prevState) => ({ ...prevState, errors: { ...prevState?.errors, whatsapp: true } }));
+                setIsLoading(false);
+                return;
+            }
+
+            let axiosResponse = await axios.get(`/api/pco/search?phone=${vCadastro.form?.whatsapp}`);
+
+            if (axiosResponse.status === 200) {
+                let data = axiosResponse.data.attributes.included;
+                // @ts-ignore
+                setVCadastro((prevState) => ({
+                    ...prevState,
+                    form: {
+                        ...prevState?.form,
+                        id: data.id || null,
+                        firstName: data.first_name || '',
+                        lastName: data.last_name || '',
+                        birthDate: new Date(data.birthdate) || null
+                    }
+                }));
+
+                if (data.length > 0) {
+                    let axiosResponseHouse = await axios.post(`/api/pco/households`, data);
+                    console.log({ axiosResponseHouse });
+                    if (axiosResponseHouse.status === 200) {
+                        // @ts-ignore
+                        let children = axiosResponse.data.map(child => ({
+                            firstName: child.first_name,
+                            birthDate: new Date(child.birthdate)
+                        }));
+                        setChildren(children);
+                    }
+                }
+                setShowCadastro(true);
+            } else {
+                setShowCadastro(true);
+            }
+            setIsLoading(false);
+        } catch (e) {
+            console.error(e);
+            // @ts-ignore
+            setVCadastro((prevState) => ({ ...prevState, errors: { ...prevState?.errors, whatsapp: true } }));
+            setIsLoading(false);
+        }
+    };
     const handleChange = (field: any, value: any) => {
         // @ts-ignore
         setVCadastro((prevState) => ({ ...prevState, form: { ...prevState?.form, [field]: value } }));
@@ -112,42 +166,13 @@ export default function KidsRegisterForm(props: Readonly<KidsRegisterFormProps>)
         <APIProvider apiKey="AIzaSyCdVvFlHiCZjhXPEl1lnj-zuyM2AilWO-o">
             <Toast ref={toast} position="center" />
             <div className="cadastro-form-kids" id="form-kids">
-                <label htmlFor="firstName"
-                       className="block text-900 font-medium mb-2">{`${locale.options.firstName} do ${locale.options.father_kids} (${locale.options.required})`}</label>
-                {vCadastro.errors?.firstName && <Message
-                    severity="error" text={locale.options.errorField} className="w-full m-1" />}
-                <InputText id="firstName" type="text" placeholder={locale.options.firstName} className="w-full mb-3"
-                           required value={vCadastro?.form?.firstName}
-                           invalid={vCadastro.errors?.firstName}
-                           onChange={(e) => handleChange('firstName', e.target.value)} />
-
-
-                <label htmlFor="lastName"
-                       className="block text-900 font-medium mb-2">{`${locale.options.lastName} do ${locale.options.father_kids} (${locale.options.required})`}</label>
-                {vCadastro.errors?.lastName && <Message
-                    severity="error" text={locale.options.errorField} className="w-full m-1" />}
-                <InputText id="lastName" type="text" placeholder={locale.options.lastName} className="w-full mb-3"
-                           invalid={vCadastro.errors?.lastName}
-                           required value={vCadastro?.form?.lastName}
-                           onChange={(e) => handleChange('lastName', e.target.value)} />
-
-                <label htmlFor="birthDate"
-                       className="block text-900 font-medium mb-2">{`${locale.options.birthDate} do ${locale.options.father_kids} (${locale.options.optional})`}</label>
-                {vCadastro.errors?.birthDate && <Message
-                    severity="error" text={locale.options.errorField} className="w-full m-1" />}
-                <Calendar id="birthDate" showIcon touchUI selectionMode="single"
-                          value={vCadastro?.form?.birthDate}
-                          invalid={vCadastro.errors?.birthDate}
-                          onChange={(e) => handleChange('birthDate', e.value)}
-                          placeholder={locale.options.birthDate}
-                          locale="pt-BR"
-                          className="w-full mb-3" />
                 <label htmlFor="whatsapp" className="block text-900 font-medium mb-2">Whatsapp
                     ({locale.options.required})</label>
                 {vCadastro.errors?.whatsapp && <Message
                     severity="error" text={locale.options.errorField} className="w-full m-1" />}
                 <PhoneInput
                     prefix=""
+                    disabled={showCadastro}
                     inputStyle={{
                         fontSize: '1rem',
                         border: '1px solid #d1d5db',
@@ -172,76 +197,119 @@ export default function KidsRegisterForm(props: Readonly<KidsRegisterFormProps>)
                     }}
                     className="w-full mb-3"
                 />
+                {!showCadastro &&
+                    <Button
+                        //@ts-ignore
+                        label={isLoading ?
+                            <ProgressSpinner style={{ maxWidth: '20px', maxHeight: '20px' }} strokeWidth="8"
+                                             fill="var(--surface-ground)" animationDuration=".5s" />
+                            : locale.options.searchpco} icon="pi pi-user-plus" className="w-full"
+                        onClick={handleBuscar} />}
 
-                <label htmlFor="email" className="block text-900 font-medium mb-2">{locale.options.email}
-                    ({locale.options.optional})</label>
-                {vCadastro.errors?.email && <Message
-                    severity="error" text={locale.options.errorField} className="w-full m-1" />}
-                <InputText id="email" type="email" placeholder="Email" className="w-full mb-3" required
-                           value={vCadastro?.form?.email}
-                           invalid={vCadastro.errors?.email}
-                           onChange={(e) => handleChange('email', e.target.value)} keyfilter="email" />
+                {showCadastro && (<>
+                    <label htmlFor="firstName"
+                           className="block text-900 font-medium mb-2">{`${locale.options.firstName} ${locale.options.father_kids} (${locale.options.required})`}</label>
+                    {vCadastro.errors?.firstName && <Message
+                        severity="error" text={locale.options.errorField} className="w-full m-1" />}
+                    <InputText id="firstName" type="text" placeholder={locale.options.firstName} className="w-full mb-3"
+                               required value={vCadastro?.form?.firstName}
+                               invalid={vCadastro.errors?.firstName}
+                               onChange={(e) => handleChange('firstName', e.target.value)} />
 
-                <label htmlFor="address" className="block text-900 font-medium mb-2">{locale.options.address}
-                    ({locale.options.required})</label>
-                {vCadastro.errors?.address && <Message
-                    severity="error" text={locale.options.errorField} className="w-full m-1" />}
-                <GoogleAutoComplete cadastro={vCadastro} onPlaceSelect={(e) => handleChange('address', e)}
-                />
 
-                <label htmlFor="quantos"
-                       className="block text-900 font-medium mb-2">{locale.options.howmanychildren}
-                    ({locale.options.required})</label>
-                {vCadastro.errors?.children && <Message
-                    severity="error" text={locale.options.errorField} className="w-full m-1" />}
+                    <label htmlFor="lastName"
+                           className="block text-900 font-medium mb-2">{`${locale.options.lastName} ${locale.options.father_kids} (${locale.options.required})`}</label>
+                    {vCadastro.errors?.lastName && <Message
+                        severity="error" text={locale.options.errorField} className="w-full m-1" />}
+                    <InputText id="lastName" type="text" placeholder={locale.options.lastName} className="w-full mb-3"
+                               invalid={vCadastro.errors?.lastName}
+                               required value={vCadastro?.form?.lastName}
+                               onChange={(e) => handleChange('lastName', e.target.value)} />
 
-                <InputNumber
-                    inputId="quantos"
-                    required
-                    invalid={vCadastro.errors?.children}
-                    onChange={(e: InputNumberChangeEvent) => {
-                        // @ts-ignore
-                        if (e.value <= 4) {
+                    <label htmlFor="birthDate"
+                           className="block text-900 font-medium mb-2">{`${locale.options.birthDate} ${locale.options.father_kids} (${locale.options.optional})`}</label>
+                    {vCadastro.errors?.birthDate && <Message
+                        severity="error" text={locale.options.errorField} className="w-full m-1" />}
+                    <Calendar id="birthDate" showIcon touchUI selectionMode="single"
+                              value={vCadastro?.form?.birthDate}
+                              invalid={vCadastro.errors?.birthDate}
+                              onChange={(e) => handleChange('birthDate', e.value)}
+                              placeholder={locale.options.birthDate}
+                              locale="pt-BR"
+                              className="w-full mb-3" />
+
+                    <label htmlFor="email" className="block text-900 font-medium mb-2">{locale.options.email}
+                        ({locale.options.optional})</label>
+                    {vCadastro.errors?.email && <Message
+                        severity="error" text={locale.options.errorField} className="w-full m-1" />}
+                    <InputText id="email" type="email" placeholder={locale.options.email} className="w-full mb-3"
+                               required
+                               value={vCadastro?.form?.email}
+                               invalid={vCadastro.errors?.email}
+                               onChange={(e) => handleChange('email', e.target.value)} keyfilter="email" />
+
+                    <label htmlFor="address" className="block text-900 font-medium mb-2">{locale.options.address}
+                        ({locale.options.required})</label>
+                    {vCadastro.errors?.address && <Message
+                        severity="error" text={locale.options.errorField} className="w-full m-1" />}
+                    <GoogleAutoComplete cadastro={vCadastro} onPlaceSelect={(e) => handleChange('address', e)}
+                    />
+
+                    <label htmlFor="quantos"
+                           className="block text-900 font-medium mb-2">{locale.options.howmanychildren}
+                        ({locale.options.required})</label>
+                    {vCadastro.errors?.children && <Message
+                        severity="error" text={locale.options.errorField} className="w-full m-1" />}
+
+                    <InputNumber
+                        inputId="quantos"
+                        required
+                        invalid={vCadastro.errors?.children}
+                        onChange={(e: InputNumberChangeEvent) => {
                             // @ts-ignore
-                            handleChooseChildren(e.value);
-                        }
-                    }}
-                    useGrouping={false} min={0} max={4} className="w-full mb-3" />
+                            if (e.value <= 4) {
+                                // @ts-ignore
+                                handleChooseChildren(e.value);
+                            }
+                        }}
+                        useGrouping={false} min={0} max={4} className="w-full mb-3" />
 
-                {children.map((child, idx) => {
-                    return (<>
-                        <label htmlFor="firstname"
-                               className="block text-900 font-medium mb-2">{idx + 1} - {locale.options.firstName}
-                            ({locale.options.required})</label>
-                        {vCadastro.errors?.children && <Message
-                            severity="error" text={locale.options.errorField} className="w-full m-1" />}
-                        <InputText id="firstname" type="text" placeholder={locale.options.firstName}
-                                   className="w-full mb-3"
-                                   invalid={vCadastro.errors?.children}
-                                   onChange={(event) => handleChangeChildren('firstName', event.target.value, idx)}
-                                   required />
-                        <label htmlFor="birthDate"
-                               className="block text-900 font-medium mb-2">{idx + 1} - {locale.options.birthDate}
-                            ({locale.options.required})</label>
-                        {vCadastro.errors?.children && <Message
-                            severity="error" text={locale.options.errorField} className="w-full m-1" />}
-                        <Calendar id="birthDate"
-                                  showIcon
-                                  required
-                                  touchUI
-                                  selectionMode="single"
-                                  className="w-full mb-3"
-                                  invalid={vCadastro.errors?.children}
-                                  placeholder={locale.options.birthDate}
-                                  locale="pt-BR"
-                                  onChange={(event) => handleChangeChildren('birthDate', event.value, idx)} />
-                    </>);
-                })}
-                <Button
-                    label={isLoading ? <ProgressSpinner style={{ maxWidth: '20px', maxHeight: '20px' }} strokeWidth="8"
-                                                        fill="var(--surface-ground)" animationDuration=".5s" />
-                        : locale.options.register} icon="pi pi-user-plus" className="w-full"
-                    onClick={handleSubmit} />
+                    {children.map((child, idx) => {
+                        return (<>
+                            <label htmlFor="firstname"
+                                   className="block text-900 font-medium mb-2">{idx + 1} - {locale.options.firstName}
+                                ({locale.options.required})</label>
+                            {vCadastro.errors?.children && <Message
+                                severity="error" text={locale.options.errorField} className="w-full m-1" />}
+                            <InputText id="firstname" type="text" placeholder={locale.options.firstName}
+                                       className="w-full mb-3"
+                                       invalid={vCadastro.errors?.children}
+                                       onChange={(event) => handleChangeChildren('firstName', event.target.value, idx)}
+                                       required />
+                            <label htmlFor="birthDate"
+                                   className="block text-900 font-medium mb-2">{idx + 1} - {locale.options.birthDate}
+                                ({locale.options.required})</label>
+                            {vCadastro.errors?.children && <Message
+                                severity="error" text={locale.options.errorField} className="w-full m-1" />}
+                            <Calendar id="birthDate"
+                                      showIcon
+                                      required
+                                      touchUI
+                                      selectionMode="single"
+                                      className="w-full mb-3"
+                                      invalid={vCadastro.errors?.children}
+                                      placeholder={locale.options.birthDate}
+                                      locale="pt-BR"
+                                      onChange={(event) => handleChangeChildren('birthDate', event.value, idx)} />
+                        </>);
+                    })}
+                    <Button
+                        label={isLoading ?
+                            <ProgressSpinner style={{ maxWidth: '20px', maxHeight: '20px' }} strokeWidth="8"
+                                             fill="var(--surface-ground)" animationDuration=".5s" />
+                            : locale.options.register} icon="pi pi-user-plus" className="w-full"
+                        onClick={handleSubmit} />
+                </>)}
             </div>
         </APIProvider>
     );

@@ -7,7 +7,7 @@ export const ptBR = {
     welcome: 'bem-vindo a sua casa',
     firstName: 'Nome',
     lastName: 'Sobrenome',
-    father_kids: 'Pai/Responsável',
+    father_kids: 'do Pai/Responsável',
     birthDate: 'Data de Nascimento',
     whatsApp: 'Whatsapp',
     email: 'Email',
@@ -31,5 +31,6 @@ export const ptBR = {
     female: 'Feminino',
     question_one: 'Deseja servir em algum ministério?',
     question_two: 'Já serviu em alguma outra igreja?',
-    question_three: 'Qual connect você se interessa mais?'
+    question_three: 'Qual connect você se interessa mais?',
+    searchpco: 'Buscar Cadastro'
 };
