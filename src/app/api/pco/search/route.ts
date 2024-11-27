@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
             }
         });
         if (axiosResponse.data.data.length > 0) {
-            return NextResponse.json(axiosResponse.data.data[0], {
+            return NextResponse.json(axiosResponse.data, {
                 status: 200
             });
         }

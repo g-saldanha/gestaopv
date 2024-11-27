@@ -45,28 +45,29 @@ export default function KidsRegisterForm(props: Readonly<KidsRegisterFormProps>)
             let axiosResponse = await axios.get(`/api/pco/search?phone=${vCadastro.form?.whatsapp}`);
 
             if (axiosResponse.status === 200) {
-                let data = axiosResponse.data.attributes.included;
+                let person = axiosResponse.data.data[0];
+                let data = axiosResponse.data.included;
                 // @ts-ignore
                 setVCadastro((prevState) => ({
                     ...prevState,
                     form: {
                         ...prevState?.form,
-                        id: data.id || null,
-                        firstName: data.first_name || '',
-                        lastName: data.last_name || '',
-                        birthDate: new Date(data.birthdate) || null
+                        id: person.id || null,
+                        firstName: person.attributes.first_name || '',
+                        lastName: person.attributes.last_name || '',
+                        birthDate: new Date(person.attributes.birthdate) || null
                     }
                 }));
-
-                if (data.length > 0) {
+                if (data?.length > 0) {
                     let axiosResponseHouse = await axios.post(`/api/pco/households`, data);
-                    console.log({ axiosResponseHouse });
                     if (axiosResponseHouse.status === 200) {
+                        console.log(axiosResponseHouse);
                         // @ts-ignore
-                        let children = axiosResponse.data.map(child => ({
-                            firstName: child.first_name,
-                            birthDate: new Date(child.birthdate)
+                        let children = axiosResponseHouse.data.map(child => ({
+                            firstName: child.attributes.first_name,
+                            birthDate: new Date(child.attributes.birthdate)
                         }));
+                        console.log(children);
                         setChildren(children);
                     }
                 }
@@ -265,6 +266,7 @@ export default function KidsRegisterForm(props: Readonly<KidsRegisterFormProps>)
                         inputId="quantos"
                         required
                         invalid={vCadastro.errors?.children}
+                        value={children?.length}
                         onChange={(e: InputNumberChangeEvent) => {
                             // @ts-ignore
                             if (e.value <= 4) {
@@ -274,7 +276,7 @@ export default function KidsRegisterForm(props: Readonly<KidsRegisterFormProps>)
                         }}
                         useGrouping={false} min={0} max={4} className="w-full mb-3" />
 
-                    {children.map((child, idx) => {
+                    {children.map((child: any, idx) => {
                         return (<>
                             <label htmlFor="firstname"
                                    className="block text-900 font-medium mb-2">{idx + 1} - {locale.options.firstName}
@@ -283,6 +285,7 @@ export default function KidsRegisterForm(props: Readonly<KidsRegisterFormProps>)
                                 severity="error" text={locale.options.errorField} className="w-full m-1" />}
                             <InputText id="firstname" type="text" placeholder={locale.options.firstName}
                                        className="w-full mb-3"
+                                       value={child?.firstName}
                                        invalid={vCadastro.errors?.children}
                                        onChange={(event) => handleChangeChildren('firstName', event.target.value, idx)}
                                        required />
@@ -297,6 +300,7 @@ export default function KidsRegisterForm(props: Readonly<KidsRegisterFormProps>)
                                       touchUI
                                       selectionMode="single"
                                       className="w-full mb-3"
+                                      value={child?.birthDate}
                                       invalid={vCadastro.errors?.children}
                                       placeholder={locale.options.birthDate}
                                       locale="pt-BR"

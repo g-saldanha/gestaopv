@@ -13,9 +13,9 @@ export async function POST(request: NextRequest) {
     try {
         const households = await request.json() as any[];
         for (const household of households) {
-            const axiosResponse = await axios.get(`https://api.planningcenteronline.com/people/v2/people?where[search_phone_number_e164]=${household.id}&include=households`, { headers: config.headers });
-            const children = axiosResponse.data.data.included.filter((person: any) => person.attributes.child);
-            if (axiosResponse.data.status === 200 && children.length > 0) {
+            const axiosResponse = await axios.get(`https://api.planningcenteronline.com/people/v2/households/${household.id}?include=people`, { headers: config.headers });
+            const children = axiosResponse.data.included.filter((person: any) => person.attributes.child === true);
+            if (children.length > 0) {
                 return NextResponse.json(children, {
                     status: 200
                 });
