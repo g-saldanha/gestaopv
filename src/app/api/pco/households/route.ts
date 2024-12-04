@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
             const axiosResponse = await axios.get(`https://api.planningcenteronline.com/people/v2/households/${household.id}?include=people`, { headers: config.headers });
             const children = axiosResponse.data.included.filter((person: any) => person.attributes.child === true);
             if (children.length > 0) {
-                return NextResponse.json(children, {
+                return NextResponse.json({ children, household: household.id }, {
                     status: 200
                 });
             }

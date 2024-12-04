@@ -63,52 +63,90 @@ export async function POST(request: NextRequest) {
 
         try {
             if (toPCO.children) {
-                const household = {
-                    'data': {
-                        'attributes': { 'name': `Os Membros ${toPCO.person.data.attributes.last_name}` },
-                        'relationships': {
-                            'people': {
-                                'data': [{
-                                    'type': 'Person',
-                                    'id': `${personId}`
-                                }]
-                            },
-                            'primary_contact': {
-                                'data': {
-                                    'type': 'Person',
-                                    'id': `${personId}`
+                if (!toPCO.household) {
+                    const household = {
+                        'data': {
+                            'attributes': { 'name': `Os Membros ${toPCO.person.data.attributes.last_name}` },
+                            'relationships': {
+                                'people': {
+                                    'data': [{
+                                        'type': 'Person',
+                                        'id': `${personId}`
+                                    }]
+                                },
+                                'primary_contact': {
+                                    'data': {
+                                        'type': 'Person',
+                                        'id': `${personId}`
+                                    }
                                 }
                             }
                         }
+                    };
+                    for (const child of toPCO.children) {
+                        try {
+                            const personGender: any = await axios.post('https://v2.namsor.com/NamSorAPIv2/api2/json/genderGeoBatch', {
+                                'personalNames': [
+                                    {
+                                        'firstName': child.data.attributes.first_name,
+                                        'lastName': child.data.attributes.last_name,
+                                        'countryIso2': 'BR'
+                                    }
+                                ]
+                            }, { headers: config.genderHeaders });
+                            child.data.attributes.gender = personGender.likelyGender === 'male' ? 'Male' : 'Female';
+                            let childResponse = await axios.post(`https://api.planningcenteronline.com/people/v2/people`, child, { headers: config.headers });
+                            household.data.relationships.people.data.push({
+                                'type': 'Person',
+                                'id': `${childResponse.data.data.id}`
+                            });
+                        } catch (e) {
+                            console.error(e);
+                        }
                     }
-                };
-                for (const child of toPCO.children) {
-                    try {
-                        const personGender: any = await axios.post('https://v2.namsor.com/NamSorAPIv2/api2/json/genderGeoBatch', {
-                            'personalNames': [
-                                {
-                                    'firstName': child.data.attributes.first_name,
-                                    'lastName': child.data.attributes.last_name,
-                                    'countryIso2': 'BR'
-                                }
-                            ]
-                        }, { headers: config.genderHeaders });
-                        child.data.attributes.gender = personGender.likelyGender === 'male' ? 'Male' : 'Female';
-                        let childResponse = await axios.post(`https://api.planningcenteronline.com/people/v2/people`, child, { headers: config.headers });
-                        household.data.relationships.people.data.push({
-                            'type': 'Person',
-                            'id': `${childResponse.data.data.id}`
-                        });
-                    } catch (e) {
-                        console.error(e);
+                    await axios.post(`https://api.planningcenteronline.com/people/v2/households`, household, { headers: config.headers });
+                } else {
+                    for (const child of toPCO.children) {
+                        try {
+                            const personGender: any = await axios.post('https://v2.namsor.com/NamSorAPIv2/api2/json/genderGeoBatch', {
+                                'personalNames': [
+                                    {
+                                        'firstName': child.data.attributes.first_name,
+                                        'lastName': child.data.attributes.last_name,
+                                        'countryIso2': 'BR'
+                                    }
+                                ]
+                            }, { headers: config.genderHeaders });
+                            child.data.attributes.gender = personGender.likelyGender === 'male' ? 'Male' : 'Female';
+                            // @ts-ignore
+                            if (child.data.id) {
+                                // @ts-ignore
+                                await axios.patch(`https://api.planningcenteronline.com/people/v2/people/${child.data.id}`, child, { headers: config.headers });
+                            } else {
+                                let childResponse = await axios.post(`https://api.planningcenteronline.com/people/v2/people`, child, { headers: config.headers });
+                                await axios.patch(`https://api.planningcenteronline.com/people/v2/households/${toPCO.household}/household_memberships`, {
+                                    'data': {
+                                        'attributes': {},
+                                        'relationships': {
+                                            'person': {
+                                                'data': {
+                                                    'type': 'Person',
+                                                    'id': `${childResponse.data.data.id}`
+                                                }
+                                            }
+                                        }
+                                    }
+                                }, { headers: config.headers });
+                            }
+                        } catch (e) {
+                            console.error(e);
+                        }
                     }
                 }
-                await axios.post(`https://api.planningcenteronline.com/people/v2/households`, household, { headers: config.headers });
             }
         } catch (e) {
             console.error(e);
         }
-
         return NextResponse.json(true, {
             status: 200
         });

@@ -21,7 +21,7 @@ declare namespace Form {
     }
 
     interface CadastroKids {
-        hasHousehold: boolean;
+        household?: string;
         firstName: string | null;
         lastName: string | null;
         birthDate?: Date | null;
@@ -74,6 +74,6 @@ declare namespace Form {
         email?: any;
         children?: Person[];
         phone: string;
-        hasHousehold: boolean;
+        household: boolean;
     }
 }

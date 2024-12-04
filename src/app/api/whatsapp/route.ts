@@ -6,7 +6,6 @@ import axios from 'axios';
 
 export async function GET(request: NextRequest) {
     try {
-
         const url = new URL(request.url);
         let zap = url.searchParams.get('zap');
         let config = {

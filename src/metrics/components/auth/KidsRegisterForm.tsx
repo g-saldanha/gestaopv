@@ -17,7 +17,6 @@ import { useRouter } from 'next/navigation';
 import { initCadastroKids, validateCadastroKids, ValidateCadastroKids } from '@/metrics/components/auth/validationKids';
 import axios from 'axios';
 
-
 interface KidsRegisterFormProps {
     locale: any;
 }
@@ -62,7 +61,7 @@ export default function KidsRegisterForm(props: Readonly<KidsRegisterFormProps>)
                     let axiosResponseHouse = await axios.post(`/api/pco/households`, data);
                     if (axiosResponseHouse.status === 200) {
                         // @ts-ignore
-                        let children = axiosResponseHouse.data.map(child => ({
+                        let children = axiosResponseHouse.data.children.map(child => ({
                             firstName: child.attributes.first_name,
                             birthDate: new Date(child.attributes.birthdate),
                             id: child.id
@@ -73,7 +72,7 @@ export default function KidsRegisterForm(props: Readonly<KidsRegisterFormProps>)
                             ...prevState,
                             form: {
                                 ...prevState?.form,
-                                hasHousehold: true
+                                household: axiosResponseHouse.data.household
                             }
                         }));
                     }
