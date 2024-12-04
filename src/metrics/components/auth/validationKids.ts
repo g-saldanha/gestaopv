@@ -18,6 +18,7 @@ export const initCadastroKids: ValidateCadastroKids = {
         children: false
     },
     form: {
+        hasHousehold: false,
         firstName: '',
         lastName: '',
         birthDate: null,

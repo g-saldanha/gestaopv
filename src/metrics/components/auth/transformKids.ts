@@ -6,6 +6,7 @@ export function transformCadastroKids(cadastro: ValidateCadastroKids) {
         person: undefined
     };
     payload.phone = cadastro.form?.whatsapp;
+    payload.hasHousehold = cadastro.form?.hasHousehold;
     payload.person = {
         data: {
             type: 'Person',
@@ -66,6 +67,7 @@ export function transformCadastroKids(cadastro: ValidateCadastroKids) {
 
     payload.children = cadastro.form?.children.map((child) => ({
         data: {
+            id: child.id,
             type: 'Person',
             attributes: {
                 child: true,

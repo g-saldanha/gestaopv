@@ -61,14 +61,21 @@ export default function KidsRegisterForm(props: Readonly<KidsRegisterFormProps>)
                 if (data?.length > 0) {
                     let axiosResponseHouse = await axios.post(`/api/pco/households`, data);
                     if (axiosResponseHouse.status === 200) {
-                        console.log(axiosResponseHouse);
                         // @ts-ignore
                         let children = axiosResponseHouse.data.map(child => ({
                             firstName: child.attributes.first_name,
-                            birthDate: new Date(child.attributes.birthdate)
+                            birthDate: new Date(child.attributes.birthdate),
+                            id: child.id
                         }));
-                        console.log(children);
                         setChildren(children);
+                        // @ts-ignore
+                        setVCadastro((prevState) => ({
+                            ...prevState,
+                            form: {
+                                ...prevState?.form,
+                                hasHousehold: true
+                            }
+                        }));
                     }
                 }
                 setShowCadastro(true);
