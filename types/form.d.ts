@@ -77,3 +77,13 @@ declare namespace Form {
         household: boolean;
     }
 }
+
+declare namespace FormCanas {
+    interface Conexao {
+        firstName: string | null;
+        lastName: string | null;
+        email?: string | null;
+        whatsapp: string | undefined;
+        address: google.maps.places.PlaceResult;
+    }
+}

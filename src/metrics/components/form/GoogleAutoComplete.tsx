@@ -5,11 +5,12 @@ import { InputText } from 'primereact/inputtext';
 import { ValidateCadastro } from '@/metrics/components/auth/validation';
 import { ValidateCadastroKids } from '@/metrics/components/auth/validationKids';
 import { ValidateCadastroConnect } from '@/metrics/components/auth/validationConnect';
+import { ValidateCadastroCanas } from '@/metrics/components/auth/canasvieiras/validationCanas';
 
 
 interface PlaceAutocompleteProps {
     onPlaceSelect: (place: google.maps.places.PlaceResult | null) => void;
-    cadastro: ValidateCadastro | ValidateCadastroKids | ValidateCadastroConnect;
+    cadastro: ValidateCadastro | ValidateCadastroKids | ValidateCadastroConnect | ValidateCadastroCanas;
 }
 
 // @ts-ignore

@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
 import { Form } from '../../../../../types/form';
+import { canasWebhookUrl } from '@/metrics/service/paths';
 
-let config = {
+const config = {
     headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Basic ZWI0MDk3NjdmMWIxMWFiZTI3NjM4ZjRiNjNmM2I2ZmViYjY1OGI2NGNmYjg1MmRlYmQ2ZTk0MDVhNWQ3MWU4OTozYTFhYjBlNzA1ZDE4OThkYTM5ZDgzNDBkZjg4M2IzZWJjMjUwYjg3M2Q5ZjMxYWMwZWFhYmM2ZjAyMTUwOTg4'
@@ -10,10 +11,9 @@ let config = {
     genderHeaders: { 'Content-Type': 'application/json', 'X-API-KEY': '9b27370b25d7b392b5a1d40eb36f05f2' }
 };
 
-
 export async function POST(request: NextRequest) {
     try {
-        let toPCO = await request.json() as Form.PCO;
+        const toPCO = await request.json() as Form.PCO;
         try {
             const personGender: any = await axios.post('https://v2.namsor.com/NamSorAPIv2/api2/json/genderGeoBatch', {
                 'personalNames': [
@@ -41,12 +41,26 @@ export async function POST(request: NextRequest) {
         } catch (e) {
             console.error(e);
         }
+
         try {
             if (toPCO.email) {
                 await axios.post(`https://api.planningcenteronline.com/people/v2/people/${personResponse.data.data.id}/emails`, toPCO.email, { headers: config.headers });
             }
         } catch (e) {
             console.error(e);
+        }
+
+        try {
+            await axios.post(canasWebhookUrl, {
+                nome: toPCO.person.data.attributes.first_name,
+                sobrenome: toPCO.person.data.attributes.last_name,
+                email: toPCO.email.data.attributes.address,
+                whatsapp: toPCO.whatsapp.data.attributes.number,
+                sexo: toPCO.person.data.attributes.gender,
+                bairro: toPCO.person.data.attributes.gender
+            });
+        } catch (e) {
+
         }
 
         return NextResponse.json(true, {
