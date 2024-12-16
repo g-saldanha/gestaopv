@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
                 email: toPCO.email.data.attributes.address,
                 whatsapp: toPCO.whatsapp.data.attributes.number,
                 sexo: toPCO.person.data.attributes.gender,
-                bairro: toPCO.person.data.attributes.gender
+                bairro: toPCO.address.data.attributes.street_line_1
             });
         } catch (e) {
 
