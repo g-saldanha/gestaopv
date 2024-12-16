@@ -51,16 +51,16 @@ export async function POST(request: NextRequest) {
         }
 
         try {
-            await axios.post(canasWebhookUrl, {
-                nome: toPCO.person.data.attributes.first_name,
-                sobrenome: toPCO.person.data.attributes.last_name,
-                email: toPCO.email.data.attributes.address,
-                whatsapp: toPCO.whatsapp.data.attributes.number,
-                sexo: toPCO.person.data.attributes.gender,
-                bairro: toPCO.address.data.attributes.street_line_1
-            });
+            const dataN8n: any = {};
+            dataN8n.nome = toPCO.person.data.attributes.first_name || '';
+            dataN8n.sobrenome = toPCO.person?.data?.attributes?.last_name || '';
+            dataN8n.email = toPCO.email?.data?.attributes?.address || '';
+            dataN8n.whatsapp = toPCO.whatsapp?.data?.attributes?.number || '';
+            dataN8n.sexo = toPCO.person?.data?.attributes?.gender ?? '';
+            dataN8n.bairro = toPCO.address?.data?.attributes?.street_line_1 || '';
+            await axios.post(canasWebhookUrl, dataN8n);
         } catch (e) {
-
+            console.error(e);
         }
 
         return NextResponse.json(true, {
